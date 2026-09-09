@@ -1,7 +1,7 @@
 # Interactive Robotics Portfolio Design
 
 Date: 2026-09-10
-Status: Approved in conversation; awaiting written-spec review
+Status: Approved on 2026-09-10
 
 ## Purpose
 
