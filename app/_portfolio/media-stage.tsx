@@ -13,7 +13,7 @@ interface MediaStageProps {
   labelledBy?: string;
 }
 
-function MediaFallback({ media }: { media: MediaSpec }) {
+function MediaFallback() {
   const { language } = useLanguage();
   return (
     <div className="media-fallback" role="status">
@@ -39,18 +39,19 @@ function ControlledEvidenceVideo({
     if (!video) return;
     if (!active) {
       video.pause();
-      setPlaying(false);
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    void video.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    void video.play().catch(() => undefined);
   }, [active, media.src]);
 
   if (failed || (!media.src && !media.mp4Src)) {
     return media.poster ? (
       // A poster remains useful when playback is unavailable.
+      // Native image sizing is intentional inside the fixed evidence frame.
+      // eslint-disable-next-line @next/next/no-img-element
       <img className="media-poster" src={media.poster} alt={language === "en" ? media.alt.en : media.alt.ko} />
-    ) : <MediaFallback media={media} />;
+    ) : <MediaFallback />;
   }
 
   async function togglePlayback() {
@@ -79,6 +80,8 @@ function ControlledEvidenceVideo({
         playsInline
         poster={media.poster}
         aria-label={language === "en" ? media.alt.en : media.alt.ko}
+        onPause={() => setPlaying(false)}
+        onPlay={() => setPlaying(true)}
         onError={() => {
           setFailed(true);
           onFailure?.();
@@ -106,8 +109,6 @@ export function MediaStage({
   const { t } = useLanguage();
   const [failed, setFailed] = useState(false);
 
-  useEffect(() => setFailed(false), [media.src, media.visual]);
-
   let content;
   if (media.kind === "video") {
     content = (
@@ -119,8 +120,10 @@ export function MediaStage({
     );
   } else if (media.kind === "image") {
     content = failed || !media.src ? (
-      <MediaFallback media={media} />
+      <MediaFallback />
     ) : (
+      // Native image sizing is intentional inside the fixed evidence frame.
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         className="evidence-image"
         src={media.src}
@@ -135,7 +138,7 @@ export function MediaStage({
     content = media.visual ? (
       <EvidenceGraphic visual={media.visual} />
     ) : (
-      <MediaFallback media={media} />
+      <MediaFallback />
     );
   }
 

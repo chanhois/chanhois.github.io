@@ -58,6 +58,7 @@ export function CaseStudyView({ study, index = 0 }: { study: CaseStudy; index?: 
             <span>{t(activeStep.label)}</span>
           </div>
           <MediaStage
+            key={activeStep.id}
             media={activeStep.media}
             active
             labelledBy={`${activeStep.id}-title`}

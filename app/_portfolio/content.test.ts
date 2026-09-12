@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { portfolioContent } from "./content";
+import { social } from "./social";
 
 const forbidden = [
   /ServiQ/i,
@@ -60,5 +61,10 @@ describe("public portfolio content", () => {
       ({ id }) => id === "slam-time-axis",
     );
     expect(JSON.stringify(slam)).not.toMatch(/SLAM.{0,40}\d+(?:\.\d+)?%/i);
+  });
+
+  it("keeps metadata and localized content public-safe", () => {
+    const renderedSurface = JSON.stringify({ portfolioContent, social });
+    for (const pattern of forbidden) expect(renderedSurface).not.toMatch(pattern);
   });
 });

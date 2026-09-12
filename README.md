@@ -1,98 +1,30 @@
-# vinext-starter
+# Chan-ho Seo · Robotics Sensor Engineer
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A bright, bilingual, single-page portfolio about making robot sensor data spatially correct, temporally aligned, and trustworthy.
 
-## Prerequisites
+The page follows a Signal Lab visual direction with an Ice Mint palette. Five featured projects use a Scroll Lab Story format: the evidence panel remains visible while the narrative moves through Problem, Evidence, Decision, Implementation, and Result. Four compact projects, production experience, research, publications, skills, and contact follow the featured work.
 
-- Node.js `>=22.13.0`
+## Content
 
-## Quick Start
+All public Korean and English copy lives in [`app/_portfolio/content.ts`](app/_portfolio/content.ts). Keep verified measurements in that file and preserve the public platform labels when updating project descriptions.
+
+The public surface must not include customer names, internal product names, issue identifiers, robot serials, or internal repository paths.
+
+## Media
+
+Project photographs and recordings belong under `public/media/`. Read [`public/media/README.md`](public/media/README.md) before adding an asset; it defines redaction, alt text, captions, and GIF conversion.
+
+The hardware synchronization case currently reports its verified physical trigger rate. Promote downstream synchronized-versus-unsynchronized motion results only after the comparison report is complete. Add a quantitative SLAM quality claim only after a controlled evaluation.
+
+## Commands
 
 ```bash
 npm install
 npm run dev
+npm test
 npm run build
+npm run test:site
+npm run lint
 ```
 
-This starter does not use `wrangler.jsonc`.
-
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+`npm test` runs component, content, interaction, and accessibility checks. `npm run test:site` builds the Sites worker and verifies the server-rendered portfolio and public-copy boundary.
