@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom/vitest";
-import { vi } from "vitest";
+import * as axeMatchers from "vitest-axe/matchers";
+import { expect, vi } from "vitest";
+
+expect.extend(axeMatchers);
 
 class IntersectionObserverStub implements IntersectionObserver {
   readonly root = null;

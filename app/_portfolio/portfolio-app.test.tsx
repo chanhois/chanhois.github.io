@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { axe } from "vitest-axe";
 import { PortfolioApp } from "../portfolio-app";
 
 describe("PortfolioApp", () => {
@@ -38,5 +39,14 @@ describe("PortfolioApp", () => {
           "mailto:studychanho0717@gmail.com",
       ),
     ).toBe(true);
+  });
+
+  it("has no automated accessibility violations", async () => {
+    const { container } = render(<PortfolioApp />);
+    expect(
+      await axe(container, {
+        rules: { "color-contrast": { enabled: false } },
+      }),
+    ).toHaveNoViolations();
   });
 });
