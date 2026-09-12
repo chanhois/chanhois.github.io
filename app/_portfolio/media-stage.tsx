@@ -1,0 +1,148 @@
+"use client";
+
+import { Pause, Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { EvidenceGraphic } from "./evidence-graphic";
+import type { MediaSpec } from "./model";
+import { useLanguage } from "./use-language";
+
+interface MediaStageProps {
+  media: MediaSpec;
+  active: boolean;
+  onFailure?: () => void;
+  labelledBy?: string;
+}
+
+function MediaFallback({ media }: { media: MediaSpec }) {
+  const { language } = useLanguage();
+  return (
+    <div className="media-fallback" role="status">
+      <span aria-hidden="true">×</span>
+      <strong>{language === "en" ? "Evidence unavailable" : "증거 자료를 불러올 수 없습니다"}</strong>
+      <p>{language === "en" ? "The written finding remains available below." : "아래의 분석 결과는 계속 확인할 수 있습니다."}</p>
+    </div>
+  );
+}
+
+function ControlledEvidenceVideo({
+  media,
+  active,
+  onFailure,
+}: Omit<MediaStageProps, "labelledBy">) {
+  const { language } = useLanguage();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [failed, setFailed] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!active) {
+      video.pause();
+      setPlaying(false);
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    void video.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+  }, [active, media.src]);
+
+  if (failed || (!media.src && !media.mp4Src)) {
+    return media.poster ? (
+      // A poster remains useful when playback is unavailable.
+      <img className="media-poster" src={media.poster} alt={language === "en" ? media.alt.en : media.alt.ko} />
+    ) : <MediaFallback media={media} />;
+  }
+
+  async function togglePlayback() {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      try {
+        await video.play();
+        setPlaying(true);
+      } catch {
+        setFailed(true);
+        onFailure?.();
+      }
+    } else {
+      video.pause();
+      setPlaying(false);
+    }
+  }
+
+  return (
+    <div className="evidence-video">
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        poster={media.poster}
+        aria-label={language === "en" ? media.alt.en : media.alt.ko}
+        onError={() => {
+          setFailed(true);
+          onFailure?.();
+        }}
+      >
+        {media.src ? <source src={media.src} type="video/webm" /> : null}
+        {media.mp4Src ? <source src={media.mp4Src} type="video/mp4" /> : null}
+      </video>
+      <button type="button" className="media-control" onClick={togglePlayback}>
+        {playing ? <Pause aria-hidden="true" size={15} /> : <Play aria-hidden="true" size={15} />}
+        {playing
+          ? language === "en" ? "Pause" : "일시정지"
+          : language === "en" ? "Play" : "재생"}
+      </button>
+    </div>
+  );
+}
+
+export function MediaStage({
+  media,
+  active,
+  onFailure,
+  labelledBy,
+}: MediaStageProps) {
+  const { t } = useLanguage();
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => setFailed(false), [media.src, media.visual]);
+
+  let content;
+  if (media.kind === "video") {
+    content = (
+      <ControlledEvidenceVideo
+        media={media}
+        active={active}
+        onFailure={onFailure}
+      />
+    );
+  } else if (media.kind === "image") {
+    content = failed || !media.src ? (
+      <MediaFallback media={media} />
+    ) : (
+      <img
+        className="evidence-image"
+        src={media.src}
+        alt={t(media.alt)}
+        onError={() => {
+          setFailed(true);
+          onFailure?.();
+        }}
+      />
+    );
+  } else {
+    content = media.visual ? (
+      <EvidenceGraphic visual={media.visual} />
+    ) : (
+      <MediaFallback media={media} />
+    );
+  }
+
+  return (
+    <figure className="media-stage" aria-labelledby={labelledBy}>
+      <div className="media-stage__frame">{content}</div>
+      <figcaption>{t(media.caption)}</figcaption>
+    </figure>
+  );
+}
