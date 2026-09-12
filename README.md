@@ -24,7 +24,18 @@ npm run dev
 npm test
 npm run build
 npm run test:site
+npm run build:static
 npm run lint
 ```
 
 `npm test` runs component, content, interaction, and accessibility checks. `npm run test:site` builds the Sites worker and verifies the server-rendered portfolio and public-copy boundary.
+
+## Deployment
+
+The page is published to GitHub Pages at <https://chanhois.github.io>.
+
+Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs the test suite, builds the static site, and deploys it.
+
+`npm run build:static` produces that deployable site in `dist-static/`. The portfolio is an entirely client-rendered tree with no server data access, so it ships as a static single-page bundle; [`vite.static.config.ts`](vite.static.config.ts) builds it from [`static/`](static) with relative asset paths, which keeps the output valid at a user-site root and at a project subpath alike.
+
+The Cloudflare Worker build (`npm run build`) remains available for server-rendered hosting, and `npm run test:site` continues to guard the public-copy boundary against it.
