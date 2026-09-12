@@ -1,0 +1,658 @@
+import type {
+  CaseStep,
+  EvidenceVisual,
+  LocalizedText,
+  PortfolioContent,
+} from "./model";
+
+const copy = (en: string, ko: string): LocalizedText => ({ en, ko });
+
+const media = (
+  visual: EvidenceVisual,
+  alt: LocalizedText,
+  caption: LocalizedText,
+) => ({ kind: "diagram" as const, visual, alt, caption });
+
+const storyStep = (
+  id: string,
+  label: LocalizedText,
+  title: LocalizedText,
+  body: LocalizedText,
+  visual: EvidenceVisual,
+  alt: LocalizedText,
+  caption: LocalizedText,
+): CaseStep => ({
+  id,
+  label,
+  title,
+  body,
+  media: media(visual, alt, caption),
+});
+
+const stages = {
+  problem: copy("Problem", "문제"),
+  evidence: copy("Evidence", "근거"),
+  decision: copy("Decision", "판단"),
+  implementation: copy("Implementation", "구현"),
+  result: copy("Result", "결과"),
+};
+
+export const portfolioContent: PortfolioContent = {
+  profile: {
+    name: "Chan-ho Seo",
+    role: copy("Robotics Sensor Engineer", "로보틱스 센서 엔지니어"),
+    headline: copy(
+      "RIGHT PLACE. RIGHT TIME. TRUSTED DATA.",
+      "정확한 공간. 정확한 시간. 신뢰할 수 있는 데이터.",
+    ),
+    introduction: copy(
+      "I turn noisy measurements into dependable robot behavior across calibration, synchronization, sensor quality, and perception.",
+      "캘리브레이션, 시간 동기화, 센서 품질, 인지를 연결해 불안정한 측정값을 신뢰할 수 있는 로봇 동작으로 바꿉니다.",
+    ),
+    email: "studychanho0717@gmail.com",
+  },
+  navigation: {
+    work: copy("Selected Work", "주요 작업"),
+    projects: copy("Project Index", "프로젝트"),
+    experience: copy("Experience", "경험"),
+    research: copy("Research", "연구"),
+    about: copy("About", "소개"),
+  },
+  featured: [
+    {
+      id: "lidar-stability",
+      eyebrow: copy("01 · Measurement Stability", "01 · 측정 안정화"),
+      title: copy(
+        "Stabilizing a Low-Cost LiDAR for Reliable Navigation",
+        "저가형 LiDAR를 안정적인 내비게이션 센서로",
+      ),
+      summary: copy(
+        "Traced rigid scan jitter to time and angle representation, then combined a fixed angular grid with per-beam EKF filtering.",
+        "강체 형태로 흔들리는 스캔의 원인을 시간과 각도 표현에서 찾고, 고정 각도 그리드와 빔별 EKF로 안정화했습니다.",
+      ),
+      tags: ["2D LiDAR", "EKF", "Mahalanobis gating", "ROS 2"],
+      metrics: [
+        {
+          label: copy("Yaw standard deviation", "Yaw 표준편차"),
+          value: "0.378° → 0.067°",
+          context: copy("Raw to filtered", "원본 대비 필터링"),
+        },
+        {
+          label: copy("Range noise", "거리 노이즈"),
+          value: "4.1 mm → 1.3 mm",
+          context: copy("Stationary target", "정지 표적 측정"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "lidar-problem",
+          stages.problem,
+          copy("The room moved while the robot stood still", "로봇은 멈췄는데 공간이 흔들렸습니다"),
+          copy(
+            "A stationary scan oscillated as one rigid shape. Navigation saw a changing world even though individual range measurements looked plausible.",
+            "정지 상태의 스캔 전체가 하나의 강체처럼 진동했습니다. 개별 거리값은 그럴듯했지만 내비게이션은 주변 공간이 움직인다고 인식했습니다.",
+          ),
+          "lidar",
+          copy("Raw LiDAR scan showing rigid yaw oscillation", "강체 yaw 진동이 나타나는 원본 LiDAR 스캔"),
+          copy("Raw scan yaw standard deviation: 0.378°.", "원본 스캔의 yaw 표준편차는 0.378°입니다."),
+        ),
+        storyStep(
+          "lidar-evidence",
+          stages.evidence,
+          copy("The defect lived in the scan representation", "원인은 스캔 표현 방식에 있었습니다"),
+          copy(
+            "Diagnostic playback separated publish time, angle wrapping, and beam ordering. The dominant motion followed the assembled scan, pointing to timing and angular synchronization rather than random range noise alone.",
+            "진단 재생으로 publish time, angle wrapping, 빔 순서를 분리했습니다. 지배적인 움직임이 조립된 스캔을 따라가며, 단순 거리 노이즈보다 시간과 각도 동기화가 핵심임을 확인했습니다.",
+          ),
+          "lidar",
+          copy("Diagnostic comparison of timestamps and wrapped scan angles", "타임스탬프와 래핑된 스캔 각도 진단 비교"),
+          copy("A fixed angle grid lowered yaw variation to 0.166°.", "고정 각도 그리드에서 yaw 변동이 0.166°로 줄었습니다."),
+        ),
+        storyStep(
+          "lidar-decision",
+          stages.decision,
+          copy("Stabilize geometry first, estimate each beam second", "먼저 기하를 고정하고, 각 빔을 추정했습니다"),
+          copy(
+            "I chose a 400-bin angular grid to make each index physically consistent, then assigned an independent one-dimensional EKF to every beam.",
+            "각 인덱스가 같은 물리 각도를 가리키도록 400-bin 각도 그리드를 적용하고, 각 빔에 독립적인 1차원 EKF를 배치했습니다.",
+          ),
+          "lidar",
+          copy("Fixed 400-bin angular grid feeding per-beam EKF filters", "400-bin 고정 각도 그리드와 빔별 EKF 구조"),
+          copy("The estimator works on consistent angular observations.", "일관된 각도 관측값 위에서 추정기가 동작합니다."),
+        ),
+        storyStep(
+          "lidar-implementation",
+          stages.implementation,
+          copy("Reject improbable jumps without freezing real motion", "실제 움직임은 살리고 이상치만 거부했습니다"),
+          copy(
+            "Mahalanobis gating rejected outliers relative to each beam's uncertainty. The filter remained responsive while suppressing measurements that were statistically inconsistent.",
+            "각 빔의 불확도를 기준으로 Mahalanobis gating을 적용했습니다. 통계적으로 일관되지 않은 측정은 억제하면서 실제 변화에는 반응하도록 구성했습니다.",
+          ),
+          "lidar",
+          copy("Per-beam EKF and Mahalanobis innovation gate", "빔별 EKF와 Mahalanobis innovation gate"),
+          copy("Noise is filtered per direction instead of smoothing the whole scan blindly.", "전체 스캔을 뭉뚱그려 평활화하지 않고 방향별 노이즈를 추정합니다."),
+        ),
+        storyStep(
+          "lidar-result",
+          stages.result,
+          copy("A steadier scan with measurable gains", "측정 가능한 개선을 만든 안정적인 스캔"),
+          copy(
+            "Yaw standard deviation fell from 0.378° to 0.067°, while stationary-target range noise fell from 4.1 mm to 1.3 mm.",
+            "Yaw 표준편차는 0.378°에서 0.067°로, 정지 표적의 거리 노이즈는 4.1 mm에서 1.3 mm로 감소했습니다.",
+          ),
+          "lidar",
+          copy("Before and after bars for yaw and range stability", "Yaw 및 거리 안정성 전후 비교 막대"),
+          copy("The final EKF stage reaches 0.067° yaw deviation.", "최종 EKF 단계에서 yaw 편차 0.067°에 도달했습니다."),
+        ),
+      ],
+    },
+    {
+      id: "slam-time-axis",
+      eyebrow: copy("02 · Temporal Alignment", "02 · 시간 정렬"),
+      title: copy(
+        "Rebuilding the Time Axis for Better SLAM",
+        "더 나은 SLAM 입력을 위한 시간축 재구성",
+      ),
+      summary: copy(
+        "Separated device, acquisition, and host time; measured clock drift; and rebuilt per-beam timestamps for deskew-ready scans.",
+        "device, acquisition, host time을 분리하고 clock drift를 측정해 deskewing 가능한 빔별 타임스탬프를 재구성했습니다.",
+      ),
+      tags: ["Device time", "Clock drift", "Deskewing", "SLAM"],
+      metrics: [
+        {
+          label: copy("Observed drift", "관측 drift"),
+          value: "≈13 ms / 12 h",
+          context: copy("Approximately 0.3 ppm", "약 0.3 ppm"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "time-problem",
+          stages.problem,
+          copy("One timestamp hid three different clocks", "하나의 타임스탬프가 세 개의 시간을 숨겼습니다"),
+          copy(
+            "Sensor packets carried device time, arrived at an acquisition time, and were published on host time. Treating them as one instant distorted motion inside each scan.",
+            "센서 패킷에는 device time이 있고, acquisition time에 수집되어 host time에 publish됩니다. 이를 하나의 순간으로 처리하면 스캔 내부의 움직임이 왜곡됩니다.",
+          ),
+          "clock",
+          copy("Three timelines for device, acquisition, and host clocks", "Device, acquisition, host clock의 세 시간축"),
+          copy("Clock domains must be modeled before scan correction.", "스캔 보정 전에 clock domain을 구분해야 합니다."),
+        ),
+        storyStep(
+          "time-evidence",
+          stages.evidence,
+          copy("Long runs exposed a small, accumulating offset", "장시간 측정에서 작은 오차가 누적됐습니다"),
+          copy(
+            "A 12-hour capture showed about 13 ms of drift, equivalent to roughly 0.3 ppm. Small per packet, it became meaningful across long operation and robot motion.",
+            "12시간 측정에서 약 13 ms, 약 0.3 ppm의 drift를 확인했습니다. 패킷 하나에서는 작지만 장시간 동작과 로봇 움직임에서는 의미 있는 오차가 됩니다.",
+          ),
+          "clock",
+          copy("Twelve-hour clock drift plot ending near 13 milliseconds", "12시간 후 약 13 ms에 도달하는 clock drift 그래프"),
+          copy("Measured drift: approximately 13 ms over 12 hours.", "측정된 drift는 12시간 동안 약 13 ms입니다."),
+        ),
+        storyStep(
+          "time-decision",
+          stages.decision,
+          copy("Preserve source time, then map it explicitly", "원본 시간을 보존하고 명시적으로 변환했습니다"),
+          copy(
+            "I kept the sensor's device clock as the source of truth and estimated its relation to host time rather than replacing it at publication.",
+            "Publish 시점으로 덮어쓰는 대신 센서의 device clock을 원본으로 보존하고 host time과의 관계를 추정했습니다.",
+          ),
+          "clock",
+          copy("Affine conversion from device time into the host clock", "Device time에서 host clock으로의 affine 변환"),
+          copy("Offset and drift are handled as separate terms.", "Offset과 drift를 서로 다른 항으로 다룹니다."),
+        ),
+        storyStep(
+          "time-implementation",
+          stages.implementation,
+          copy("Reconstruct the acquisition time of every beam", "모든 빔의 획득 시각을 재구성했습니다"),
+          copy(
+            "Device-time conversion and scan-period modeling assign a timestamp to each beam. A deskewing filter can then transform measurements to one reference pose.",
+            "Device time 변환과 스캔 주기 모델링으로 각 빔에 타임스탬프를 부여했습니다. Deskewing filter는 이를 하나의 기준 pose로 변환합니다.",
+          ),
+          "clock",
+          copy("Per-beam time reconstruction followed by deskewing", "빔별 시간 재구성 후 deskewing하는 과정"),
+          copy("Each point carries the time at which it was actually measured.", "각 포인트가 실제 측정 시각을 갖습니다."),
+        ),
+        storyStep(
+          "time-result",
+          stages.result,
+          copy("Cleaner temporal input for downstream estimation", "후단 추정을 위한 더 정확한 시간 입력"),
+          copy(
+            "The pipeline now supplies temporally coherent scans for SLAM evaluation. Quantitative map-quality claims remain pending a controlled comparison.",
+            "파이프라인은 SLAM 평가에 시간적으로 일관된 스캔을 제공합니다. 지도 품질의 정량 수치는 통제된 비교 실험 후 제시할 예정입니다.",
+          ),
+          "clock",
+          copy("Aligned scan timeline prepared for controlled SLAM comparison", "통제된 SLAM 비교를 위해 정렬된 스캔 시간축"),
+          copy("The verified result is corrected timing; map-quality measurement is the next experiment.", "검증된 결과는 시간 보정이며, 지도 품질 측정은 다음 실험입니다."),
+        ),
+      ],
+    },
+    {
+      id: "hardware-trigger-sync",
+      eyebrow: copy("03 · Hardware Synchronization", "03 · 하드웨어 동기화"),
+      title: copy(
+        "Giving Camera and IMU One Shared Clock",
+        "카메라와 IMU에 하나의 공통 시계를",
+      ),
+      summary: copy(
+        "Built an STM32 timing master that triggers a camera and timestamps IMU data on the same 1 MHz clock.",
+        "STM32를 timing master로 사용해 카메라 trigger와 IMU 데이터를 동일한 1 MHz clock에 기록했습니다.",
+      ),
+      tags: ["STM32", "Hardware trigger", "IMU", "Rust", "ICP"],
+      metrics: [
+        {
+          label: copy("Verified camera rate", "검증된 카메라 주기"),
+          value: "30.00 Hz",
+          context: copy("447 frames / 14.87 s", "447 frames / 14.87 s"),
+        },
+        {
+          label: copy("Master clock", "Master clock"),
+          value: "1 MHz",
+          context: copy("100 μs trigger pulse", "100 μs trigger pulse"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "trigger-problem",
+          stages.problem,
+          copy("Software timestamps could not prove simultaneity", "소프트웨어 타임스탬프로는 동시성을 증명할 수 없었습니다"),
+          copy(
+            "Camera frames and inertial samples passed through different drivers and queues. Host arrival time could not tell when both sensors observed the world.",
+            "카메라 프레임과 관성 데이터는 서로 다른 드라이버와 큐를 통과합니다. Host 도착 시각만으로 두 센서가 세상을 관측한 순간을 알 수 없습니다.",
+          ),
+          "trigger",
+          copy("Unsynchronized camera and IMU timelines", "동기화되지 않은 카메라와 IMU 시간축"),
+          copy("Different software paths introduce variable latency.", "서로 다른 소프트웨어 경로에는 가변 지연이 생깁니다."),
+        ),
+        storyStep(
+          "trigger-evidence",
+          stages.evidence,
+          copy("The measurement needed a common hardware event", "공통 하드웨어 이벤트가 필요했습니다"),
+          copy(
+            "The camera supports external triggering and the IMU exposes a data-ready signal. Both can be observed directly by a microcontroller clock.",
+            "카메라는 외부 trigger를, IMU는 data-ready 신호를 지원합니다. 두 신호 모두 마이크로컨트롤러 clock으로 직접 관측할 수 있습니다.",
+          ),
+          "trigger",
+          copy("Camera trigger and IMU data-ready lines entering a timing controller", "Timing controller에 연결된 카메라 trigger와 IMU data-ready 선"),
+          copy("The physical signals establish an observable timing boundary.", "물리 신호가 관측 가능한 시간 경계를 만듭니다."),
+        ),
+        storyStep(
+          "trigger-decision",
+          stages.decision,
+          copy("Make the microcontroller the timing authority", "마이크로컨트롤러를 시간 기준으로 삼았습니다"),
+          copy(
+            "An STM32 generates the 30 Hz camera pulse and captures IMU events against one 1 MHz timer, avoiding cross-device host-clock assumptions.",
+            "STM32가 30 Hz 카메라 pulse를 생성하고 IMU 이벤트를 하나의 1 MHz timer로 캡처해, 장치별 host clock 가정을 제거했습니다.",
+          ),
+          "trigger",
+          copy("STM32 timing master connected to camera and IMU", "카메라와 IMU에 연결된 STM32 timing master"),
+          copy("One hardware timer timestamps both sensing streams.", "하나의 하드웨어 timer가 두 센서 스트림을 기록합니다."),
+        ),
+        storyStep(
+          "trigger-implementation",
+          stages.implementation,
+          copy("Bridge voltage, packets, and estimation", "전압·패킷·추정 파이프라인을 연결했습니다"),
+          copy(
+            "A 3.3 V to 1.8 V interface protects the camera input. COBS framing with CRC transports timestamps from C firmware to a Rust host, and IMU-seeded ICP tooling prepares the downstream comparison.",
+            "3.3 V에서 1.8 V로 변환하는 회로로 카메라 입력을 보호했습니다. C firmware에서 생성한 timestamp는 COBS와 CRC를 거쳐 Rust host로 전달되고, IMU-seeded ICP 도구로 후단 비교를 준비했습니다.",
+          ),
+          "trigger",
+          copy("Voltage interface, COBS and CRC packet path, and ICP consumer", "전압 변환, COBS/CRC 패킷, ICP consumer 경로"),
+          copy("The chain preserves timing from the electrical edge to the host record.", "전기 신호의 edge부터 host 기록까지 timing을 보존합니다."),
+        ),
+        storyStep(
+          "trigger-result",
+          stages.result,
+          copy("The physical trigger rate is verified", "물리 trigger 주기를 검증했습니다"),
+          copy(
+            "A real slave-camera test captured 447 frames in 14.87 seconds, measuring 30.00 Hz. The synchronized-versus-unsynchronized motion report is the remaining validation step.",
+            "실제 slave camera 시험에서 14.87초 동안 447프레임, 30.00 Hz를 확인했습니다. 동기화 전후 motion 비교 보고서는 남은 검증 단계입니다.",
+          ),
+          "trigger",
+          copy("Verified 30 hertz trigger trace with pending downstream comparison", "검증된 30 Hz trigger trace와 예정된 후단 비교"),
+          copy("Measured output: 447 frames over 14.87 seconds, or 30.00 Hz.", "측정 결과는 14.87초 동안 447프레임, 30.00 Hz입니다."),
+        ),
+      ],
+    },
+    {
+      id: "amr-calibration",
+      eyebrow: copy("04 · Production Calibration", "04 · 생산 캘리브레이션"),
+      title: copy(
+        "Automating Sensor Calibration for a New Industrial AMR",
+        "신규 산업용 AMR의 센서 캘리브레이션 자동화",
+      ),
+      summary: copy(
+        "Estimated LiDAR-to-LiDAR SE(2) alignment from wall geometry and moved the workflow onto production robots.",
+        "벽면 기하로 LiDAR 간 SE(2) 정렬을 추정하고, 캘리브레이션 과정을 생산 로봇에서 직접 실행하도록 만들었습니다.",
+      ),
+      tags: ["SE(2)", "RANSAC", "PCA", "Huber loss", "Production"],
+      metrics: [
+        {
+          label: copy("Production rollout", "생산 적용"),
+          value: "7 units",
+          context: copy("Calibrated in the production workflow", "생산 공정에서 캘리브레이션"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "calibration-problem",
+          stages.problem,
+          copy("Manual alignment did not scale with production", "수동 정렬은 생산 규모로 확장되지 않았습니다"),
+          copy(
+            "A new AMR used multiple range sensors whose relative pose affected navigation. Manual adjustment made repeatability depend on operator judgment.",
+            "신규 AMR은 여러 거리 센서의 상대 pose가 내비게이션에 영향을 줍니다. 수동 조정에서는 반복성이 작업자의 판단에 의존했습니다.",
+          ),
+          "calibration",
+          copy("Two LiDAR scans misaligned against the same wall", "같은 벽을 서로 다르게 관측하는 두 LiDAR 스캔"),
+          copy("Relative-pose error appears as doubled wall geometry.", "상대 pose 오차는 겹치지 않는 이중 벽으로 나타납니다."),
+        ),
+        storyStep(
+          "calibration-evidence",
+          stages.evidence,
+          copy("Walls provide a stable geometric reference", "벽면을 안정적인 기하 기준으로 사용했습니다"),
+          copy(
+            "RANSAC removes clutter and extracts wall candidates. PCA then estimates each wall direction and normal from the inlier points.",
+            "RANSAC으로 주변 clutter를 제거하고 벽 후보를 추출했습니다. 이후 PCA로 inlier point의 벽 방향과 normal을 추정했습니다.",
+          ),
+          "calibration",
+          copy("RANSAC wall inliers and PCA direction estimates", "RANSAC 벽 inlier와 PCA 방향 추정"),
+          copy("Structural lines become repeatable calibration observations.", "구조적인 선이 반복 가능한 캘리브레이션 관측값이 됩니다."),
+        ),
+        storyStep(
+          "calibration-decision",
+          stages.decision,
+          copy("Solve only the motion the platform needs", "플랫폼에 필요한 움직임만 추정했습니다"),
+          copy(
+            "The floor-constrained platform makes SE(2) the right model. A prior keeps the solution near the mechanical design while wall residuals provide the correction.",
+            "바닥 위에서 움직이는 플랫폼에 맞춰 SE(2)를 사용했습니다. Prior가 기구 설계값 주변을 유지하고, 벽 residual이 보정값을 제공합니다.",
+          ),
+          "calibration",
+          copy("SE2 transform aligning source and reference wall models", "Source와 reference 벽 모델을 정렬하는 SE(2) 변환"),
+          copy("The parameterization matches the physical degrees of freedom.", "추정 파라미터가 실제 자유도와 일치합니다."),
+        ),
+        storyStep(
+          "calibration-implementation",
+          stages.implementation,
+          copy("Robust optimization became an on-robot tool", "Robust optimization을 로봇 위의 도구로 만들었습니다"),
+          copy(
+            "Huber loss limits the influence of remaining outliers. I ported data capture, estimation, diagnostics, and result storage into a repeatable on-robot workflow.",
+            "Huber loss로 남은 이상치의 영향을 제한했습니다. 데이터 수집, 추정, 진단, 결과 저장을 반복 가능한 on-robot workflow로 이식했습니다.",
+          ),
+          "calibration",
+          copy("On-robot capture, optimization, validation, and save pipeline", "로봇 내 수집, 최적화, 검증, 저장 파이프라인"),
+          copy("One workflow carries the estimate from raw scans to a stored transform.", "하나의 workflow가 원본 스캔부터 저장된 변환값까지 연결합니다."),
+        ),
+        storyStep(
+          "calibration-result",
+          stages.result,
+          copy("A repeatable workflow reached the production line", "반복 가능한 workflow가 생산 라인에 적용됐습니다"),
+          copy(
+            "The automated tool calibrated seven production units and replaced judgment-heavy manual alignment with measurable residuals and repeatable steps.",
+            "자동화 도구를 생산용 7대에 적용했고, 작업자 판단 중심의 수동 정렬을 측정 가능한 residual과 반복 가능한 단계로 대체했습니다.",
+          ),
+          "calibration",
+          copy("Aligned wall scans with a badge for seven production units", "정렬된 벽 스캔과 생산용 7대 적용 배지"),
+          copy("Deployed result: seven production units calibrated.", "적용 결과: 생산용 7대를 캘리브레이션했습니다."),
+        ),
+      ],
+    },
+    {
+      id: "camera-iqc-uncertainty",
+      eyebrow: copy("05 · Measurement Uncertainty", "05 · 측정 불확도"),
+      title: copy(
+        "Turning Camera Inspection Disputes into a Measurement System",
+        "카메라 검사 판정 충돌을 측정 시스템으로",
+      ),
+      summary: copy(
+        "Reframed conflicting tray-camera verdicts as a nested measurement-uncertainty problem and built a shared decision workflow.",
+        "Tray camera 판정 충돌을 중첩 측정 불확도 문제로 재정의하고, 공통 판정 workflow를 구축했습니다.",
+      ),
+      tags: ["ANOVA", "Uncertainty", "%P/T", "Guard bands", "IQC"],
+      metrics: [
+        {
+          label: copy("Conflicting decisions", "상충 판정"),
+          value: "52",
+          context: copy("Across two inspection sites", "두 검사 지점 간"),
+        },
+        {
+          label: copy("Retest reversals", "재검 판정 전환"),
+          value: "32 / 116",
+          context: copy("Fail to pass", "Fail에서 pass로"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "uncertainty-problem",
+          stages.problem,
+          copy("The same camera received different verdicts", "같은 카메라가 서로 다른 판정을 받았습니다"),
+          copy(
+            "Supplier and factory inspections disagreed on 52 units. In a 116-unit retest, 32 units moved from fail to pass, showing that the decision system itself needed analysis.",
+            "공급사와 공장 검사에서 52대의 판정이 달랐습니다. 116대 재검에서는 32대가 fail에서 pass로 바뀌어, 제품뿐 아니라 판정 시스템 자체를 분석해야 했습니다.",
+          ),
+          "uncertainty",
+          copy("Supplier and factory decision split for camera inspection", "카메라 검사에서 공급사와 공장 판정이 갈리는 모습"),
+          copy("Observed evidence: 52 conflicts and 32 reversals among 116 retests.", "관측 근거: 52건의 충돌과 116대 중 32대의 판정 전환."),
+        ),
+        storyStep(
+          "uncertainty-evidence",
+          stages.evidence,
+          copy("Variation entered through several nested stages", "변동은 여러 중첩 단계에서 들어왔습니다"),
+          copy(
+            "A six-stage experiment separated software, image capture, fixture mounting, operator, environment, and unit effects instead of treating all spread as product variation.",
+            "6단계 실험으로 software, image capture, fixture mounting, operator, environment, unit 효과를 분리해 모든 산포를 제품 편차로 취급하지 않았습니다.",
+          ),
+          "uncertainty",
+          copy("Six nested sources of camera inspection variation", "카메라 검사 변동의 여섯 가지 중첩 요인"),
+          copy("The experiment locates variation before changing the specification.", "규격을 바꾸기 전에 변동의 위치를 찾습니다."),
+        ),
+        storyStep(
+          "uncertainty-decision",
+          stages.decision,
+          copy("Model the measurement before judging the part", "부품을 판정하기 전에 측정을 모델링했습니다"),
+          copy(
+            "ANOVA partitions variance by source. Combined and expanded uncertainty, %P/T, and correlations then show how much confidence each pass or fail decision deserves.",
+            "ANOVA로 원인별 분산을 분리했습니다. 결합·확장 불확도, %P/T, 상관관계를 이용해 각 pass/fail 판정의 신뢰 수준을 계산했습니다.",
+          ),
+          "uncertainty",
+          copy("ANOVA variance components feeding combined uncertainty", "결합 불확도로 이어지는 ANOVA 분산 성분"),
+          copy("Decision confidence comes from the full measurement chain.", "판정 신뢰도는 전체 측정 chain에서 계산됩니다."),
+        ),
+        storyStep(
+          "uncertainty-implementation",
+          stages.implementation,
+          copy("Put the statistical model into daily decisions", "통계 모델을 일상 판정에 연결했습니다"),
+          copy(
+            "Guard bands protect specification edges, while a shared SOP and browser tool make the same calculation available in Korean, English, and Chinese.",
+            "Guard band로 규격 경계의 위험을 관리하고, 공통 SOP와 한국어·영어·중국어 browser tool로 동일한 계산을 사용할 수 있게 했습니다.",
+          ),
+          "uncertainty",
+          copy("Guard-banded decision zones and multilingual analysis workflow", "Guard band 판정 영역과 다국어 분석 workflow"),
+          copy("The method is packaged as a repeatable operational process.", "분석 방법을 반복 가능한 운영 프로세스로 만들었습니다."),
+        ),
+        storyStep(
+          "uncertainty-result",
+          stages.result,
+          copy("Disagreement became diagnosable and governable", "판정 충돌을 진단하고 관리할 수 있게 됐습니다"),
+          copy(
+            "Teams can now trace a verdict to its variance sources, quantify decision risk near the limit, and improve the measurement system before rejecting hardware.",
+            "판정 결과를 변동 원인까지 추적하고, 규격 경계의 판정 위험을 정량화하며, 하드웨어를 불합격 처리하기 전에 측정 시스템을 개선할 수 있게 됐습니다.",
+          ),
+          "uncertainty",
+          copy("Traceable camera decision with uncertainty and guard band context", "불확도와 guard band 근거를 갖춘 추적 가능한 카메라 판정"),
+          copy("The outcome is a shared, evidence-based decision system.", "결과는 근거를 공유하는 판정 시스템입니다."),
+        ),
+      ],
+    },
+  ],
+  projects: [
+    {
+      id: "compact-service-sensor-stack",
+      title: copy(
+        "Sensor Stack for a New Compact Service Robot",
+        "신규 소형 서빙로봇 센서 스택",
+      ),
+      summary: copy(
+        "Integrated depth, ToF, RGB, and 2D LiDAR sensing across the complete product lifecycle.",
+        "Depth, ToF, RGB, 2D LiDAR를 제품 전 과정에 걸쳐 통합했습니다.",
+      ),
+      outcome: copy(
+        "Owned bring-up, URDF and TF, calibration, factory tests, and field reliability as one connected sensor system.",
+        "Bring-up, URDF·TF, 캘리브레이션, 공장 검사, 필드 신뢰성을 하나의 센서 시스템으로 책임졌습니다.",
+      ),
+      tags: ["RGB-D", "ToF", "2D LiDAR", "URDF / TF"],
+    },
+    {
+      id: "humanoid-bringup",
+      title: copy(
+        "Humanoid Sensor-System Bring-up",
+        "휴머노이드 센서 시스템 Bring-up",
+      ),
+      summary: copy(
+        "Brought up 2D LiDAR, depth cameras, and projected 3D sensing for a new humanoid platform.",
+        "신규 휴머노이드 플랫폼의 2D LiDAR, depth camera, projected 3D sensing을 bring-up했습니다.",
+      ),
+      outcome: copy(
+        "Completed URDF and TF integration, extrinsic calibration, and a shipment-ready configuration within a short critical schedule.",
+        "짧은 핵심 일정 안에 URDF·TF 통합, extrinsic calibration, 출하 가능한 sensor configuration을 완성했습니다.",
+      ),
+      tags: ["Humanoid", "Extrinsics", "Depth", "ROS 2"],
+    },
+    {
+      id: "pedestrian-calibration",
+      title: copy(
+        "Camera Calibration from Pedestrians",
+        "보행자 기반 카메라 캘리브레이션",
+      ),
+      summary: copy(
+        "Used pedestrians as vertical line features to calibrate CCTV cameras where artificial markers were unavailable.",
+        "인공 marker를 설치하기 어려운 CCTV 환경에서 보행자를 수직선 feature로 사용했습니다.",
+      ),
+      outcome: copy(
+        "RANSAC and MSAC handled real-world outliers and improved calibration accuracy by 82% over the ICPR 2021 baseline.",
+        "RANSAC과 MSAC으로 실제 영상의 이상치에 대응해 ICPR 2021 baseline 대비 정확도를 82% 향상했습니다.",
+      ),
+      tags: ["Camera calibration", "RANSAC", "MSAC", "Geometry"],
+    },
+    {
+      id: "lidar-mot",
+      title: copy(
+        "Multi-Object Tracking with a 2D LiDAR",
+        "2D LiDAR 기반 다중 객체 추적",
+      ),
+      summary: copy(
+        "Tracked multiple moving objects using range scans alone, without relying on camera appearance.",
+        "카메라의 외형 정보 없이 거리 스캔만으로 여러 이동 객체를 추적했습니다.",
+      ),
+      outcome: copy(
+        "DBSCAN formed observations, an EKF estimated motion state, and the Hungarian algorithm associated detections across frames.",
+        "DBSCAN으로 관측을 만들고 EKF로 motion state를 추정하며 Hungarian algorithm으로 프레임 간 객체를 연결했습니다.",
+      ),
+      tags: ["DBSCAN", "EKF", "Hungarian", "MOT"],
+    },
+  ],
+  experience: [
+    {
+      id: "compact-service",
+      platform: copy("New Compact Service Robot", "신규 소형 서빙로봇"),
+      role: copy("End-to-end sensor stack owner", "센서 스택 전 과정 담당"),
+      summary: copy(
+        "Depth, ToF, RGB, and LiDAR bring-up through calibration, factory validation, and field reliability.",
+        "Depth, ToF, RGB, LiDAR bring-up부터 캘리브레이션, 공장 검증, 필드 신뢰성까지 담당했습니다.",
+      ),
+    },
+    {
+      id: "industrial-amr",
+      platform: copy("New Industrial AMR", "신규 산업용 AMR"),
+      role: copy("Multi-sensor integration and production calibration", "다중 센서 통합 및 생산 캘리브레이션"),
+      summary: copy(
+        "Integrated the sensing stack from prototype to a production hardware upgrade and automated geometric calibration.",
+        "Prototype부터 생산용 하드웨어 개선까지 센서 스택을 통합하고 기하 캘리브레이션을 자동화했습니다.",
+      ),
+    },
+    {
+      id: "humanoid-platform",
+      platform: copy("Humanoid Robot Platform", "휴머노이드 로봇 플랫폼"),
+      role: copy("Sensor-system bring-up and calibration", "센서 시스템 bring-up 및 캘리브레이션"),
+      summary: copy(
+        "Established a shipment-ready range and depth sensing configuration under a short critical schedule.",
+        "짧은 핵심 일정에서 출하 가능한 거리·깊이 센서 configuration을 구축했습니다.",
+      ),
+    },
+  ],
+  research: [
+    {
+      id: "camera-calibration-research",
+      title: copy(
+        "Accurate and Robust Surveillance Camera Calibration using Pedestrians",
+        "보행자를 이용한 정확하고 강건한 감시 카메라 캘리브레이션",
+      ),
+      summary: copy(
+        "Marker-free camera parameter estimation from pedestrian line segments perpendicular to the ground plane.",
+        "지면에 수직인 보행자 line segment를 이용한 marker-free 카메라 파라미터 추정 연구입니다.",
+      ),
+      result: copy(
+        "Improved accuracy by 82% over the ICPR 2021 baseline under real CCTV conditions.",
+        "실제 CCTV 조건에서 ICPR 2021 baseline 대비 정확도를 82% 향상했습니다.",
+      ),
+      tags: ["Camera calibration", "Multiple-view geometry", "RANSAC / MSAC"],
+    },
+    {
+      id: "lidar-mot-research",
+      title: copy(
+        "LiDAR-based Multi-Object Tracking in Autonomous Driving",
+        "자율주행 환경의 LiDAR 기반 다중 객체 추적",
+      ),
+      summary: copy(
+        "A range-only tracking pipeline combining spatial clustering, recursive state estimation, and global data association.",
+        "공간 군집화, 재귀 상태 추정, 전역 데이터 연결을 결합한 거리 센서 기반 추적 파이프라인입니다.",
+      ),
+      result: copy(
+        "Implemented DBSCAN observations, EKF tracks, and Hungarian assignment as an end-to-end MOT system.",
+        "DBSCAN 관측, EKF track, Hungarian 할당을 end-to-end MOT 시스템으로 구현했습니다.",
+      ),
+      tags: ["2D LiDAR", "Multi-Object Tracking", "EKF"],
+    },
+  ],
+  publications: [
+    {
+      id: "mot-trends",
+      title: "Trends in Multiple Object Tracking (MOT) Technology",
+      venue: copy(
+        "Journal of the Institute of Control, Robotics and Systems",
+        "제어로봇시스템학회 논문지",
+      ),
+      contribution: copy("First author", "제1저자"),
+    },
+    {
+      id: "nerf-viewpoint",
+      title:
+        "Viewpoint Selection Technique Based on Distance-Entropy for Accurate 3D Reconstruction in NeRF",
+      venue: copy("Journal of the Robotics Society", "로봇학회 논문지"),
+      contribution: copy("Co-author", "공동저자"),
+      recognition: copy("Best Paper Award", "우수논문상"),
+    },
+  ],
+  skills: [
+    {
+      id: "space",
+      title: copy("Spatial Calibration", "공간 캘리브레이션"),
+      skills: ["SE(2) / SE(3)", "RANSAC", "PCA", "URDF / TF", "OpenCV", "Open3D"],
+    },
+    {
+      id: "time",
+      title: copy("Temporal Alignment", "시간 정렬"),
+      skills: ["Hardware Trigger", "Device Time", "Clock Drift", "Deskewing", "STM32"],
+    },
+    {
+      id: "quality",
+      title: copy("Sensor Quality", "센서 품질"),
+      skills: ["IQC", "ANOVA", "Guard Bands", "Root Cause Analysis", "Reliability"],
+    },
+    {
+      id: "perception",
+      title: copy("Perception", "인지"),
+      skills: ["2D LiDAR", "RGB-D", "EKF", "Multi-Object Tracking", "ROS 2"],
+    },
+  ],
+};
