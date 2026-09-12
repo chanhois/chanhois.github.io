@@ -3,6 +3,13 @@
 import { Hero } from "./_portfolio/hero";
 import { CaseStudyView } from "./_portfolio/case-study";
 import { portfolioContent } from "./_portfolio/content";
+import { ProjectIndex } from "./_portfolio/project-index";
+import {
+  AboutSection,
+  ContactFooter,
+  ExperienceSection,
+  ResearchSection,
+} from "./_portfolio/sections";
 import { SiteNav } from "./_portfolio/site-nav";
 import { LanguageProvider, useLanguage } from "./_portfolio/use-language";
 
@@ -33,11 +40,12 @@ function PortfolioSurface() {
             <CaseStudyView study={study} index={index} key={study.id} />
           ))}
         </section>
-        <section id="projects" aria-label="Project index" />
-        <section id="experience" aria-label="Experience" />
-        <section id="research" aria-label="Research" />
-        <section id="about" aria-label="About" />
+        <ProjectIndex />
+        <ExperienceSection />
+        <ResearchSection />
+        <AboutSection />
       </main>
+      <ContactFooter />
     </>
   );
 }

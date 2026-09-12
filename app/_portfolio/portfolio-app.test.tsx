@@ -19,4 +19,24 @@ describe("PortfolioApp", () => {
       screen.getByRole("link", { name: /explore selected work/i }),
     ).toHaveAttribute("href", "#work");
   });
+
+  it("renders every public project and the contact path", () => {
+    render(<PortfolioApp />);
+    for (const name of [
+      "Sensor Stack for a New Compact Service Robot",
+      "Humanoid Sensor-System Bring-up",
+      "Camera Calibration from Pedestrians",
+      "Multi-Object Tracking with a 2D LiDAR",
+    ]) {
+      expect(screen.getByRole("heading", { name })).toBeInTheDocument();
+    }
+
+    expect(
+      screen.getAllByRole("link").some(
+        (link) =>
+          link.getAttribute("href") ===
+          "mailto:studychanho0717@gmail.com",
+      ),
+    ).toBe(true);
+  });
 });
