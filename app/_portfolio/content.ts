@@ -84,18 +84,27 @@ export const portfolioContent: PortfolioContent = {
         },
       ],
       steps: [
-        storyStep(
-          "lidar-problem",
-          stages.problem,
-          copy("The room moved while the robot stood still", "로봇은 멈췄는데 공간이 흔들렸습니다"),
-          copy(
+        {
+          id: "lidar-problem",
+          label: stages.problem,
+          title: copy("The room moved while the robot stood still", "로봇은 멈췄는데 공간이 흔들렸습니다"),
+          body: copy(
             "A stationary scan oscillated as one rigid shape. Navigation saw a changing world even though individual range measurements looked plausible.",
             "정지 상태의 스캔 전체가 하나의 강체처럼 진동했습니다. 개별 거리값은 그럴듯했지만 내비게이션은 주변 공간이 움직인다고 인식했습니다.",
           ),
-          "lidar",
-          copy("Raw LiDAR scan showing rigid yaw oscillation", "강체 yaw 진동이 나타나는 원본 LiDAR 스캔"),
-          copy("Raw scan yaw standard deviation: 0.378°.", "원본 스캔의 yaw 표준편차는 0.378°입니다."),
-        ),
+          media: {
+            kind: "image",
+            src: "/media/lidar-stability/scan-excursion-as-is.webp",
+            alt: copy(
+              "Every scan of a stationary wall corner drawn on top of one another, where the wall spreads into a thick smeared band instead of a line",
+              "정지한 벽 코너의 모든 스캔을 겹쳐 그린 그림으로, 벽이 선이 아니라 두껍게 번진 띠로 나타납니다",
+            ),
+            caption: copy(
+              "A wall that never moved, measured at 3,273 different positions across 91 scans.",
+              "움직인 적 없는 벽이 91회 스캔에서 3,273개의 서로 다른 위치로 측정됐습니다.",
+            ),
+          },
+        },
         storyStep(
           "lidar-evidence",
           stages.evidence,
