@@ -106,9 +106,9 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
           <span className="integration-overlap" aria-hidden="true" />
         </div>
         <div className="integration-axis" aria-hidden="true">
-          <span>2025 · 03</span>
+          <span>START</span>
           <span>17 MONTHS</span>
-          <span>2026 · 08</span>
+          <span>PRESENT</span>
         </div>
         <p className="graphic-conclusion">The programs overlap; the sensor owner does not change</p>
       </div>

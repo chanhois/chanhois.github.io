@@ -1044,7 +1044,11 @@ section[id] {
   object-fit: contain;
 }
 
+/* Recorded assets are wide plots and captures, unlike the generated graphics the
+   1.35 frame was shaped for. A wider frame keeps one stable panel height across a
+   case's steps while wasting far less of it on letterbox bands. */
 .media-stage__frame--recorded {
+  aspect-ratio: 1.85 / 1;
   background: #0b0f0d;
 }
 

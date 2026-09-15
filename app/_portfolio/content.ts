@@ -355,30 +355,48 @@ export const portfolioContent: PortfolioContent = {
         },
       ],
       steps: [
-        storyStep(
-          "calibration-problem",
-          stages.problem,
-          copy("Manual alignment did not scale with production", "수동 정렬은 생산 규모로 확장되지 않았습니다"),
-          copy(
-            "A new AMR used multiple range sensors whose relative pose affected navigation. Manual adjustment made repeatability depend on operator judgment.",
-            "신규 AMR은 여러 거리 센서의 상대 pose가 내비게이션에 영향을 줍니다. 수동 조정에서는 반복성이 작업자의 판단에 의존했습니다.",
+        {
+          id: "calibration-problem",
+          label: stages.problem,
+          title: copy("Manual alignment did not scale with production", "수동 정렬은 생산 규모로 확장되지 않았습니다"),
+          body: copy(
+            "A new AMR used multiple range sensors whose relative pose affected navigation. One sensor is mounted upside down with an uncertain yaw, so its returns land off the wall that the reference sensor measures correctly. Manual adjustment made repeatability depend on operator judgment.",
+            "신규 AMR은 여러 거리 센서의 상대 pose가 내비게이션에 영향을 줍니다. 한 센서는 뒤집혀 장착되고 yaw가 불확실해, 기준 센서가 정확히 관측하는 벽에서 벗어난 점을 반환합니다. 수동 조정에서는 반복성이 작업자의 판단에 의존했습니다.",
           ),
-          "calibration",
-          copy("Two LiDAR scans misaligned against the same wall", "같은 벽을 서로 다르게 관측하는 두 LiDAR 스캔"),
-          copy("Relative-pose error appears as doubled wall geometry.", "상대 pose 오차는 겹치지 않는 이중 벽으로 나타납니다."),
-        ),
-        storyStep(
-          "calibration-evidence",
-          stages.evidence,
-          copy("Walls provide a stable geometric reference", "벽면을 안정적인 기하 기준으로 사용했습니다"),
-          copy(
-            "RANSAC removes clutter and extracts wall candidates. PCA then estimates each wall direction and normal from the inlier points.",
-            "RANSAC으로 주변 clutter를 제거하고 벽 후보를 추출했습니다. 이후 PCA로 inlier point의 벽 방향과 normal을 추정했습니다.",
+          media: {
+            kind: "image",
+            src: "/media/amr-calibration/two-lidar-setup.webp",
+            alt: copy(
+              "Top-down view of two range sensors on one robot, where the reference beams end on the wall and the uncalibrated beams end short of it",
+              "한 로봇의 두 거리 센서를 위에서 본 그림으로, 기준 센서의 빔은 벽에 닿고 미보정 센서의 빔은 벽에 못 미쳐 끝납니다",
+            ),
+            caption: copy(
+              "The unknown is a planar transform: yaw and two translations between the sensors.",
+              "미지수는 두 센서 사이의 평면 변환, 즉 yaw와 두 방향의 이동입니다.",
+            ),
+          },
+        },
+        {
+          id: "calibration-evidence",
+          label: stages.evidence,
+          title: copy("Walls provide a stable geometric reference", "벽면을 안정적인 기하 기준으로 사용했습니다"),
+          body: copy(
+            "RANSAC removes clutter and extracts wall candidates, and PCA estimates each wall direction and normal from the inlier points. Measuring each point's residual along that normal turns the misalignment into a quantity an SE(2) correction can minimize.",
+            "RANSAC으로 주변 clutter를 제거해 벽 후보를 추출하고, PCA로 inlier point의 벽 방향과 normal을 추정했습니다. 각 점의 residual을 그 normal 방향으로 재면, 정렬 오차가 SE(2) 보정으로 최소화할 수 있는 양이 됩니다.",
           ),
-          "calibration",
-          copy("RANSAC wall inliers and PCA direction estimates", "RANSAC 벽 inlier와 PCA 방향 추정"),
-          copy("Structural lines become repeatable calibration observations.", "구조적인 선이 반복 가능한 캘리브레이션 관측값이 됩니다."),
-        ),
+          media: {
+            kind: "image",
+            src: "/media/amr-calibration/wall-residual-se2.webp",
+            alt: copy(
+              "Wall points from a reference sensor, the same points measured off the wall before correction, and those points landing on the wall after a planar transform",
+              "기준 센서가 관측한 벽 점, 보정 전 벽에서 벗어난 같은 점, 그리고 평면 변환 후 벽 위에 놓인 점들",
+            ),
+            caption: copy(
+              "Each residual is measured perpendicular to the wall, so the fit has a physical meaning.",
+              "각 residual을 벽에 수직으로 측정해, 적합 결과가 물리적인 의미를 갖습니다.",
+            ),
+          },
+        },
         {
           id: "calibration-result",
           label: stages.result,
@@ -485,8 +503,8 @@ export const portfolioContent: PortfolioContent = {
         "세 대의 로봇 센서 스택을 동시에 전담하기",
       ),
       summary: copy(
-        "Sole sensor owner for a serving robot, an industrial AMR, and a humanoid platform running in parallel over seventeen months.",
-        "서빙로봇, 산업용 AMR, 휴머노이드 플랫폼을 17개월 동안 동시에 진행하며 센서를 단독으로 담당했습니다.",
+        "Sole sensor owner for a serving robot, an industrial AMR, and a humanoid platform, all running in parallel.",
+        "서빙로봇, 산업용 AMR, 휴머노이드 플랫폼을 동시에 진행하며 센서를 단독으로 담당했습니다.",
       ),
       tags: ["Bring-up", "URDF / TF", "Extrinsics", "Factory test", "Field reliability"],
       metrics: [
@@ -511,7 +529,7 @@ export const portfolioContent: PortfolioContent = {
             "서빙로봇, 산업용 AMR, 휴머노이드 플랫폼 각각이 센서 구성, 장착, 캘리브레이션, 유지까지 필요로 했습니다. 세 일정이 겹쳤고, 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
           ),
           "integration",
-          copy("Three platform schedules overlapping across seventeen months", "17개월에 걸쳐 겹치는 세 플랫폼 일정"),
+          copy("Three platform schedules running across one another rather than in sequence", "순차가 아니라 서로 겹쳐 진행되는 세 플랫폼 일정"),
           copy("The three programs overlap rather than follow one another.", "세 과제는 순차가 아니라 서로 겹쳐 진행됐습니다."),
         ),
         storyStep(
@@ -602,16 +620,16 @@ export const portfolioContent: PortfolioContent = {
       media: [
         {
           kind: "video",
-          src: "/media/lidar-mot/kitti-tracking.webm",
-          mp4Src: "/media/lidar-mot/kitti-tracking.mp4",
-          poster: "/media/lidar-mot/kitti-tracking-poster.jpg",
+          src: "/media/lidar-mot/range-tracking.webm",
+          mp4Src: "/media/lidar-mot/range-tracking.mp4",
+          poster: "/media/lidar-mot/range-tracking-poster.jpg",
           alt: copy(
             "Driving footage beside a range-scan view where tracked objects keep a box and an identifier as the vehicle moves",
             "주행 영상 옆에 거리 스캔 화면이 있고, 차량이 움직이는 동안 추적된 객체가 박스와 식별자를 유지합니다",
           ),
           caption: copy(
-            "Tracks keep their identifier across frames on KITTI driving sequences.",
-            "KITTI 주행 시퀀스에서 각 track이 프레임 간 식별자를 유지합니다.",
+            "Each track keeps its identifier from frame to frame as the vehicle moves.",
+            "차량이 움직이는 동안 각 track이 프레임 간 식별자를 유지합니다.",
           ),
         },
       ],
