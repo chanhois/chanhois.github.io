@@ -120,30 +120,50 @@ export const portfolioContent: PortfolioContent = {
           copy("Fixed 400-bin angular grid feeding per-beam EKF filters", "400-bin 고정 각도 그리드와 빔별 EKF 구조"),
           copy("The estimator works on consistent angular observations.", "일관된 각도 관측값 위에서 추정기가 동작합니다."),
         ),
-        storyStep(
-          "lidar-implementation",
-          stages.implementation,
-          copy("Reject improbable jumps without freezing real motion", "실제 움직임은 살리고 이상치만 거부했습니다"),
-          copy(
+        {
+          id: "lidar-implementation",
+          label: stages.implementation,
+          title: copy("Reject improbable jumps without freezing real motion", "실제 움직임은 살리고 이상치만 거부했습니다"),
+          body: copy(
             "Mahalanobis gating rejected outliers relative to each beam's uncertainty. The filter remained responsive while suppressing measurements that were statistically inconsistent.",
             "각 빔의 불확도를 기준으로 Mahalanobis gating을 적용했습니다. 통계적으로 일관되지 않은 측정은 억제하면서 실제 변화에는 반응하도록 구성했습니다.",
           ),
-          "lidar",
-          copy("Per-beam EKF and Mahalanobis innovation gate", "빔별 EKF와 Mahalanobis innovation gate"),
-          copy("Noise is filtered per direction instead of smoothing the whole scan blindly.", "전체 스캔을 뭉뚱그려 평활화하지 않고 방향별 노이즈를 추정합니다."),
-        ),
-        storyStep(
-          "lidar-result",
-          stages.result,
-          copy("A steadier scan with measurable gains", "측정 가능한 개선을 만든 안정적인 스캔"),
-          copy(
-            "Yaw standard deviation fell from 0.378° to 0.067°, while stationary-target range noise fell from 4.1 mm to 1.3 mm.",
-            "Yaw 표준편차는 0.378°에서 0.067°로, 정지 표적의 거리 노이즈는 4.1 mm에서 1.3 mm로 감소했습니다.",
+          media: {
+            kind: "video",
+            src: "/media/lidar-stability/scan-stability-before-after.webm",
+            mp4Src: "/media/lidar-stability/scan-stability-before-after.mp4",
+            poster: "/media/lidar-stability/scan-stability-before-after-poster.jpg",
+            alt: copy(
+              "Side-by-side playback of a wall corner scanned before and after filtering, where the unfiltered scan jitters and the filtered scan holds still",
+              "벽 코너를 필터링 전후로 스캔한 영상을 나란히 재생한 화면으로, 필터링 전 스캔은 흔들리고 필터링 후 스캔은 고정되어 있습니다",
+            ),
+            caption: copy(
+              "The same wall corner across 91 scans: the gate holds the surface still without erasing it.",
+              "같은 벽 코너를 91회 스캔한 결과로, gate는 벽면을 지우지 않으면서 흔들림만 억제합니다.",
+            ),
+          },
+        },
+        {
+          id: "lidar-result",
+          label: stages.result,
+          title: copy("A steadier scan with measurable gains", "측정 가능한 개선을 만든 안정적인 스캔"),
+          body: copy(
+            "Yaw standard deviation fell from 0.378° to 0.067°, while stationary-target range noise fell from 4.1 mm to 1.3 mm. Accumulating every scan position a wall was ever measured at, the swept area fell from 3,273 to 977 pixels across 91 scans, a 70% reduction.",
+            "Yaw 표준편차는 0.378°에서 0.067°로, 정지 표적의 거리 노이즈는 4.1 mm에서 1.3 mm로 감소했습니다. 91회 스캔 동안 벽이 측정된 모든 위치를 누적하면 이탈 면적이 3,273픽셀에서 977픽셀로 70% 줄었습니다.",
           ),
-          "lidar",
-          copy("Before and after bars for yaw and range stability", "Yaw 및 거리 안정성 전후 비교 막대"),
-          copy("The final EKF stage reaches 0.067° yaw deviation.", "최종 EKF 단계에서 yaw 편차 0.067°에 도달했습니다."),
-        ),
+          media: {
+            kind: "image",
+            src: "/media/lidar-stability/scan-excursion-decay.webp",
+            alt: copy(
+              "Two accumulated scan images of the same wall corner, where the unfiltered side spreads into a wide colored band and the filtered side stays a narrow line",
+              "같은 벽 코너를 누적한 두 스캔 이미지로, 필터링 전은 넓은 색 띠로 번지고 필터링 후는 얇은 선으로 유지됩니다",
+            ),
+            caption: copy(
+              "Every position the wall was ever measured at, over 91 scans: 3,273 pixels before filtering, 977 after.",
+              "91회 스캔 동안 벽이 측정된 모든 위치입니다. 필터링 전 3,273픽셀, 필터링 후 977픽셀입니다.",
+            ),
+          },
+        },
       ],
     },
     {
@@ -383,18 +403,27 @@ export const portfolioContent: PortfolioContent = {
           copy("On-robot capture, optimization, validation, and save pipeline", "로봇 내 수집, 최적화, 검증, 저장 파이프라인"),
           copy("One workflow carries the estimate from raw scans to a stored transform.", "하나의 workflow가 원본 스캔부터 저장된 변환값까지 연결합니다."),
         ),
-        storyStep(
-          "calibration-result",
-          stages.result,
-          copy("A repeatable workflow reached the production line", "반복 가능한 workflow가 생산 라인에 적용됐습니다"),
-          copy(
-            "The automated tool calibrated seven production units and replaced judgment-heavy manual alignment with measurable residuals and repeatable steps.",
-            "자동화 도구를 생산용 7대에 적용했고, 작업자 판단 중심의 수동 정렬을 측정 가능한 residual과 반복 가능한 단계로 대체했습니다.",
+        {
+          id: "calibration-result",
+          label: stages.result,
+          title: copy("A repeatable workflow reached the production line", "반복 가능한 workflow가 생산 라인에 적용됐습니다"),
+          body: copy(
+            "The automated tool calibrated seven production units and replaced judgment-heavy manual alignment with measurable residuals and repeatable steps. The same procedure converges on different robots, not just the one it was tuned on.",
+            "자동화 도구를 생산용 7대에 적용했고, 작업자 판단 중심의 수동 정렬을 측정 가능한 residual과 반복 가능한 단계로 대체했습니다. 같은 절차가 튜닝한 한 대에서만이 아니라 서로 다른 로봇에서 동일하게 수렴합니다.",
           ),
-          "calibration",
-          copy("Aligned wall scans with a badge for seven production units", "정렬된 벽 스캔과 생산용 7대 적용 배지"),
-          copy("Deployed result: seven production units calibrated.", "적용 결과: 생산용 7대를 캘리브레이션했습니다."),
-        ),
+          media: {
+            kind: "image",
+            src: "/media/amr-calibration/wall-alignment-before-after.webp",
+            alt: copy(
+              "Wall scans from two range sensors on two robots, separated into two lines before calibration and overlapping as one line after",
+              "두 로봇에서 두 거리 센서로 측정한 벽 스캔으로, 캘리브레이션 전에는 두 선으로 갈라지고 후에는 하나의 선으로 겹칩니다",
+            ),
+            caption: copy(
+              "Two robots, before and after: the two sensors resolve the same wall corner as one surface.",
+              "두 대의 로봇, 캘리브레이션 전후입니다. 두 센서가 같은 벽 코너를 하나의 면으로 관측합니다.",
+            ),
+          },
+        },
       ],
     },
     {

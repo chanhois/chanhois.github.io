@@ -942,7 +942,12 @@ section[id] {
 .media-poster,
 .evidence-video video {
   display: block;
-  object-fit: cover;
+  /* Recorded evidence is measurement plots: never crop an axis or a label away. */
+  object-fit: contain;
+}
+
+.media-stage__frame--recorded {
+  background: #0b0f0d;
 }
 
 .evidence-video { position: relative; }

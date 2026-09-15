@@ -142,9 +142,13 @@ export function MediaStage({
     );
   }
 
+  // Recorded assets are plots whose edges carry meaning, so their frame letterboxes
+  // instead of cropping, against a ground that suits a dark capture.
+  const recorded = media.kind === "image" || media.kind === "video";
+
   return (
     <figure className="media-stage" aria-labelledby={labelledBy}>
-      <div className="media-stage__frame">{content}</div>
+      <div className={`media-stage__frame${recorded ? " media-stage__frame--recorded" : ""}`}>{content}</div>
       <figcaption>{t(media.caption)}</figcaption>
     </figure>
   );
