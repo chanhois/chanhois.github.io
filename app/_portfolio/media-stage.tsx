@@ -42,7 +42,9 @@ function ControlledEvidenceVideo({
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    void video.play().catch(() => undefined);
+    // play() only returns a promise on modern browsers; guard before chaining.
+    const started = video.play() as Promise<void> | undefined;
+    void started?.catch(() => undefined);
   }, [active, media.src]);
 
   if (failed || (!media.src && !media.mp4Src)) {

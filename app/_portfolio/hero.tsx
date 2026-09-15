@@ -97,12 +97,12 @@ export function Hero() {
           <div className="hero__metrics">
             <Metric
               label={t(lidarMetric.label)}
-              value={lidarMetric.value}
+              value={t(lidarMetric.value)}
               context={t(lidarMetric.context)}
             />
             <Metric
               label={t(triggerMetric.label)}
-              value={triggerMetric.value}
+              value={t(triggerMetric.value)}
               context={t(triggerMetric.context)}
             />
           </div>

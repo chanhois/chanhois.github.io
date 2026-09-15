@@ -1,6 +1,7 @@
 "use client";
 
 import { portfolioContent } from "./content";
+import { MediaStage } from "./media-stage";
 import { useLanguage } from "./use-language";
 
 function ProjectMotif({ id }: { id: string }) {
@@ -22,7 +23,7 @@ export function ProjectIndex() {
     <section className="projects-section" id="projects" aria-labelledby="projects-title">
       <div className="page-shell">
         <div className="section-intro section-intro--compact">
-          <p className="section-index">06 — 09</p>
+          <p className="section-index">07 — 08</p>
           <h2 id="projects-title">{language === "en" ? "Project Index" : "프로젝트"}</h2>
           <p>
             {language === "en"
@@ -34,12 +35,20 @@ export function ProjectIndex() {
           {portfolioContent.projects.map((project, index) => (
             <article className="project-card" key={project.id}>
               <div className="project-card__topline">
-                <p>{String(index + 6).padStart(2, "0")}</p>
+                <p>{String(index + 7).padStart(2, "0")}</p>
                 <ul aria-label={language === "en" ? "Technologies" : "기술"}>
                   {project.tags.slice(0, 2).map((tag) => <li key={tag}>{tag}</li>)}
                 </ul>
               </div>
-              <ProjectMotif id={project.id} />
+              {project.media?.length ? (
+                <div className="project-card__media">
+                  {project.media.map((item) => (
+                    <MediaStage key={item.src} media={item} active />
+                  ))}
+                </div>
+              ) : (
+                <ProjectMotif id={project.id} />
+              )}
               <h3>{t(project.title)}</h3>
               <p>{t(project.summary)}</p>
               <details>

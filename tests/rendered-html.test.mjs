@@ -37,9 +37,8 @@ test("server-renders the complete English portfolio", async () => {
   assert.match(html, /Rebuilding the Time Axis for Better SLAM/);
   assert.match(html, /Giving Camera and IMU One Shared Clock/);
   assert.match(html, /Automating Sensor Calibration for a New Industrial AMR/);
-  assert.match(html, /Turning Camera Inspection Disputes into a Measurement System/);
-  assert.match(html, /Sensor Stack for a New Compact Service Robot/);
-  assert.match(html, /Humanoid Sensor-System Bring-up/);
+  assert.match(html, /Tracing Camera Inspection Disputes Back to the Fixture/);
+  assert.match(html, /Owning the Sensor Stack of Three Robots at Once/);
   assert.match(html, /Camera Calibration from Pedestrians/);
   assert.match(html, /Multi-Object Tracking with a 2D LiDAR/);
   assert.match(html, /studychanho0717@gmail\.com/);

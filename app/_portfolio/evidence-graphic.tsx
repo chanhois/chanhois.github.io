@@ -78,8 +78,39 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
           <span className="wall-model">WALL MODEL</span>
           <span className="transform-badge">RANSAC → PCA → SE(2)</span>
         </div>
-        <div className="graphic-result"><strong>7</strong><span>PRODUCTION UNITS</span></div>
+        <div className="graphic-result"><strong>&lt; 1</strong><span>WEEK TO ON-ROBOT TOOL</span></div>
         <p className="graphic-conclusion">Repeatable on-robot calibration replaced manual alignment</p>
+      </div>
+    );
+  }
+
+  if (visual === "integration") {
+    const lanes = [
+      { id: "serving", label: "SERVING ROBOT", start: 0, span: 100 },
+      { id: "amr", label: "INDUSTRIAL AMR", start: 24, span: 76 },
+      { id: "humanoid", label: "HUMANOID", start: 58, span: 42 },
+    ];
+    return (
+      <div className="evidence-graphic evidence-graphic--integration">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">THREE PROGRAMS · ONE SENSOR OWNER</p>
+        <div className="integration-lanes">
+          {lanes.map((lane) => (
+            <div className="integration-lane" key={lane.id}>
+              <span className="integration-lane__label">{lane.label}</span>
+              <span className="integration-lane__track" aria-hidden="true">
+                <i style={{ left: `${lane.start}%`, width: `${lane.span}%` }} />
+              </span>
+            </div>
+          ))}
+          <span className="integration-overlap" aria-hidden="true" />
+        </div>
+        <div className="integration-axis" aria-hidden="true">
+          <span>2025 · 03</span>
+          <span>17 MONTHS</span>
+          <span>2026 · 08</span>
+        </div>
+        <p className="graphic-conclusion">The programs overlap; the sensor owner does not change</p>
       </div>
     );
   }
@@ -87,7 +118,7 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
   return (
     <div className="evidence-graphic evidence-graphic--uncertainty">
       <div className="evidence-grid" aria-hidden="true" />
-      <p className="graphic-kicker">MEASUREMENT SYSTEM · VARIANCE FLOW</p>
+      <p className="graphic-kicker">MEASUREMENT SETUP · REMOUNT SPREAD</p>
       <div className="verdict-split">
         <div><span>SITE A</span><strong>PASS</strong></div>
         <span aria-hidden="true">≠</span>
@@ -95,18 +126,18 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
       </div>
       <div className="variance-chips">
         {[
-          "SOFTWARE",
-          "CAPTURE",
-          "MOUNT",
-          "OPERATOR",
-          "ENVIRONMENT",
+          "PART",
+          "FIXTURE",
+          "SEATING",
+          "REMOUNT",
+          "SENSOR SIZE",
         ].map((item) => <span key={item}>{item}</span>)}
       </div>
       <div className="uncertainty-results">
         <span><strong>52</strong> conflicting decisions</span>
         <span><strong>32 / 116</strong> fail → pass</span>
       </div>
-      <p className="graphic-conclusion">ANOVA → uncertainty → guard-banded decision</p>
+      <p className="graphic-conclusion">Remount spread → seating as a source → fixture improved</p>
     </div>
   );
 }

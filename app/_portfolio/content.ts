@@ -74,12 +74,12 @@ export const portfolioContent: PortfolioContent = {
       metrics: [
         {
           label: copy("Yaw standard deviation", "Yaw 표준편차"),
-          value: "0.378° → 0.067°",
+          value: copy("0.378° → 0.067°", "0.378° → 0.067°"),
           context: copy("Raw to filtered", "원본 대비 필터링"),
         },
         {
           label: copy("Range noise", "거리 노이즈"),
-          value: "4.1 mm → 1.3 mm",
+          value: copy("4.1 mm → 1.3 mm", "4.1 mm → 1.3 mm"),
           context: copy("Stationary target", "정지 표적 측정"),
         },
       ],
@@ -181,7 +181,7 @@ export const portfolioContent: PortfolioContent = {
       metrics: [
         {
           label: copy("Observed drift", "관측 drift"),
-          value: "≈13 ms / 12 h",
+          value: copy("≈13 ms / 12 h", "≈13 ms / 12 h"),
           context: copy("Approximately 0.3 ppm", "약 0.3 ppm"),
         },
       ],
@@ -263,12 +263,12 @@ export const portfolioContent: PortfolioContent = {
       metrics: [
         {
           label: copy("Verified camera rate", "검증된 카메라 주기"),
-          value: "30.00 Hz",
+          value: copy("30.00 Hz", "30.00 Hz"),
           context: copy("447 frames / 14.87 s", "447 frames / 14.87 s"),
         },
         {
           label: copy("Master clock", "Master clock"),
-          value: "1 MHz",
+          value: copy("1 MHz", "1 MHz"),
           context: copy("100 μs trigger pulse", "100 μs trigger pulse"),
         },
       ],
@@ -343,15 +343,15 @@ export const portfolioContent: PortfolioContent = {
         "신규 산업용 AMR의 센서 캘리브레이션 자동화",
       ),
       summary: copy(
-        "Estimated LiDAR-to-LiDAR SE(2) alignment from wall geometry and moved the workflow onto production robots.",
-        "벽면 기하로 LiDAR 간 SE(2) 정렬을 추정하고, 캘리브레이션 과정을 생산 로봇에서 직접 실행하도록 만들었습니다.",
+        "Estimated LiDAR-to-LiDAR SE(2) alignment from wall geometry and had it running on the robots inside a week.",
+        "벽면 기하로 LiDAR 간 SE(2) 정렬을 추정하고, 일주일 안에 로봇에서 동작하게 만들었습니다.",
       ),
-      tags: ["SE(2)", "RANSAC", "PCA", "Huber loss", "Production"],
+      tags: ["SE(2)", "RANSAC", "PCA", "Huber loss", "Rapid response"],
       metrics: [
         {
-          label: copy("Production rollout", "생산 적용"),
-          value: "7 units",
-          context: copy("Calibrated in the production workflow", "생산 공정에서 캘리브레이션"),
+          label: copy("Problem to deployed tool", "문제 인식에서 적용까지"),
+          value: copy("Under a week", "1주 이내"),
+          context: copy("Diagnosis, estimator, and on-robot workflow", "진단, 추정기, on-robot workflow"),
         },
       ],
       steps: [
@@ -379,37 +379,13 @@ export const portfolioContent: PortfolioContent = {
           copy("RANSAC wall inliers and PCA direction estimates", "RANSAC 벽 inlier와 PCA 방향 추정"),
           copy("Structural lines become repeatable calibration observations.", "구조적인 선이 반복 가능한 캘리브레이션 관측값이 됩니다."),
         ),
-        storyStep(
-          "calibration-decision",
-          stages.decision,
-          copy("Solve only the motion the platform needs", "플랫폼에 필요한 움직임만 추정했습니다"),
-          copy(
-            "The floor-constrained platform makes SE(2) the right model. A prior keeps the solution near the mechanical design while wall residuals provide the correction.",
-            "바닥 위에서 움직이는 플랫폼에 맞춰 SE(2)를 사용했습니다. Prior가 기구 설계값 주변을 유지하고, 벽 residual이 보정값을 제공합니다.",
-          ),
-          "calibration",
-          copy("SE2 transform aligning source and reference wall models", "Source와 reference 벽 모델을 정렬하는 SE(2) 변환"),
-          copy("The parameterization matches the physical degrees of freedom.", "추정 파라미터가 실제 자유도와 일치합니다."),
-        ),
-        storyStep(
-          "calibration-implementation",
-          stages.implementation,
-          copy("Robust optimization became an on-robot tool", "Robust optimization을 로봇 위의 도구로 만들었습니다"),
-          copy(
-            "Huber loss limits the influence of remaining outliers. I ported data capture, estimation, diagnostics, and result storage into a repeatable on-robot workflow.",
-            "Huber loss로 남은 이상치의 영향을 제한했습니다. 데이터 수집, 추정, 진단, 결과 저장을 반복 가능한 on-robot workflow로 이식했습니다.",
-          ),
-          "calibration",
-          copy("On-robot capture, optimization, validation, and save pipeline", "로봇 내 수집, 최적화, 검증, 저장 파이프라인"),
-          copy("One workflow carries the estimate from raw scans to a stored transform.", "하나의 workflow가 원본 스캔부터 저장된 변환값까지 연결합니다."),
-        ),
         {
           id: "calibration-result",
           label: stages.result,
-          title: copy("A repeatable workflow reached the production line", "반복 가능한 workflow가 생산 라인에 적용됐습니다"),
+          title: copy("From problem to working tool in under a week", "문제 인식에서 동작하는 도구까지 일주일 이내"),
           body: copy(
-            "The automated tool calibrated seven production units and replaced judgment-heavy manual alignment with measurable residuals and repeatable steps. The same procedure converges on different robots, not just the one it was tuned on.",
-            "자동화 도구를 생산용 7대에 적용했고, 작업자 판단 중심의 수동 정렬을 측정 가능한 residual과 반복 가능한 단계로 대체했습니다. 같은 절차가 튜닝한 한 대에서만이 아니라 서로 다른 로봇에서 동일하게 수렴합니다.",
+            "From recognizing the misalignment to a working on-robot tool took under a week. The same procedure converges on different robots, not just the one it was tuned on.",
+            "정렬 문제를 인지하고 로봇에서 동작하는 도구를 만들기까지 일주일이 걸리지 않았습니다. 같은 절차가 튜닝한 한 대에서만이 아니라 서로 다른 로봇에서 동일하게 수렴합니다.",
           ),
           media: {
             kind: "image",
@@ -419,8 +395,8 @@ export const portfolioContent: PortfolioContent = {
               "두 로봇에서 두 거리 센서로 측정한 벽 스캔으로, 캘리브레이션 전에는 두 선으로 갈라지고 후에는 하나의 선으로 겹칩니다",
             ),
             caption: copy(
-              "Two robots, before and after: the two sensors resolve the same wall corner as one surface.",
-              "두 대의 로봇, 캘리브레이션 전후입니다. 두 센서가 같은 벽 코너를 하나의 면으로 관측합니다.",
+              "Two robots, before and after, one week after the problem surfaced.",
+              "문제가 드러나고 일주일 뒤, 두 대의 로봇에서 얻은 캘리브레이션 전후입니다.",
             ),
           },
         },
@@ -428,25 +404,25 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "camera-iqc-uncertainty",
-      eyebrow: copy("05 · Measurement Uncertainty", "05 · 측정 불확도"),
+      eyebrow: copy("05 · Measurement Variation", "05 · 측정 산포"),
       title: copy(
-        "Turning Camera Inspection Disputes into a Measurement System",
-        "카메라 검사 판정 충돌을 측정 시스템으로",
+        "Tracing Camera Inspection Disputes Back to the Fixture",
+        "카메라 검사 판정 충돌의 원인을 지그에서 찾기",
       ),
       summary: copy(
-        "Reframed conflicting tray-camera verdicts as a nested measurement-uncertainty problem and built a shared decision workflow.",
-        "Tray camera 판정 충돌을 중첩 측정 불확도 문제로 재정의하고, 공통 판정 workflow를 구축했습니다.",
+        "Treated conflicting tray-camera verdicts as a question about variation in the measurement setup, then measured how much of it came from remounting.",
+        "Tray camera 판정 충돌을 측정 환경의 산포 문제로 보고, 그중 재장착에서 오는 산포가 얼마인지 측정했습니다.",
       ),
-      tags: ["ANOVA", "Uncertainty", "%P/T", "Guard bands", "IQC"],
+      tags: ["Measurement variation", "Remount study", "Fixture design", "IQC"],
       metrics: [
         {
           label: copy("Conflicting decisions", "상충 판정"),
-          value: "52",
+          value: copy("52", "52"),
           context: copy("Across two inspection sites", "두 검사 지점 간"),
         },
         {
           label: copy("Retest reversals", "재검 판정 전환"),
-          value: "32 / 116",
+          value: copy("32 / 116", "32 / 116"),
           context: copy("Fail to pass", "Fail에서 pass로"),
         },
       ],
@@ -456,97 +432,116 @@ export const portfolioContent: PortfolioContent = {
           stages.problem,
           copy("The same camera received different verdicts", "같은 카메라가 서로 다른 판정을 받았습니다"),
           copy(
-            "Supplier and factory inspections disagreed on 52 units. In a 116-unit retest, 32 units moved from fail to pass, showing that the decision system itself needed analysis.",
-            "공급사와 공장 검사에서 52대의 판정이 달랐습니다. 116대 재검에서는 32대가 fail에서 pass로 바뀌어, 제품뿐 아니라 판정 시스템 자체를 분석해야 했습니다.",
+            "Supplier and factory inspections disagreed on 52 units. In a 116-unit retest, 32 units moved from fail to pass, so the disagreement could not be explained by the cameras alone.",
+            "공급사와 공장 검사에서 52대의 판정이 달랐습니다. 116대 재검에서는 32대가 fail에서 pass로 바뀌었고, 이 불일치를 카메라만으로는 설명할 수 없었습니다.",
           ),
           "uncertainty",
           copy("Supplier and factory decision split for camera inspection", "카메라 검사에서 공급사와 공장 판정이 갈리는 모습"),
           copy("Observed evidence: 52 conflicts and 32 reversals among 116 retests.", "관측 근거: 52건의 충돌과 116대 중 32대의 판정 전환."),
         ),
         storyStep(
-          "uncertainty-evidence",
-          stages.evidence,
-          copy("Variation entered through several nested stages", "변동은 여러 중첩 단계에서 들어왔습니다"),
-          copy(
-            "A six-stage experiment separated software, image capture, fixture mounting, operator, environment, and unit effects instead of treating all spread as product variation.",
-            "6단계 실험으로 software, image capture, fixture mounting, operator, environment, unit 효과를 분리해 모든 산포를 제품 편차로 취급하지 않았습니다.",
-          ),
-          "uncertainty",
-          copy("Six nested sources of camera inspection variation", "카메라 검사 변동의 여섯 가지 중첩 요인"),
-          copy("The experiment locates variation before changing the specification.", "규격을 바꾸기 전에 변동의 위치를 찾습니다."),
-        ),
-        storyStep(
           "uncertainty-decision",
           stages.decision,
-          copy("Model the measurement before judging the part", "부품을 판정하기 전에 측정을 모델링했습니다"),
+          copy("Ask how much the setup itself varies", "측정 환경 자체의 산포를 먼저 물었습니다"),
           copy(
-            "ANOVA partitions variance by source. Combined and expanded uncertainty, %P/T, and correlations then show how much confidence each pass or fail decision deserves.",
-            "ANOVA로 원인별 분산을 분리했습니다. 결합·확장 불확도, %P/T, 상관관계를 이용해 각 pass/fail 판정의 신뢰 수준을 계산했습니다.",
+            "A verdict near the specification limit only means something if the measurement repeats. Rather than judging the cameras, I looked at the inspection fixture as a source of variation in its own right.",
+            "규격 경계의 판정은 측정이 재현될 때만 의미가 있습니다. 카메라를 판정하기 전에, 검사 지그 자체를 하나의 산포 원인으로 보고 접근했습니다.",
           ),
           "uncertainty",
-          copy("ANOVA variance components feeding combined uncertainty", "결합 불확도로 이어지는 ANOVA 분산 성분"),
-          copy("Decision confidence comes from the full measurement chain.", "판정 신뢰도는 전체 측정 chain에서 계산됩니다."),
+          copy("Inspection fixture treated as a measured source of variation", "산포 원인으로 다루어지는 검사 지그"),
+          copy("The fixture is part of the measurement, not a neutral background.", "지그는 중립적인 배경이 아니라 측정의 일부입니다."),
         ),
         storyStep(
           "uncertainty-implementation",
           stages.implementation,
-          copy("Put the statistical model into daily decisions", "통계 모델을 일상 판정에 연결했습니다"),
+          copy("Measure the spread that remounting adds", "재장착이 만드는 산포를 측정했습니다"),
           copy(
-            "Guard bands protect specification edges, while a shared SOP and browser tool make the same calculation available in Korean, English, and Chinese.",
-            "Guard band로 규격 경계의 위험을 관리하고, 공통 SOP와 한국어·영어·중국어 browser tool로 동일한 계산을 사용할 수 있게 했습니다.",
+            "Repeatedly removing and remounting the same camera produced a spread that belonged to the fixture, not to the part. Running this across sensor sizes showed the spread depended on how each size seated.",
+            "같은 카메라를 반복해서 탈거하고 재장착하면, 부품이 아니라 지그에서 비롯된 산포가 나타납니다. 이를 센서 크기별로 수행하자 산포가 각 크기의 안착 방식에 따라 달라졌습니다.",
           ),
           "uncertainty",
-          copy("Guard-banded decision zones and multilingual analysis workflow", "Guard band 판정 영역과 다국어 분석 workflow"),
-          copy("The method is packaged as a repeatable operational process.", "분석 방법을 반복 가능한 운영 프로세스로 만들었습니다."),
+          copy("Repeated remount measurements spreading by sensor size", "센서 크기별로 벌어지는 반복 재장착 측정"),
+          copy("Remount spread separates fixture behavior from part behavior.", "재장착 산포는 지그의 거동과 부품의 거동을 분리합니다."),
         ),
         storyStep(
           "uncertainty-result",
           stages.result,
-          copy("Disagreement became diagnosable and governable", "판정 충돌을 진단하고 관리할 수 있게 됐습니다"),
+          copy("The fixture changed, not the verdict threshold", "판정 기준이 아니라 지그를 바꿨습니다"),
           copy(
-            "Teams can now trace a verdict to its variance sources, quantify decision risk near the limit, and improve the measurement system before rejecting hardware.",
-            "판정 결과를 변동 원인까지 추적하고, 규격 경계의 판정 위험을 정량화하며, 하드웨어를 불합격 처리하기 전에 측정 시스템을 개선할 수 있게 됐습니다.",
+            "The remount study identified seating as a real contributor to the disagreement and led to an improvement in how sensors seat in the fixture, so a borderline verdict reflects the camera rather than how it was mounted.",
+            "재장착 실험으로 안착이 판정 불일치의 실제 원인 중 하나임을 확인했고, 센서가 지그에 안착하는 방식을 개선했습니다. 경계 판정이 장착 방식이 아니라 카메라 자체를 반영하게 됐습니다.",
           ),
           "uncertainty",
-          copy("Traceable camera decision with uncertainty and guard band context", "불확도와 guard band 근거를 갖춘 추적 가능한 카메라 판정"),
-          copy("The outcome is a shared, evidence-based decision system.", "결과는 근거를 공유하는 판정 시스템입니다."),
+          copy("Improved fixture seating narrowing the remount spread", "안착 개선으로 좁아진 재장착 산포"),
+          copy("The outcome is a steadier fixture, reached by measuring it.", "결과는 측정을 통해 도달한 더 안정적인 지그입니다."),
+        ),
+      ],
+    },
+    {
+      id: "sensor-integration",
+      eyebrow: copy("06 · Sensor Integration", "06 · 센서 통합"),
+      title: copy(
+        "Owning the Sensor Stack of Three Robots at Once",
+        "세 대의 로봇 센서 스택을 동시에 전담하기",
+      ),
+      summary: copy(
+        "Sole sensor owner for a serving robot, an industrial AMR, and a humanoid platform running in parallel over seventeen months.",
+        "서빙로봇, 산업용 AMR, 휴머노이드 플랫폼을 17개월 동안 동시에 진행하며 센서를 단독으로 담당했습니다.",
+      ),
+      tags: ["Bring-up", "URDF / TF", "Extrinsics", "Factory test", "Field reliability"],
+      metrics: [
+        {
+          label: copy("Platforms owned in parallel", "동시 전담 플랫폼"),
+          value: copy("3", "3"),
+          context: copy("Serving robot, industrial AMR, humanoid", "서빙로봇, 산업용 AMR, 휴머노이드"),
+        },
+        {
+          label: copy("As the only sensor engineer", "단독 담당 기간"),
+          value: copy("17 months", "17개월"),
+          context: copy("No second sensor engineer on the programs", "해당 과제에 다른 센서 엔지니어 없음"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "integration-problem",
+          stages.problem,
+          copy("Three programs needed a sensor owner at the same time", "세 과제가 동시에 센서 담당자를 필요로 했습니다"),
+          copy(
+            "A serving robot, an industrial AMR, and a humanoid platform each needed their full sensing stack defined, mounted, calibrated, and kept working. The three schedules overlapped and there was no second sensor engineer to split them with.",
+            "서빙로봇, 산업용 AMR, 휴머노이드 플랫폼 각각이 센서 구성, 장착, 캘리브레이션, 유지까지 필요로 했습니다. 세 일정이 겹쳤고, 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
+          ),
+          "integration",
+          copy("Three platform schedules overlapping across seventeen months", "17개월에 걸쳐 겹치는 세 플랫폼 일정"),
+          copy("The three programs overlap rather than follow one another.", "세 과제는 순차가 아니라 서로 겹쳐 진행됐습니다."),
+        ),
+        storyStep(
+          "integration-decision",
+          stages.decision,
+          copy("Carry one lifecycle instead of three backlogs", "세 개의 업무 목록이 아니라 하나의 생애주기로 다뤘습니다"),
+          copy(
+            "Rather than treating each platform as a separate queue of tickets, I worked the same lifecycle on all three: bring-up, URDF and TF, calibration, factory validation, then field reliability. What I learned closing one stage on one robot transferred directly to the next.",
+            "플랫폼마다 별도의 티켓 목록으로 다루지 않고, 세 대 모두에 같은 생애주기를 적용했습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성 순입니다. 한 로봇에서 한 단계를 닫으며 얻은 것이 다음 로봇에 그대로 옮겨갔습니다.",
+          ),
+          "integration",
+          copy("One shared lifecycle applied across the three platforms", "세 플랫폼에 공통으로 적용한 하나의 생애주기"),
+          copy("A shared lifecycle is what makes three platforms tractable alone.", "공통 생애주기가 있어야 세 플랫폼을 혼자 감당할 수 있습니다."),
+        ),
+        storyStep(
+          "integration-result",
+          stages.result,
+          copy("Every platform reached its shipping milestone", "세 플랫폼 모두 출하 기준에 도달했습니다"),
+          copy(
+            "Depth, ToF, RGB, and range sensing were integrated on each robot and carried through to factory test and field operation, including a humanoid configuration delivered under a hard shipment deadline.",
+            "각 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 여기에는 촉박한 출하 일정 아래 완성한 휴머노이드 sensor configuration이 포함됩니다.",
+          ),
+          "integration",
+          copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
+          copy("Each platform closed the same lifecycle, not just the parts that were easy.", "각 플랫폼이 쉬운 부분만이 아니라 같은 생애주기를 끝까지 닫았습니다."),
         ),
       ],
     },
   ],
   projects: [
-    {
-      id: "compact-service-sensor-stack",
-      title: copy(
-        "Sensor Stack for a New Compact Service Robot",
-        "신규 소형 서빙로봇 센서 스택",
-      ),
-      summary: copy(
-        "Integrated depth, ToF, RGB, and 2D LiDAR sensing across the complete product lifecycle.",
-        "Depth, ToF, RGB, 2D LiDAR를 제품 전 과정에 걸쳐 통합했습니다.",
-      ),
-      outcome: copy(
-        "Owned bring-up, URDF and TF, calibration, factory tests, and field reliability as one connected sensor system.",
-        "Bring-up, URDF·TF, 캘리브레이션, 공장 검사, 필드 신뢰성을 하나의 센서 시스템으로 책임졌습니다.",
-      ),
-      tags: ["RGB-D", "ToF", "2D LiDAR", "URDF / TF"],
-    },
-    {
-      id: "humanoid-bringup",
-      title: copy(
-        "Humanoid Sensor-System Bring-up",
-        "휴머노이드 센서 시스템 Bring-up",
-      ),
-      summary: copy(
-        "Brought up 2D LiDAR, depth cameras, and projected 3D sensing for a new humanoid platform.",
-        "신규 휴머노이드 플랫폼의 2D LiDAR, depth camera, projected 3D sensing을 bring-up했습니다.",
-      ),
-      outcome: copy(
-        "Completed URDF and TF integration, extrinsic calibration, and a shipment-ready configuration within a short critical schedule.",
-        "짧은 핵심 일정 안에 URDF·TF 통합, extrinsic calibration, 출하 가능한 sensor configuration을 완성했습니다.",
-      ),
-      tags: ["Humanoid", "Extrinsics", "Depth", "ROS 2"],
-    },
     {
       id: "pedestrian-calibration",
       title: copy(
@@ -562,6 +557,32 @@ export const portfolioContent: PortfolioContent = {
         "RANSAC과 MSAC으로 실제 영상의 이상치에 대응해 ICPR 2021 baseline 대비 정확도를 82% 향상했습니다.",
       ),
       tags: ["Camera calibration", "RANSAC", "MSAC", "Geometry"],
+      media: [
+        {
+          kind: "image",
+          src: "/media/pedestrian-calibration/calibration-pipeline.webp",
+          alt: copy(
+            "Pipeline diagram running from pose estimation and line segment extraction into sampling, parameter estimation, triangulation, and evaluation",
+            "자세 추정과 선분 추출에서 샘플링, 파라미터 추정, 삼각측량, 평가로 이어지는 파이프라인 다이어그램",
+          ),
+          caption: copy(
+            "Pedestrians become line segments, then a sampling loop solves for the camera.",
+            "보행자를 선분으로 만든 뒤, 샘플링 반복으로 카메라를 추정합니다.",
+          ),
+        },
+        {
+          kind: "image",
+          src: "/media/pedestrian-calibration/line-segments-before-after.webp",
+          alt: copy(
+            "Two frames of the same street, where the first is covered in stray outlier curves and the second keeps one clean segment per pedestrian",
+            "같은 거리의 두 장면으로, 첫 번째는 이상치 곡선으로 덮여 있고 두 번째는 보행자마다 하나의 선분만 남아 있습니다",
+          ),
+          caption: copy(
+            "Outlier rejection leaves one usable segment per pedestrian.",
+            "이상치를 걸러내면 보행자마다 쓸 수 있는 선분 하나가 남습니다.",
+          ),
+        },
+      ],
     },
     {
       id: "lidar-mot",
@@ -578,6 +599,22 @@ export const portfolioContent: PortfolioContent = {
         "DBSCAN으로 관측을 만들고 EKF로 motion state를 추정하며 Hungarian algorithm으로 프레임 간 객체를 연결했습니다.",
       ),
       tags: ["DBSCAN", "EKF", "Hungarian", "MOT"],
+      media: [
+        {
+          kind: "video",
+          src: "/media/lidar-mot/kitti-tracking.webm",
+          mp4Src: "/media/lidar-mot/kitti-tracking.mp4",
+          poster: "/media/lidar-mot/kitti-tracking-poster.jpg",
+          alt: copy(
+            "Driving footage beside a range-scan view where tracked objects keep a box and an identifier as the vehicle moves",
+            "주행 영상 옆에 거리 스캔 화면이 있고, 차량이 움직이는 동안 추적된 객체가 박스와 식별자를 유지합니다",
+          ),
+          caption: copy(
+            "Tracks keep their identifier across frames on KITTI driving sequences.",
+            "KITTI 주행 시퀀스에서 각 track이 프레임 간 식별자를 유지합니다.",
+          ),
+        },
+      ],
     },
   ],
   experience: [
@@ -676,7 +713,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "quality",
       title: copy("Sensor Quality", "센서 품질"),
-      skills: ["IQC", "ANOVA", "Guard Bands", "Root Cause Analysis", "Reliability"],
+      skills: ["IQC", "Measurement Variation", "Remount Study", "Root Cause Analysis", "Reliability"],
     },
     {
       id: "perception",

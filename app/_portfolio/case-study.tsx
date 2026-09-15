@@ -46,7 +46,7 @@ export function CaseStudyView({ study, index = 0 }: { study: CaseStudy; index?: 
         </ul>
         <div className="case-study__metrics">
           {study.metrics.map((metric) => (
-            <Metric key={metric.value} label={t(metric.label)} value={metric.value} context={t(metric.context)} />
+            <Metric key={metric.value.en} label={t(metric.label)} value={t(metric.value)} context={t(metric.context)} />
           ))}
         </div>
       </header>

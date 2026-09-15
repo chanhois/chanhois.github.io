@@ -22,8 +22,9 @@ describe("public portfolio content", () => {
       "hardware-trigger-sync",
       "amr-calibration",
       "camera-iqc-uncertainty",
+      "sensor-integration",
     ]);
-    expect(portfolioContent.projects).toHaveLength(4);
+    expect(portfolioContent.projects).toHaveLength(2);
   });
 
   it("contains complete bilingual copy and media descriptions", () => {
@@ -36,12 +37,24 @@ describe("public portfolio content", () => {
     }
 
     for (const study of portfolioContent.featured) {
-      expect(study.steps).toHaveLength(5);
+      // Every case runs problem through result; the middle stages are optional.
+      expect(study.steps.length).toBeGreaterThanOrEqual(3);
+      expect(study.steps.length).toBeLessThanOrEqual(5);
       for (const step of study.steps) {
         expect(step.body.en.trim()).not.toBe("");
         expect(step.body.ko.trim()).not.toBe("");
         expect(step.media.alt.en.trim()).not.toBe("");
         expect(step.media.alt.ko.trim()).not.toBe("");
+      }
+    }
+
+    // Recorded project media carries the same description burden as case evidence.
+    for (const project of portfolioContent.projects) {
+      for (const item of project.media ?? []) {
+        expect(item.alt.en.trim()).not.toBe("");
+        expect(item.alt.ko.trim()).not.toBe("");
+        expect(item.caption.en.trim()).not.toBe("");
+        expect(item.caption.ko.trim()).not.toBe("");
       }
     }
 

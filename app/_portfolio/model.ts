@@ -6,7 +6,8 @@ export type EvidenceVisual =
   | "clock"
   | "trigger"
   | "calibration"
-  | "uncertainty";
+  | "uncertainty"
+  | "integration";
 
 export interface MediaSpec {
   kind: EvidenceKind;
@@ -20,7 +21,8 @@ export interface MediaSpec {
 
 export interface MetricSpec {
   label: LocalizedText;
-  value: string;
+  /** Localized because some values carry words ("under a week") and not only numbers. */
+  value: LocalizedText;
   context: LocalizedText;
 }
 
@@ -48,6 +50,8 @@ export interface CompactProject {
   summary: LocalizedText;
   outcome: LocalizedText;
   tags: string[];
+  /** Recorded project media. A card without any falls back to its generated motif. */
+  media?: MediaSpec[];
 }
 
 export interface ExperienceEntry {
