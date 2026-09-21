@@ -373,6 +373,18 @@ export const portfolioContent: PortfolioContent = {
           copy("The three programs run across one another.", "세 과제가 서로 겹쳐 진행됩니다."),
         ),
         storyStep(
+          "integration-evidence",
+          stages.evidence,
+          copy("Most of it was never at the sensor", "대부분은 센서에 있지 않았습니다"),
+          copy(
+            "A field-of-view crop came from angular bounds written for a sensor that publishes ±π being reused for one that publishes 0 to 2π, which let only a wrong 138° sector through. A publisher delay came from a vendor driver emitting redundant static transforms, which I filed upstream. Neither was a sensor fault.",
+            "FOV crop은 ±π로 발행하는 센서용 angular bounds가 0~2π로 발행하는 센서에 그대로 쓰여, 엉뚱한 138° 섹터만 통과시킨 것이었습니다. Publisher 지연은 벤더 드라이버가 중복 static transform을 내보낸 것이었고 upstream에 제기했습니다. 둘 다 센서 결함이 아니었습니다.",
+          ),
+          "integration",
+          copy("Two driver-level defects sitting between the sensor and the robot", "센서와 로봇 사이에 있던 두 개의 드라이버 결함"),
+          copy("Integration work lands in the driver and the transform tree.", "통합 작업은 드라이버와 transform tree에서 이뤄집니다."),
+        ),
+        storyStep(
           "integration-decision",
           stages.decision,
           copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
@@ -490,7 +502,7 @@ export const portfolioContent: PortfolioContent = {
   experience: [
     {
       id: "compact-service",
-      platform: copy("New Compact Service Robot", "신규 소형 서빙로봇"),
+      platform: copy("Compact Service Robot", "소형 서빙로봇"),
       role: copy("End-to-end sensor stack owner", "센서 스택 전 과정 담당"),
       summary: copy(
         "Depth, ToF, RGB, and LiDAR from bring-up to factory validation and field reliability.",
@@ -499,7 +511,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "industrial-amr",
-      platform: copy("New Industrial AMR", "신규 산업용 AMR"),
+      platform: copy("Industrial AMR", "산업용 AMR"),
       role: copy("Multi-sensor integration and production calibration", "다중 센서 통합 및 생산 캘리브레이션"),
       summary: copy(
         "Carried the sensing stack from prototype through a production hardware upgrade, and automated the geometric calibration.",
@@ -508,7 +520,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "humanoid-platform",
-      platform: copy("Humanoid Robot Platform", "휴머노이드 로봇 플랫폼"),
+      platform: copy("Humanoid Platform", "휴머노이드 플랫폼"),
       role: copy("Sensor-system bring-up and calibration", "센서 시스템 bring-up 및 캘리브레이션"),
       summary: copy(
         "Built a shipment-ready range and depth configuration against a hard date.",
@@ -552,6 +564,12 @@ export const portfolioContent: PortfolioContent = {
   ],
   publications: [
     {
+      id: "pedestrian-calibration-paper",
+      title: "Robust and Accurate Camera Calibration from Pedestrians",
+      venue: copy("IEEE Access, under review", "IEEE Access, 심사 중"),
+      contribution: copy("First author", "제1저자"),
+    },
+    {
       id: "mot-trends",
       title: "Trends in Multiple Object Tracking (MOT) Technology",
       venue: copy(
@@ -573,7 +591,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "space",
       title: copy("Spatial Calibration", "공간 캘리브레이션"),
-      skills: ["SE(2) / SE(3)", "RANSAC", "PCA", "URDF / TF", "OpenCV", "Open3D"],
+      skills: ["SE(2) / SE(3)", "RANSAC", "MSAC", "PCA", "Huber Loss", "URDF / TF", "Multiple-View Geometry"],
     },
     {
       id: "interfaces",
@@ -583,12 +601,17 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "quality",
       title: copy("Sensor Quality", "센서 품질"),
-      skills: ["IQC", "Measurement Variation", "Remount Study", "Root Cause Analysis", "Reliability"],
+      skills: ["Measurement Variation", "Remount Study", "Fixture Design", "IQC", "Root Cause Analysis"],
     },
     {
       id: "perception",
       title: copy("Perception", "인지"),
-      skills: ["2D LiDAR", "RGB-D", "EKF", "Multi-Object Tracking", "ROS 1"],
+      skills: ["2D LiDAR", "RGB-D and ToF", "EKF", "Multi-Object Tracking", "DBSCAN", "Hungarian Algorithm"],
+    },
+    {
+      id: "tools",
+      title: copy("Languages and Tools", "언어와 도구"),
+      skills: ["C++", "Python", "ROS 1", "OpenCV", "Open3D", "PyTorch", "Bazel", "Git", "Linux"],
     },
   ],
 };
