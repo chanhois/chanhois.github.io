@@ -24,7 +24,7 @@ describe("PortfolioApp", () => {
   it("renders every public project and the contact path", () => {
     render(<PortfolioApp />);
     for (const name of [
-      "Owning the Sensor Stack of Three Robots at Once",
+      "Three Robots, One Sensor Engineer",
       "Camera Calibration from Pedestrians",
       "Multi-Object Tracking with a 2D LiDAR",
     ]) {

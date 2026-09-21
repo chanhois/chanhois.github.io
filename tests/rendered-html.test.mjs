@@ -33,12 +33,12 @@ test("server-renders the complete English portfolio", async () => {
   const html = await response.text();
   assert.match(html, /<title>Chan-ho Seo · Robotics Sensor Engineer<\/title>/i);
   assert.match(html, /RIGHT PLACE[\s\S]*RIGHT TIME[\s\S]*TRUSTED DATA/i);
-  assert.match(html, /Stabilizing a Low-Cost LiDAR for Reliable Navigation/);
-  assert.match(html, /Rebuilding the Time Axis for Better SLAM/);
-  assert.match(html, /Giving Camera and IMU One Shared Clock/);
-  assert.match(html, /Automating Sensor Calibration for a New Industrial AMR/);
-  assert.match(html, /Tracing Camera Inspection Disputes Back to the Fixture/);
-  assert.match(html, /Owning the Sensor Stack of Three Robots at Once/);
+  assert.match(html, /Yaw Jitter Down 82% on a Low-Cost LiDAR/);
+  assert.match(html, /Three Clocks Pretending to Be One/);
+  assert.match(html, /One 1 MHz Clock for Camera and IMU/);
+  assert.match(html, /LiDAR-to-LiDAR Calibration, Built in a Week/);
+  assert.match(html, /52 Cameras, Two Verdicts/);
+  assert.match(html, /Three Robots, One Sensor Engineer/);
   assert.match(html, /Camera Calibration from Pedestrians/);
   assert.match(html, /Multi-Object Tracking with a 2D LiDAR/);
   assert.match(html, /studychanho0717@gmail\.com/);
