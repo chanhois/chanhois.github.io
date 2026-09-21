@@ -70,7 +70,7 @@ export const portfolioContent: PortfolioContent = {
         "Stationary scans swung 0.378°. The cause was in the timestamps and the angle indexing, not the sensor. A fixed angular grid plus a per-beam EKF brought it to 0.067°.",
         "정지 상태 스캔이 0.378° 흔들렸습니다. 원인은 센서가 아니라 타임스탬프와 각도 인덱싱이었습니다. 고정 각도 그리드와 빔별 EKF로 0.067°까지 내렸습니다.",
       ),
-      tags: ["2D LiDAR", "EKF", "Mahalanobis gating", "ROS 2"],
+      tags: ["2D LiDAR", "EKF", "Mahalanobis gating", "ROS 1"],
       metrics: [
         {
           label: copy("Yaw standard deviation", "Yaw 표준편차"),
@@ -346,7 +346,7 @@ export const portfolioContent: PortfolioContent = {
         "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
         "서빙로봇, 산업용 AMR, 휴머노이드. 겹치는 일정, 17개월, 세 대 모두 단독 담당.",
       ),
-      tags: ["Bring-up", "URDF / TF", "Extrinsics", "Factory test", "Field reliability"],
+      tags: ["Bring-up", "URDF / TF", "ROS 1 drivers", "Linux interfaces", "Factory test"],
       metrics: [
         {
           label: copy("Platforms owned in parallel", "동시 전담 플랫폼"),
@@ -401,8 +401,8 @@ export const portfolioContent: PortfolioContent = {
           stages.result,
           copy("All three shipped", "세 대 모두 출하됐습니다"),
           copy(
-            "Depth, ToF, RGB, and range sensing integrated on each robot and carried through factory test into field operation, including a humanoid configuration finished against a hard shipment date.",
-            "세 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 촉박한 출하 일정에 맞춘 휴머노이드 configuration도 포함됩니다.",
+            "Depth, ToF, RGB, and range sensing integrated on each robot and carried through factory test into field operation, including a humanoid configuration finished against a hard shipment date. Integration here meant the whole path: vendor ROS drivers and their SDK upgrades, URDF and TF, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
+            "세 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 촉박한 출하 일정에 맞춘 휴머노이드 configuration도 포함됩니다. 여기서 통합은 전체 경로를 뜻합니다. 벤더 ROS 드라이버와 SDK 업그레이드, URDF·TF, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
           ),
           "integration",
           copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
@@ -576,6 +576,11 @@ export const portfolioContent: PortfolioContent = {
       skills: ["SE(2) / SE(3)", "RANSAC", "PCA", "URDF / TF", "OpenCV", "Open3D"],
     },
     {
+      id: "interfaces",
+      title: copy("Sensor Interfaces", "센서 인터페이스"),
+      skills: ["Ethernet / IP LiDAR", "USB Enumeration", "dmesg", "aarch64", "Linux"],
+    },
+    {
       id: "quality",
       title: copy("Sensor Quality", "센서 품질"),
       skills: ["IQC", "Measurement Variation", "Remount Study", "Root Cause Analysis", "Reliability"],
@@ -583,7 +588,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "perception",
       title: copy("Perception", "인지"),
-      skills: ["2D LiDAR", "RGB-D", "EKF", "Multi-Object Tracking", "ROS 2"],
+      skills: ["2D LiDAR", "RGB-D", "EKF", "Multi-Object Tracking", "ROS 1"],
     },
   ],
 };

@@ -76,7 +76,7 @@ export interface PublicationEntry {
 }
 
 export interface SkillGroup {
-  id: "space" | "quality" | "perception";
+  id: "space" | "interfaces" | "quality" | "perception";
   title: LocalizedText;
   skills: string[];
 }

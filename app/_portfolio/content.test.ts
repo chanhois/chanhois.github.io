@@ -59,7 +59,7 @@ describe("public portfolio content", () => {
     expect(portfolioContent.experience).toHaveLength(3);
     expect(portfolioContent.research).toHaveLength(2);
     expect(portfolioContent.publications.length).toBeGreaterThanOrEqual(2);
-    expect(portfolioContent.skills).toHaveLength(3);
+    expect(portfolioContent.skills).toHaveLength(4);
   });
 
   it("contains no internal names or identifiers", () => {
