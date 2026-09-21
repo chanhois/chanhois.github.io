@@ -2,6 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CaseStudyView } from "./case-study";
 import { portfolioContent } from "./content";
+
+const lidarCase = portfolioContent.featured.find(
+  ({ id }) => id === "lidar-stability",
+)!;
 import { MediaStage } from "./media-stage";
 import { LanguageProvider } from "./use-language";
 
@@ -9,7 +13,7 @@ describe("CaseStudyView", () => {
   it("lets keyboard and pointer users select a story step", () => {
     render(
       <LanguageProvider>
-        <CaseStudyView study={portfolioContent.featured[0]} />
+        <CaseStudyView study={lidarCase} />
       </LanguageProvider>,
     );
     const result = screen.getByRole("button", { name: /result/i });

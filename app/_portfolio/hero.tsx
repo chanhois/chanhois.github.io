@@ -15,8 +15,11 @@ const functions = [
 export function Hero() {
   const { language, t } = useLanguage();
   const profile = portfolioContent.profile;
-  const lidarMetric = portfolioContent.featured[0].metrics[0];
-  const scopeMetric = portfolioContent.featured[3].metrics[0];
+  // Read by id: the featured order is a content decision, not a contract with the hero.
+  const byId = (id: string) =>
+    portfolioContent.featured.find((study) => study.id === id)!.metrics[0];
+  const scopeMetric = byId("sensor-integration");
+  const lidarMetric = byId("lidar-stability");
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
@@ -61,14 +64,14 @@ export function Hero() {
 
         <div className="hero__metrics">
           <Metric
-            label={t(lidarMetric.label)}
-            value={t(lidarMetric.value)}
-            context={t(lidarMetric.context)}
-          />
-          <Metric
             label={t(scopeMetric.label)}
             value={t(scopeMetric.value)}
             context={t(scopeMetric.context)}
+          />
+          <Metric
+            label={t(lidarMetric.label)}
+            value={t(lidarMetric.value)}
+            context={t(lidarMetric.context)}
           />
         </div>
       </div>

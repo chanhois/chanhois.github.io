@@ -17,10 +17,10 @@ const forbidden = [
 describe("public portfolio content", () => {
   it("has the approved project counts and order", () => {
     expect(portfolioContent.featured.map(({ id }) => id)).toEqual([
+      "sensor-integration",
       "lidar-stability",
       "amr-calibration",
       "camera-iqc-uncertainty",
-      "sensor-integration",
     ]);
     expect(portfolioContent.projects).toHaveLength(2);
   });

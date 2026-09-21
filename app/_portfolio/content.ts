@@ -60,8 +60,95 @@ export const portfolioContent: PortfolioContent = {
   },
   featured: [
     {
+      id: "sensor-integration",
+      eyebrow: copy("01 · Sensor Integration", "01 · 센서 통합"),
+      title: copy(
+        "Three Robots, One Sensor Engineer",
+        "로봇 세 대, 센서 엔지니어 한 명",
+      ),
+      summary: copy(
+        "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
+        "서빙로봇, 산업용 AMR, 휴머노이드. 겹치는 일정, 17개월, 세 대 모두 단독 담당.",
+      ),
+      tags: ["Bring-up", "URDF / TF", "ROS 1 drivers", "Linux interfaces", "Factory test"],
+      metrics: [
+        {
+          label: copy("Platforms owned in parallel", "동시 전담 플랫폼"),
+          value: copy("3", "3"),
+          context: copy("Serving robot, industrial AMR, humanoid", "서빙로봇, 산업용 AMR, 휴머노이드"),
+        },
+        {
+          label: copy("As the only sensor engineer", "단독 담당 기간"),
+          value: copy("17 months", "17개월"),
+          context: copy("No second sensor engineer on the programs", "해당 과제에 다른 센서 엔지니어 없음"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "integration-problem",
+          stages.problem,
+          copy("Three programs, one of me", "세 개의 과제, 한 명"),
+          copy(
+            "Three robots each needed a full sensing stack: parts chosen, mounted, calibrated, kept alive in the field. The schedules overlapped. There was no second sensor engineer.",
+            "로봇 세 대가 각각 완전한 센서 스택을 필요로 했습니다. 부품 선정, 장착, 캘리브레이션, 현장 유지까지입니다. 일정은 겹쳤습니다. 다른 센서 엔지니어는 없었습니다.",
+          ),
+          "integration",
+          copy("Three platform schedules drawn on one time axis, overlapping in the middle", "하나의 시간축에 그린 세 플랫폼 일정으로, 가운데 구간이 겹칩니다"),
+          copy("The three programs run across one another.", "세 과제가 서로 겹쳐 진행됩니다."),
+        ),
+        storyStep(
+          "integration-evidence",
+          stages.evidence,
+          copy("Most of it was never at the sensor", "대부분은 센서에 있지 않았습니다"),
+          copy(
+            "A field-of-view crop came from angular bounds written for a sensor that publishes ±π being reused for one that publishes 0 to 2π, which let only a wrong 138° sector through. A publisher delay came from a vendor driver emitting redundant static transforms, which I filed upstream. Neither was a sensor fault.",
+            "FOV crop은 ±π로 발행하는 센서용 angular bounds가 0~2π로 발행하는 센서에 그대로 쓰여, 엉뚱한 138° 섹터만 통과시킨 것이었습니다. Publisher 지연은 벤더 드라이버가 중복 static transform을 내보낸 것이었고 upstream에 제기했습니다. 둘 다 센서 결함이 아니었습니다.",
+          ),
+          "integration",
+          copy("Two driver-level defects sitting between the sensor and the robot", "센서와 로봇 사이에 있던 두 개의 드라이버 결함"),
+          copy("Integration work lands in the driver and the transform tree.", "통합 작업은 드라이버와 transform tree에서 이뤄집니다."),
+        ),
+        storyStep(
+          "integration-decision",
+          stages.decision,
+          copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
+          copy(
+            "I ran the same five stages on all three: bring-up, URDF and TF, calibration, factory validation, field reliability. Closing a stage once made closing it on the next robot cheap.",
+            "세 대 모두에 같은 다섯 단계를 적용했습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성입니다. 한 번 닫은 단계는 다음 로봇에서 훨씬 싸게 닫혔습니다.",
+          ),
+          "integration",
+          copy("One shared lifecycle applied across the three platforms", "세 플랫폼에 공통으로 적용한 하나의 생애주기"),
+          copy("Five stages, applied three times.", "다섯 단계를 세 번 적용했습니다."),
+        ),
+        storyStep(
+          "integration-implementation",
+          stages.implementation,
+          copy("Build the interface that was missing", "없던 접점을 직접 만들기"),
+          copy(
+            "Sensor mounting geometry lived with mechanical engineering and reached software late, or not at all. I opened a standing channel between the two teams. Its field-of-view and mounting-position documents became the specification the rest of us cite.",
+            "센서 장착 기하는 기구팀에 있었고 소프트웨어에는 늦게 오거나 아예 오지 않았습니다. 두 팀 사이에 상시 채널을 열었습니다. 거기서 나온 FOV·장착 위치 문서가 다른 팀이 인용하는 스펙이 됐습니다.",
+          ),
+          "integration",
+          copy("A shared channel between software and mechanical engineering feeding one specification", "하나의 스펙으로 모이는 소프트웨어와 기구팀 사이의 공용 채널"),
+          copy("Mounting geometry now arrives as a document, not a question.", "장착 기하가 질문이 아니라 문서로 옵니다."),
+        ),
+        storyStep(
+          "integration-result",
+          stages.result,
+          copy("All three shipped", "세 대 모두 출하됐습니다"),
+          copy(
+            "Depth, ToF, RGB, and range sensing integrated on each robot and carried through factory test into field operation, including a humanoid configuration finished against a hard shipment date. Integration here meant the whole path: vendor ROS drivers and their SDK upgrades, URDF and TF, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
+            "세 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 촉박한 출하 일정에 맞춘 휴머노이드 configuration도 포함됩니다. 여기서 통합은 전체 경로를 뜻합니다. 벤더 ROS 드라이버와 SDK 업그레이드, URDF·TF, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
+          ),
+          "integration",
+          copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
+          copy("Same five stages closed on each of the three.", "세 대 각각에서 같은 다섯 단계를 닫았습니다."),
+        ),
+      ],
+    },
+    {
       id: "lidar-stability",
-      eyebrow: copy("01 · Measurement Stability", "01 · 측정 안정화"),
+      eyebrow: copy("02 · Measurement Stability", "02 · 측정 안정화"),
       title: copy(
         "Yaw Jitter Down 82% on a Low-Cost LiDAR",
         "저가형 LiDAR의 Yaw 지터를 82% 줄이기",
@@ -177,7 +264,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "amr-calibration",
-      eyebrow: copy("02 · Production Calibration", "02 · 생산 캘리브레이션"),
+      eyebrow: copy("03 · Production Calibration", "03 · 생산 캘리브레이션"),
       title: copy(
         "LiDAR-to-LiDAR Calibration, Built in a Week",
         "일주일 만에 만든 LiDAR 간 캘리브레이션",
@@ -262,7 +349,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "camera-iqc-uncertainty",
-      eyebrow: copy("03 · Measurement Variation", "03 · 측정 산포"),
+      eyebrow: copy("04 · Measurement Variation", "04 · 측정 산포"),
       title: copy(
         "52 Cameras, Two Verdicts",
         "카메라 52대, 두 개의 판정",
@@ -332,93 +419,6 @@ export const portfolioContent: PortfolioContent = {
           "uncertainty",
           copy("Improved fixture seating narrowing the remount spread", "안착 개선으로 좁아진 재장착 산포"),
           copy("The outcome is a steadier fixture, reached by measuring it.", "결과는 측정을 통해 도달한 더 안정적인 지그입니다."),
-        ),
-      ],
-    },
-    {
-      id: "sensor-integration",
-      eyebrow: copy("04 · Sensor Integration", "04 · 센서 통합"),
-      title: copy(
-        "Three Robots, One Sensor Engineer",
-        "로봇 세 대, 센서 엔지니어 한 명",
-      ),
-      summary: copy(
-        "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
-        "서빙로봇, 산업용 AMR, 휴머노이드. 겹치는 일정, 17개월, 세 대 모두 단독 담당.",
-      ),
-      tags: ["Bring-up", "URDF / TF", "ROS 1 drivers", "Linux interfaces", "Factory test"],
-      metrics: [
-        {
-          label: copy("Platforms owned in parallel", "동시 전담 플랫폼"),
-          value: copy("3", "3"),
-          context: copy("Serving robot, industrial AMR, humanoid", "서빙로봇, 산업용 AMR, 휴머노이드"),
-        },
-        {
-          label: copy("As the only sensor engineer", "단독 담당 기간"),
-          value: copy("17 months", "17개월"),
-          context: copy("No second sensor engineer on the programs", "해당 과제에 다른 센서 엔지니어 없음"),
-        },
-      ],
-      steps: [
-        storyStep(
-          "integration-problem",
-          stages.problem,
-          copy("Three programs, one of me", "세 개의 과제, 한 명"),
-          copy(
-            "Three robots each needed a full sensing stack: parts chosen, mounted, calibrated, kept alive in the field. The schedules overlapped. There was no second sensor engineer.",
-            "로봇 세 대가 각각 완전한 센서 스택을 필요로 했습니다. 부품 선정, 장착, 캘리브레이션, 현장 유지까지입니다. 일정은 겹쳤습니다. 다른 센서 엔지니어는 없었습니다.",
-          ),
-          "integration",
-          copy("Three platform schedules drawn on one time axis, overlapping in the middle", "하나의 시간축에 그린 세 플랫폼 일정으로, 가운데 구간이 겹칩니다"),
-          copy("The three programs run across one another.", "세 과제가 서로 겹쳐 진행됩니다."),
-        ),
-        storyStep(
-          "integration-evidence",
-          stages.evidence,
-          copy("Most of it was never at the sensor", "대부분은 센서에 있지 않았습니다"),
-          copy(
-            "A field-of-view crop came from angular bounds written for a sensor that publishes ±π being reused for one that publishes 0 to 2π, which let only a wrong 138° sector through. A publisher delay came from a vendor driver emitting redundant static transforms, which I filed upstream. Neither was a sensor fault.",
-            "FOV crop은 ±π로 발행하는 센서용 angular bounds가 0~2π로 발행하는 센서에 그대로 쓰여, 엉뚱한 138° 섹터만 통과시킨 것이었습니다. Publisher 지연은 벤더 드라이버가 중복 static transform을 내보낸 것이었고 upstream에 제기했습니다. 둘 다 센서 결함이 아니었습니다.",
-          ),
-          "integration",
-          copy("Two driver-level defects sitting between the sensor and the robot", "센서와 로봇 사이에 있던 두 개의 드라이버 결함"),
-          copy("Integration work lands in the driver and the transform tree.", "통합 작업은 드라이버와 transform tree에서 이뤄집니다."),
-        ),
-        storyStep(
-          "integration-decision",
-          stages.decision,
-          copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
-          copy(
-            "I ran the same five stages on all three: bring-up, URDF and TF, calibration, factory validation, field reliability. Closing a stage once made closing it on the next robot cheap.",
-            "세 대 모두에 같은 다섯 단계를 적용했습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성입니다. 한 번 닫은 단계는 다음 로봇에서 훨씬 싸게 닫혔습니다.",
-          ),
-          "integration",
-          copy("One shared lifecycle applied across the three platforms", "세 플랫폼에 공통으로 적용한 하나의 생애주기"),
-          copy("Five stages, applied three times.", "다섯 단계를 세 번 적용했습니다."),
-        ),
-        storyStep(
-          "integration-implementation",
-          stages.implementation,
-          copy("Build the interface that was missing", "없던 접점을 직접 만들기"),
-          copy(
-            "Sensor mounting geometry lived with mechanical engineering and reached software late, or not at all. I opened a standing channel between the two teams. Its field-of-view and mounting-position documents became the specification the rest of us cite.",
-            "센서 장착 기하는 기구팀에 있었고 소프트웨어에는 늦게 오거나 아예 오지 않았습니다. 두 팀 사이에 상시 채널을 열었습니다. 거기서 나온 FOV·장착 위치 문서가 다른 팀이 인용하는 스펙이 됐습니다.",
-          ),
-          "integration",
-          copy("A shared channel between software and mechanical engineering feeding one specification", "하나의 스펙으로 모이는 소프트웨어와 기구팀 사이의 공용 채널"),
-          copy("Mounting geometry now arrives as a document, not a question.", "장착 기하가 질문이 아니라 문서로 옵니다."),
-        ),
-        storyStep(
-          "integration-result",
-          stages.result,
-          copy("All three shipped", "세 대 모두 출하됐습니다"),
-          copy(
-            "Depth, ToF, RGB, and range sensing integrated on each robot and carried through factory test into field operation, including a humanoid configuration finished against a hard shipment date. Integration here meant the whole path: vendor ROS drivers and their SDK upgrades, URDF and TF, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
-            "세 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 촉박한 출하 일정에 맞춘 휴머노이드 configuration도 포함됩니다. 여기서 통합은 전체 경로를 뜻합니다. 벤더 ROS 드라이버와 SDK 업그레이드, URDF·TF, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
-          ),
-          "integration",
-          copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
-          copy("Same five stages closed on each of the three.", "세 대 각각에서 같은 다섯 단계를 닫았습니다."),
         ),
       ],
     },
