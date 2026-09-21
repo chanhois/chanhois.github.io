@@ -26,7 +26,7 @@ function PortfolioSurface() {
         <Hero />
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-intro page-shell">
-            <p className="section-index">01 — 06</p>
+            <p className="section-index">01 — 04</p>
             <h2 id="work-title">
               {language === "en" ? "Selected Work" : "주요 작업"}
             </h2>

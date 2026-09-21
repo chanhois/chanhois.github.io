@@ -25,48 +25,6 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
     );
   }
 
-  if (visual === "clock") {
-    return (
-      <div className="evidence-graphic evidence-graphic--clock">
-        <div className="evidence-grid" aria-hidden="true" />
-        <p className="graphic-kicker">CLOCK DRIFT · 12 HOUR RUN</p>
-        <div className="clock-plot">
-          <span className="clock-plot__y">13 ms</span>
-          <span className="clock-plot__line" aria-hidden="true" />
-          <span className="clock-plot__dot" aria-hidden="true" />
-          <span className="clock-plot__start">0 h</span>
-          <span className="clock-plot__end">12 h</span>
-        </div>
-        <div className="clock-domains">
-          <span>DEVICE TIME</span><i aria-hidden="true" />
-          <span>HOST TIME</span>
-        </div>
-        <p className="graphic-conclusion">≈13 ms / 12 h · ≈0.3 ppm measured drift</p>
-      </div>
-    );
-  }
-
-  if (visual === "trigger") {
-    return (
-      <div className="evidence-graphic evidence-graphic--trigger">
-        <div className="evidence-grid" aria-hidden="true" />
-        <p className="graphic-kicker">SHARED HARDWARE TIMEBASE</p>
-        <div className="trigger-flow">
-          <div className="trigger-node trigger-node--master">
-            <span>MCU</span><strong>1 MHz</strong>
-          </div>
-          <span className="trigger-wire" aria-hidden="true">→</span>
-          <div className="trigger-stack">
-            <div className="trigger-node"><span>LEVEL</span><strong>1.8 V</strong></div>
-            <div className="trigger-node"><span>CAMERA</span><strong>30.00 Hz</strong></div>
-            <div className="trigger-node"><span>IMU</span><strong>DATA READY</strong></div>
-          </div>
-        </div>
-        <p className="graphic-conclusion">447 frames / 14.87 s · verified physical trigger rate</p>
-      </div>
-    );
-  }
-
   if (visual === "calibration") {
     return (
       <div className="evidence-graphic evidence-graphic--calibration">

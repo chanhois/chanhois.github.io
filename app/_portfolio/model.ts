@@ -3,8 +3,6 @@ export type LocalizedText = Record<Language, string>;
 export type EvidenceKind = "diagram" | "chart" | "image" | "video";
 export type EvidenceVisual =
   | "lidar"
-  | "clock"
-  | "trigger"
   | "calibration"
   | "uncertainty"
   | "integration";
@@ -78,7 +76,7 @@ export interface PublicationEntry {
 }
 
 export interface SkillGroup {
-  id: "space" | "time" | "quality" | "perception";
+  id: "space" | "quality" | "perception";
   title: LocalizedText;
   skills: string[];
 }

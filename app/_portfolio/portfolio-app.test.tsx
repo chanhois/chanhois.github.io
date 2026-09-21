@@ -15,7 +15,7 @@ describe("PortfolioApp", () => {
       }),
     ).toBeInTheDocument();
     expect(within(hero).getByText("0.378° → 0.067°")).toBeInTheDocument();
-    expect(within(hero).getByText("30.00 Hz")).toBeInTheDocument();
+    expect(within(hero).getByText("3")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /explore selected work/i }),
     ).toHaveAttribute("href", "#work");

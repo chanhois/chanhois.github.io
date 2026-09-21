@@ -18,8 +18,6 @@ describe("public portfolio content", () => {
   it("has the approved project counts and order", () => {
     expect(portfolioContent.featured.map(({ id }) => id)).toEqual([
       "lidar-stability",
-      "slam-time-axis",
-      "hardware-trigger-sync",
       "amr-calibration",
       "camera-iqc-uncertainty",
       "sensor-integration",
@@ -61,19 +59,12 @@ describe("public portfolio content", () => {
     expect(portfolioContent.experience).toHaveLength(3);
     expect(portfolioContent.research).toHaveLength(2);
     expect(portfolioContent.publications.length).toBeGreaterThanOrEqual(2);
-    expect(portfolioContent.skills).toHaveLength(4);
+    expect(portfolioContent.skills).toHaveLength(3);
   });
 
   it("contains no internal names or identifiers", () => {
     const publicCopy = JSON.stringify(portfolioContent);
     for (const pattern of forbidden) expect(publicCopy).not.toMatch(pattern);
-  });
-
-  it("does not invent a quantitative SLAM gain", () => {
-    const slam = portfolioContent.featured.find(
-      ({ id }) => id === "slam-time-axis",
-    );
-    expect(JSON.stringify(slam)).not.toMatch(/SLAM.{0,40}\d+(?:\.\d+)?%/i);
   });
 
   it("keeps metadata and localized content public-safe", () => {

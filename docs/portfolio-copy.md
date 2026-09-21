@@ -96,98 +96,7 @@ Korean follows the same rules: 수치를 문장 안에, 동사로 시작, 단문
 
 ---
 
-## 02 · Temporal Alignment
-
-**Title**
-
-- EN — Three Clocks Pretending to Be One
-- KO — 하나로 위장한 세 개의 시계
-
-**Summary**
-
-- EN — A sensor packet is stamped on the device, arrives at another time, and publishes at a third. Measured 13 ms of drift over 12 hours and rebuilt per-beam timestamps so scans can be deskewed.
-- KO — 센서 패킷은 장치에서 시각이 찍히고, 다른 시각에 도착하고, 또 다른 시각에 publish됩니다. 12시간 동안 13 ms drift를 측정하고, deskewing이 가능하도록 빔별 타임스탬프를 재구성했습니다.
-
-**Metrics**
-
-| Label | Value | Context |
-|---|---|---|
-| Observed drift / 관측 drift | ≈13 ms / 12 h | About 0.3 ppm / 약 0.3 ppm |
-
-### Problem — One timestamp hid three different clocks
-
-- EN — Device time, acquisition time, host publish time. Collapsing them into one instant distorts any motion that happens inside a single scan.
-- KO — Device time, acquisition time, host publish time이 있습니다. 이를 하나의 순간으로 합치면 한 스캔 안에서 일어난 움직임이 왜곡됩니다.
-
-### Evidence — Small per packet, large per shift
-
-- EN — A 12-hour capture drifted about 13 ms, roughly 0.3 ppm. Negligible in one packet. Not negligible across a work shift with the robot moving.
-- KO — 12시간 측정에서 약 13 ms, 약 0.3 ppm의 drift가 나왔습니다. 패킷 하나에서는 무시할 수 있습니다. 로봇이 움직이는 하루 운용에서는 아닙니다.
-
-### Decision — Keep the source clock, map it explicitly
-
-- EN — The device clock stays the source of truth. Offset and drift are estimated as separate terms in an affine map to host time.
-- KO — Device clock을 원본으로 유지합니다. Offset과 drift를 host time으로 가는 affine 변환의 서로 다른 항으로 추정합니다.
-
-### Implementation — Give every beam its own timestamp
-
-- EN — Device-time conversion plus a scan-period model assigns each beam the time it was actually measured. A deskewing filter can then pull the whole scan to one reference pose.
-- KO — Device time 변환과 스캔 주기 모델로 각 빔에 실제 측정 시각을 부여합니다. 이후 deskewing filter가 스캔 전체를 하나의 기준 pose로 끌어옵니다.
-
-### Result — Timing is fixed; map quality is the next experiment
-
-- EN — The pipeline now hands SLAM temporally coherent scans. A quantitative map-quality number needs a controlled before-and-after run, which has not been done.
-- KO — 파이프라인은 이제 SLAM에 시간적으로 일관된 스캔을 넘깁니다. 지도 품질 수치는 통제된 전후 비교가 있어야 제시할 수 있고, 아직 하지 않았습니다.
-
----
-
-## 03 · Hardware Synchronization
-
-**Title**
-
-- EN — One 1 MHz Clock for Camera and IMU
-- KO — 카메라와 IMU를 하나의 1 MHz 시계로
-
-**Summary**
-
-- EN — Host arrival time cannot prove two sensors saw the world at the same moment. Built an STM32 timing master that fires the camera at 30 Hz and stamps IMU events on the same 1 MHz timer. Measured 30.00 Hz over 447 frames.
-- KO — Host 도착 시각으로는 두 센서가 같은 순간을 봤다는 것을 증명할 수 없습니다. STM32를 timing master로 만들어 카메라를 30 Hz로 트리거하고 IMU 이벤트를 같은 1 MHz timer로 기록했습니다. 447프레임에서 30.00 Hz를 측정했습니다.
-
-**Metrics**
-
-| Label | Value | Context |
-|---|---|---|
-| Verified camera rate / 검증된 카메라 주기 | 30.00 Hz | 447 frames / 14.87 s |
-| Master clock / Master clock | 1 MHz | 100 μs trigger pulse |
-
-### Problem — Software timestamps cannot prove simultaneity
-
-- EN — Camera frames and IMU samples cross different drivers and queues. Host arrival time measures the software path a sample travelled.
-- KO — 카메라 프레임과 IMU 샘플은 서로 다른 드라이버와 큐를 지납니다. Host 도착 시각은 관측 순간이 아니라 소프트웨어 경로를 재는 값입니다.
-
-### Evidence — Both sensors expose a physical edge
-
-- EN — The camera takes an external trigger. The IMU raises a data-ready line. A microcontroller can watch both against one timer.
-- KO — 카메라는 외부 trigger를 받습니다. IMU는 data-ready 신호를 올립니다. 마이크로컨트롤러는 두 신호를 하나의 timer로 볼 수 있습니다.
-
-### Decision — Make the microcontroller the authority
-
-- EN — An STM32 generates the 30 Hz pulse and captures IMU events on a single 1 MHz timer. No cross-device host-clock assumption survives.
-- KO — STM32가 30 Hz pulse를 생성하고 IMU 이벤트를 하나의 1 MHz timer로 캡처합니다. 장치 간 host clock 가정이 남지 않습니다.
-
-### Implementation — Voltage to packet to pose
-
-- EN — A 3.3 V to 1.8 V interface protects the camera trigger input. COBS framing with CRC carries timestamps from C firmware to a Rust host. IMU-seeded ICP consumes them downstream.
-- KO — 3.3 V에서 1.8 V로 변환하는 회로가 카메라 trigger 입력을 보호합니다. COBS와 CRC가 C firmware에서 Rust host로 타임스탬프를 전달합니다. 후단에서 IMU-seeded ICP가 이를 사용합니다.
-
-### Result — 447 frames, 14.87 s, 30.00 Hz
-
-- EN — A real slave-mode camera test measured 30.00 Hz. The synchronized-versus-unsynchronized motion comparison is still running.
-- KO — 실제 slave 모드 카메라 시험에서 30.00 Hz를 측정했습니다. 동기화 전후 motion 비교는 아직 진행 중입니다.
-
----
-
-## 04 · Production Calibration
+## 02 · Production Calibration
 
 **Title**
 
@@ -228,7 +137,7 @@ Korean follows the same rules: 수치를 문장 안에, 동사로 시작, 단문
 
 ---
 
-## 05 · Measurement Variation
+## 03 · Measurement Variation
 
 **Title**
 
@@ -269,7 +178,7 @@ Korean follows the same rules: 수치를 문장 안에, 동사로 시작, 단문
 
 ---
 
-## 06 · Sensor Integration
+## 04 · Sensor Integration
 
 **Title**
 
@@ -309,14 +218,14 @@ Korean follows the same rules: 수치를 문장 안에, 동사로 시작, 단문
 
 ## Project index
 
-### 07 — Camera Calibration from Pedestrians
+### 05 — Camera Calibration from Pedestrians
 
 - EN summary — Calibrated CCTV cameras with no checkerboard, using pedestrians as vertical line segments. RANSAC and MSAC absorbed the outliers; accuracy improved 82% over the ICPR 2021 baseline.
 - KO summary — Checkerboard 없이 보행자를 수직 선분으로 써서 CCTV 카메라를 캘리브레이션했습니다. RANSAC과 MSAC으로 이상치를 흡수해 ICPR 2021 baseline 대비 정확도를 82% 올렸습니다.
 
 *Captions* — Pedestrians become line segments, then a sampling loop solves for the camera. / Outlier rejection leaves one usable segment per pedestrian.
 
-### 08 — Multi-Object Tracking with a 2D LiDAR
+### 06 — Multi-Object Tracking with a 2D LiDAR
 
 - EN summary — Tracked several moving objects from range scans alone, no camera appearance. DBSCAN formed the observations, an EKF held the motion state, the Hungarian algorithm linked frames.
 - KO summary — 카메라 외형 정보 없이 거리 스캔만으로 여러 이동 객체를 추적했습니다. DBSCAN이 관측을 만들고, EKF가 motion state를 유지하고, Hungarian algorithm이 프레임을 연결했습니다.
@@ -335,9 +244,14 @@ Korean follows the same rules: 수치를 문장 안에, 동사로 시작, 단문
 
 ---
 
+## Removed
+
+The two time-sync cases are out of the portfolio entirely: "Three Clocks Pretending to Be One" (device/host time, 13 ms drift over 12 h) and "One 1 MHz Clock for Camera and IMU" (STM32 trigger, 30.00 Hz over 447 frames). Their generated evidence graphics, the `clock` and `trigger` visuals, and the Temporal Alignment skills group went with them. Selected Work is now 01 to 04.
+
+The hero used to pair the LiDAR precision number with the trigger rate. It now pairs it with the three platforms owned in parallel.
+
 ## Open questions
 
 1. **Case 01 title.** "Yaw Jitter Down 82%" leads with the result, which is what a recruiter scans for. It also drops "for Reliable Navigation", so the reader loses why jitter matters until the summary. Keep the number, or keep the purpose?
 2. **Case 05 title.** "52 Cameras, Two Verdicts" is the most scannable line in the deck but says nothing about what was done. The old title named the finding (the fixture). Which half matters more?
 3. **17 months.** March 2025 to now is 18.5 months. The figure you gave was 1년 5개월. Which endpoint is it counted to?
-4. **Case 02 result.** Still says the map-quality number does not exist. Worth keeping that visible, or cut the stage?

@@ -36,7 +36,7 @@ export function ExperienceSection() {
       <div className="page-shell">
         <SectionHeading
           id="experience-title"
-          index="09 — 11"
+          index="07 — 09"
           en="Experience"
           ko="경험"
           descriptionEn="One sensor lifecycle, carried from the first electrical signal to field reliability."

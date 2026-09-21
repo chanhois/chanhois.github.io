@@ -17,7 +17,7 @@ export function Hero() {
   const { language, t } = useLanguage();
   const profile = portfolioContent.profile;
   const lidarMetric = portfolioContent.featured[0].metrics[0];
-  const triggerMetric = portfolioContent.featured[2].metrics[0];
+  const scopeMetric = portfolioContent.featured[3].metrics[0];
 
   function updateSignal(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType === "touch") return;
@@ -101,9 +101,9 @@ export function Hero() {
               context={t(lidarMetric.context)}
             />
             <Metric
-              label={t(triggerMetric.label)}
-              value={t(triggerMetric.value)}
-              context={t(triggerMetric.context)}
+              label={t(scopeMetric.label)}
+              value={t(scopeMetric.value)}
+              context={t(scopeMetric.context)}
             />
           </div>
         </div>

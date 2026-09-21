@@ -34,8 +34,6 @@ test("server-renders the complete English portfolio", async () => {
   assert.match(html, /<title>Chan-ho Seo · Robotics Sensor Engineer<\/title>/i);
   assert.match(html, /RIGHT PLACE[\s\S]*RIGHT TIME[\s\S]*TRUSTED DATA/i);
   assert.match(html, /Yaw Jitter Down 82% on a Low-Cost LiDAR/);
-  assert.match(html, /Three Clocks Pretending to Be One/);
-  assert.match(html, /One 1 MHz Clock for Camera and IMU/);
   assert.match(html, /LiDAR-to-LiDAR Calibration, Built in a Week/);
   assert.match(html, /52 Cameras, Two Verdicts/);
   assert.match(html, /Three Robots, One Sensor Engineer/);

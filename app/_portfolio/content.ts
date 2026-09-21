@@ -176,177 +176,8 @@ export const portfolioContent: PortfolioContent = {
       ],
     },
     {
-      id: "slam-time-axis",
-      eyebrow: copy("02 · Temporal Alignment", "02 · 시간 정렬"),
-      title: copy(
-        "Three Clocks Pretending to Be One",
-        "하나로 위장한 세 개의 시계",
-      ),
-      summary: copy(
-        "A sensor packet is stamped on the device, arrives at another time, and publishes at a third. Measured 13 ms of drift over 12 hours and rebuilt per-beam timestamps so scans can be deskewed.",
-        "센서 패킷은 장치에서 시각이 찍히고, 다른 시각에 도착하고, 또 다른 시각에 publish됩니다. 12시간 동안 13 ms drift를 측정하고, deskewing이 가능하도록 빔별 타임스탬프를 재구성했습니다.",
-      ),
-      tags: ["Device time", "Clock drift", "Deskewing", "SLAM"],
-      metrics: [
-        {
-          label: copy("Observed drift", "관측 drift"),
-          value: copy("≈13 ms / 12 h", "≈13 ms / 12 h"),
-          context: copy("Approximately 0.3 ppm", "약 0.3 ppm"),
-        },
-      ],
-      steps: [
-        storyStep(
-          "time-problem",
-          stages.problem,
-          copy("One timestamp hid three different clocks", "하나의 타임스탬프가 세 개의 시간을 숨겼습니다"),
-          copy(
-            "Device time, acquisition time, host publish time. Collapsing them into one instant distorts any motion that happens inside a single scan.",
-            "Device time, acquisition time, host publish time이 있습니다. 이를 하나의 순간으로 합치면 한 스캔 안에서 일어난 움직임이 왜곡됩니다.",
-          ),
-          "clock",
-          copy("Three timelines for device, acquisition, and host clocks", "Device, acquisition, host clock의 세 시간축"),
-          copy("Three clock domains, one reported timestamp.", "세 개의 clock domain, 하나의 보고된 타임스탬프."),
-        ),
-        storyStep(
-          "time-evidence",
-          stages.evidence,
-          copy("Small per packet, large per shift", "패킷 하나엔 작고, 하루엔 큰 값"),
-          copy(
-            "A 12-hour capture drifted about 13 ms, roughly 0.3 ppm. Negligible in one packet. Not negligible across a work shift with the robot moving.",
-            "12시간 측정에서 약 13 ms, 약 0.3 ppm의 drift가 나왔습니다. 패킷 하나에서는 무시할 수 있습니다. 로봇이 움직이는 하루 운용에서는 아닙니다.",
-          ),
-          "clock",
-          copy("Twelve-hour clock drift plot ending near 13 milliseconds", "12시간 후 약 13 ms에 도달하는 clock drift 그래프"),
-          copy("Measured drift: approximately 13 ms over 12 hours.", "측정된 drift는 12시간 동안 약 13 ms입니다."),
-        ),
-        storyStep(
-          "time-decision",
-          stages.decision,
-          copy("Keep the source clock, map it explicitly", "원본 시계를 유지하고 명시적으로 변환"),
-          copy(
-            "The device clock stays the source of truth. Offset and drift are estimated as separate terms in an affine map to host time.",
-            "Device clock을 원본으로 유지합니다. Offset과 drift를 host time으로 가는 affine 변환의 서로 다른 항으로 추정합니다.",
-          ),
-          "clock",
-          copy("Affine conversion from device time into the host clock", "Device time에서 host clock으로의 affine 변환"),
-          copy("Two terms: a constant offset and a rate.", "두 개의 항, 상수 offset과 rate."),
-        ),
-        storyStep(
-          "time-implementation",
-          stages.implementation,
-          copy("Give every beam its own timestamp", "빔마다 자기 타임스탬프 부여"),
-          copy(
-            "Device-time conversion plus a scan-period model assigns each beam the time it was actually measured. A deskewing filter can then pull the whole scan to one reference pose.",
-            "Device time 변환과 스캔 주기 모델로 각 빔에 실제 측정 시각을 부여합니다. 이후 deskewing filter가 스캔 전체를 하나의 기준 pose로 끌어옵니다.",
-          ),
-          "clock",
-          copy("Per-beam time reconstruction followed by deskewing", "빔별 시간 재구성 후 deskewing하는 과정"),
-          copy("Every point carries its own measurement time.", "모든 포인트가 자기 측정 시각을 갖습니다."),
-        ),
-        storyStep(
-          "time-result",
-          stages.result,
-          copy("Timing is fixed; map quality is the next experiment", "시간은 보정됐고, 지도 품질은 다음 실험"),
-          copy(
-            "The pipeline now hands SLAM temporally coherent scans. A quantitative map-quality number needs a controlled before-and-after run, which has not been done.",
-            "파이프라인은 이제 SLAM에 시간적으로 일관된 스캔을 넘깁니다. 지도 품질 수치는 통제된 전후 비교가 있어야 제시할 수 있고, 아직 하지 않았습니다.",
-          ),
-          "clock",
-          copy("Aligned scan timeline prepared for controlled SLAM comparison", "통제된 SLAM 비교를 위해 정렬된 스캔 시간축"),
-          copy("Corrected timing is measured. Map quality is not, yet.", "시간 보정은 측정됐습니다. 지도 품질은 아직입니다."),
-        ),
-      ],
-    },
-    {
-      id: "hardware-trigger-sync",
-      eyebrow: copy("03 · Hardware Synchronization", "03 · 하드웨어 동기화"),
-      title: copy(
-        "One 1 MHz Clock for Camera and IMU",
-        "카메라와 IMU를 하나의 1 MHz 시계로",
-      ),
-      summary: copy(
-        "Host arrival time cannot prove two sensors saw the world at the same moment. Built an STM32 timing master that fires the camera at 30 Hz and stamps IMU events on the same 1 MHz timer. Measured 30.00 Hz over 447 frames.",
-        "Host 도착 시각으로는 두 센서가 같은 순간을 봤다는 것을 증명할 수 없습니다. STM32를 timing master로 만들어 카메라를 30 Hz로 트리거하고 IMU 이벤트를 같은 1 MHz timer로 기록했습니다. 447프레임에서 30.00 Hz를 측정했습니다.",
-      ),
-      tags: ["STM32", "Hardware trigger", "IMU", "Rust", "ICP"],
-      metrics: [
-        {
-          label: copy("Verified camera rate", "검증된 카메라 주기"),
-          value: copy("30.00 Hz", "30.00 Hz"),
-          context: copy("447 frames / 14.87 s", "447 frames / 14.87 s"),
-        },
-        {
-          label: copy("Master clock", "Master clock"),
-          value: copy("1 MHz", "1 MHz"),
-          context: copy("100 μs trigger pulse", "100 μs trigger pulse"),
-        },
-      ],
-      steps: [
-        storyStep(
-          "trigger-problem",
-          stages.problem,
-          copy("Software timestamps cannot prove simultaneity", "소프트웨어 타임스탬프는 동시성을 증명하지 못합니다"),
-          copy(
-            "Camera frames and IMU samples cross different drivers and queues. Host arrival time measures the software path a sample travelled.",
-            "카메라 프레임과 IMU 샘플은 서로 다른 드라이버와 큐를 지납니다. Host 도착 시각은 샘플이 지나온 소프트웨어 경로를 재는 값입니다.",
-          ),
-          "trigger",
-          copy("Unsynchronized camera and IMU timelines", "동기화되지 않은 카메라와 IMU 시간축"),
-          copy("Two software paths, two variable delays.", "두 개의 소프트웨어 경로, 두 개의 가변 지연."),
-        ),
-        storyStep(
-          "trigger-evidence",
-          stages.evidence,
-          copy("Both sensors expose a physical edge", "두 센서 모두 물리 신호를 내놓습니다"),
-          copy(
-            "The camera takes an external trigger. The IMU raises a data-ready line. A microcontroller can watch both against one timer.",
-            "카메라는 외부 trigger를 받습니다. IMU는 data-ready 신호를 올립니다. 마이크로컨트롤러는 두 신호를 하나의 timer로 볼 수 있습니다.",
-          ),
-          "trigger",
-          copy("Camera trigger and IMU data-ready lines entering a timing controller", "Timing controller에 연결된 카메라 trigger와 IMU data-ready 선"),
-          copy("Two wires the microcontroller can watch directly.", "마이크로컨트롤러가 직접 볼 수 있는 두 개의 선."),
-        ),
-        storyStep(
-          "trigger-decision",
-          stages.decision,
-          copy("Make the microcontroller the authority", "마이크로컨트롤러를 기준으로 삼기"),
-          copy(
-            "An STM32 generates the 30 Hz pulse and captures IMU events on a single 1 MHz timer. No cross-device host-clock assumption survives.",
-            "STM32가 30 Hz pulse를 생성하고 IMU 이벤트를 하나의 1 MHz timer로 캡처합니다. 장치 간 host clock 가정이 남지 않습니다.",
-          ),
-          "trigger",
-          copy("STM32 timing master connected to camera and IMU", "카메라와 IMU에 연결된 STM32 timing master"),
-          copy("One timer, both streams.", "하나의 timer, 두 개의 스트림."),
-        ),
-        storyStep(
-          "trigger-implementation",
-          stages.implementation,
-          copy("Voltage to packet to pose", "전압에서 패킷으로, 패킷에서 pose로"),
-          copy(
-            "A 3.3 V to 1.8 V interface protects the camera trigger input. COBS framing with CRC carries timestamps from C firmware to a Rust host. IMU-seeded ICP consumes them downstream.",
-            "3.3 V에서 1.8 V로 변환하는 회로가 카메라 trigger 입력을 보호합니다. COBS와 CRC가 C firmware에서 Rust host로 타임스탬프를 전달합니다. 후단에서 IMU-seeded ICP가 이를 사용합니다.",
-          ),
-          "trigger",
-          copy("Voltage interface, COBS and CRC packet path, and ICP consumer", "전압 변환, COBS/CRC 패킷, ICP consumer 경로"),
-          copy("From the electrical edge to the host record.", "전기 신호의 edge부터 host 기록까지."),
-        ),
-        storyStep(
-          "trigger-result",
-          stages.result,
-          copy("447 frames, 14.87 s, 30.00 Hz", "447프레임, 14.87초, 30.00 Hz"),
-          copy(
-            "A real slave-mode camera test measured 30.00 Hz. The synchronized-versus-unsynchronized motion comparison is still running.",
-            "실제 slave 모드 카메라 시험에서 30.00 Hz를 측정했습니다. 동기화 전후 motion 비교는 아직 진행 중입니다.",
-          ),
-          "trigger",
-          copy("Verified 30 hertz trigger trace with pending downstream comparison", "검증된 30 Hz trigger trace와 예정된 후단 비교"),
-          copy("Measured output: 447 frames over 14.87 seconds, or 30.00 Hz.", "측정 결과는 14.87초 동안 447프레임, 30.00 Hz입니다."),
-        ),
-      ],
-    },
-    {
       id: "amr-calibration",
-      eyebrow: copy("04 · Production Calibration", "04 · 생산 캘리브레이션"),
+      eyebrow: copy("02 · Production Calibration", "02 · 생산 캘리브레이션"),
       title: copy(
         "LiDAR-to-LiDAR Calibration, Built in a Week",
         "일주일 만에 만든 LiDAR 간 캘리브레이션",
@@ -431,7 +262,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "camera-iqc-uncertainty",
-      eyebrow: copy("05 · Measurement Variation", "05 · 측정 산포"),
+      eyebrow: copy("03 · Measurement Variation", "03 · 측정 산포"),
       title: copy(
         "52 Cameras, Two Verdicts",
         "카메라 52대, 두 개의 판정",
@@ -506,7 +337,7 @@ export const portfolioContent: PortfolioContent = {
     },
     {
       id: "sensor-integration",
-      eyebrow: copy("06 · Sensor Integration", "06 · 센서 통합"),
+      eyebrow: copy("04 · Sensor Integration", "04 · 센서 통합"),
       title: copy(
         "Three Robots, One Sensor Engineer",
         "로봇 세 대, 센서 엔지니어 한 명",
@@ -731,11 +562,6 @@ export const portfolioContent: PortfolioContent = {
       id: "space",
       title: copy("Spatial Calibration", "공간 캘리브레이션"),
       skills: ["SE(2) / SE(3)", "RANSAC", "PCA", "URDF / TF", "OpenCV", "Open3D"],
-    },
-    {
-      id: "time",
-      title: copy("Temporal Alignment", "시간 정렬"),
-      skills: ["Hardware Trigger", "Device Time", "Clock Drift", "Deskewing", "STM32"],
     },
     {
       id: "quality",
