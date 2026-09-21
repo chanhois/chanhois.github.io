@@ -385,6 +385,18 @@ export const portfolioContent: PortfolioContent = {
           copy("Five stages, applied three times.", "다섯 단계를 세 번 적용했습니다."),
         ),
         storyStep(
+          "integration-implementation",
+          stages.implementation,
+          copy("Build the interface that was missing", "없던 접점을 직접 만들기"),
+          copy(
+            "Sensor mounting geometry lived with mechanical engineering and reached software late, or not at all. I opened a standing channel between the two teams. Its field-of-view and mounting-position documents became the specification the rest of us cite.",
+            "센서 장착 기하는 기구팀에 있었고 소프트웨어에는 늦게 오거나 아예 오지 않았습니다. 두 팀 사이에 상시 채널을 열었습니다. 거기서 나온 FOV·장착 위치 문서가 다른 팀이 인용하는 스펙이 됐습니다.",
+          ),
+          "integration",
+          copy("A shared channel between software and mechanical engineering feeding one specification", "하나의 스펙으로 모이는 소프트웨어와 기구팀 사이의 공용 채널"),
+          copy("Mounting geometry now arrives as a document, not a question.", "장착 기하가 질문이 아니라 문서로 옵니다."),
+        ),
+        storyStep(
           "integration-result",
           stages.result,
           copy("All three shipped", "세 대 모두 출하됐습니다"),

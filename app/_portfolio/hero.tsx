@@ -5,11 +5,11 @@ import { portfolioContent } from "./content";
 import { Metric } from "./metric";
 import { useLanguage } from "./use-language";
 
-const capabilities = [
-  { en: "Calibration", ko: "캘리브레이션" },
-  { en: "Sensor Quality", ko: "센서 품질" },
-  { en: "Perception", ko: "인지" },
-  { en: "Integration", ko: "통합" },
+const functions = [
+  { en: "Robotics SW", ko: "로보틱스 SW" },
+  { en: "Mechanical", ko: "기구" },
+  { en: "Factory", ko: "공장" },
+  { en: "Field", ko: "필드" },
 ] as const;
 
 export function Hero() {
@@ -42,9 +42,9 @@ export function Hero() {
             )}
           </h1>
           <p className="hero__intro">{t(profile.introduction)}</p>
-          <ul className="capability-list" aria-label={language === "en" ? "Core capabilities" : "핵심 역량"}>
-            {capabilities.map((capability) => (
-              <li key={capability.en}>{t(capability)}</li>
+          <ul className="capability-list" aria-label={language === "en" ? "Functions this work crosses" : "이 일이 걸친 영역"}>
+            {functions.map((fn) => (
+              <li key={fn.en}>{t(fn)}</li>
             ))}
           </ul>
           <div className="hero__actions">
