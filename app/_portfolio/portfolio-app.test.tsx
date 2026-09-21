@@ -7,11 +7,11 @@ describe("PortfolioApp", () => {
   it("leads with the positioning and verified proof metrics", () => {
     render(<PortfolioApp />);
     const hero = screen.getByRole("region", {
-      name: /right place.*right time.*trusted data/i,
+      name: /the sensor.*is usually.*not the problem/i,
     });
     expect(
       within(hero).getByRole("heading", {
-        name: /right place.*right time.*trusted data/i,
+        name: /the sensor.*is usually.*not the problem/i,
       }),
     ).toBeInTheDocument();
     expect(within(hero).getByText("0.378° → 0.067°")).toBeInTheDocument();

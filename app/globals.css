@@ -186,12 +186,12 @@ section[id] {
 }
 
 .hero__content {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
-  gap: clamp(44px, 7vw, 110px);
-  align-items: center;
-  min-height: min(800px, calc(100svh - 72px));
-  padding-block: clamp(72px, 10vh, 118px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(34px, 3.4vw, 46px);
+  min-height: min(720px, calc(100svh - 72px));
+  padding-block: clamp(56px, 7vh, 88px);
 }
 
 .eyebrow {
@@ -215,9 +215,9 @@ section[id] {
 }
 
 .hero h1 {
-  max-width: 760px;
+  max-width: 1100px;
   margin: 0;
-  font-size: clamp(3.25rem, 6.6vw, 6.35rem);
+  font-size: clamp(3.1rem, 6vw, 5.6rem);
   font-weight: 780;
   letter-spacing: -0.072em;
   line-height: 0.91;
@@ -228,8 +228,8 @@ section[id] {
 }
 
 .hero__intro {
-  max-width: 620px;
-  margin: 32px 0 0;
+  max-width: 680px;
+  margin: 28px 0 0;
   color: var(--muted);
   font-size: clamp(1rem, 1.35vw, 1.18rem);
   line-height: 1.75;
@@ -293,133 +293,12 @@ section[id] {
   background: rgba(255, 255, 255, 0.45);
 }
 
-.hero__lab {
-  min-width: 0;
-}
-
-.signal-field {
-  --signal-x: 0px;
-  --signal-y: 0px;
-  position: relative;
-  aspect-ratio: 1 / 0.88;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: var(--shadow-soft);
-}
-
-.signal-field__grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.45;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 44px 44px;
-  transform: translate(var(--signal-x), var(--signal-y));
-  transition: transform 140ms ease-out;
-}
-
-.signal-field__orbit,
-.signal-field__axis,
-.signal-field__point,
-.signal-field__label {
-  position: absolute;
-  transition: transform 180ms ease-out;
-}
-
-.signal-field__orbit {
-  top: 50%;
-  left: 50%;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-  transform: translate(calc(-50% + var(--signal-x)), calc(-50% + var(--signal-y)));
-}
-
-.signal-field__orbit--outer {
-  width: 72%;
-  aspect-ratio: 1;
-  opacity: 0.48;
-}
-
-.signal-field__orbit--inner {
-  width: 37%;
-  aspect-ratio: 1;
-  border-color: var(--indigo);
-  opacity: 0.62;
-  transform: translate(calc(-50% - var(--signal-x)), calc(-50% - var(--signal-y)));
-}
-
-.signal-field__axis--x {
-  top: 50%;
-  right: 8%;
-  left: 8%;
-  border-top: 1px dashed var(--border);
-}
-
-.signal-field__axis--y {
-  top: 8%;
-  bottom: 8%;
-  left: 50%;
-  border-left: 1px dashed var(--border);
-}
-
-.signal-field__point {
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--paper);
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
-}
-
-.signal-field__point--a {
-  top: 23%;
-  left: 35%;
-  transform: translate(var(--signal-x), var(--signal-y));
-}
-
-.signal-field__point--b {
-  top: 62%;
-  left: 68%;
-  background: var(--indigo);
-  box-shadow: 0 0 0 1px var(--indigo);
-  transform: translate(calc(var(--signal-x) * -1), calc(var(--signal-y) * -1));
-}
-
-.signal-field__point--c {
-  top: 73%;
-  left: 28%;
-}
-
-.signal-field__label {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-}
-
-.signal-field__label--a { top: 17%; left: 29%; }
-.signal-field__label--b { top: 57%; left: 71%; }
-.signal-field__label--c { top: 76%; left: 31%; }
-
-.signal-field__readout {
-  position: absolute;
-  right: 16px;
-  bottom: 14px;
-  padding: 5px 8px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-}
-
 .hero__metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-right: 1px solid var(--border);
+  max-width: 620px;
+  border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  border-left: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.58);
 }
 
@@ -1435,10 +1314,6 @@ section[id] {
     display: none;
   }
 
-  .hero__content {
-    grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
-    gap: 40px;
-  }
 
   .skills-grid {
     grid-template-columns: 1fr 1fr;
@@ -1470,8 +1345,8 @@ section[id] {
   }
 
   .hero__content {
-    display: block;
     min-height: 0;
+    gap: 38px;
     padding-block: 70px 82px;
   }
 
@@ -1481,10 +1356,6 @@ section[id] {
 
   .hero__intro {
     margin-top: 26px;
-  }
-
-  .hero__lab {
-    margin-top: 52px;
   }
 
   .hero__scroll {
@@ -1674,7 +1545,6 @@ section[id] {
     transition-duration: 0.01ms !important;
   }
 
-  .signal-field *,
   .button:hover {
     transform: none !important;
   }

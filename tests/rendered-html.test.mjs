@@ -32,7 +32,7 @@ test("server-renders the complete English portfolio", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Chan-ho Seo · Robotics Sensor Engineer<\/title>/i);
-  assert.match(html, /RIGHT PLACE[\s\S]*RIGHT TIME[\s\S]*TRUSTED DATA/i);
+  assert.match(html, /THE SENSOR[\s\S]*IS USUALLY[\s\S]*NOT THE PROBLEM/i);
   assert.match(html, /Yaw Jitter Down 82% on a Low-Cost LiDAR/);
   assert.match(html, /LiDAR-to-LiDAR Calibration, Built in a Week/);
   assert.match(html, /52 Cameras, Two Verdicts/);

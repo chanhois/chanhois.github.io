@@ -46,8 +46,8 @@ export const portfolioContent: PortfolioContent = {
       "정확한 공간. 정확한 시간. 신뢰할 수 있는 데이터.",
     ),
     introduction: copy(
-      "I own robot sensors end to end: bring-up, calibration, time synchronization, factory inspection, field failures. Three commercial platforms so far, sole sensor owner on all three.",
-      "로봇 센서를 처음부터 끝까지 담당합니다. Bring-up, 캘리브레이션, 시간 동기화, 공장 검사, 현장 장애까지. 지금까지 상용 플랫폼 세 대를 모두 단독으로 맡았습니다.",
+      "I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. When a measurement goes wrong the cause is usually upstream of the sensor, in a timestamp, an index, or a fixture that shifts. I have been the only sensor engineer on three commercial robot platforms.",
+      "로봇 센서를 처음부터 끝까지 담당합니다. Bring-up, 캘리브레이션, 공장 검사, 현장 장애까지. 측정이 틀어졌을 때 원인은 대개 센서보다 위에 있습니다. 타임스탬프, 인덱스, 혹은 흔들리는 지그입니다. 상용 로봇 세 대에서 센서를 맡은 유일한 엔지니어였습니다.",
     ),
     email: "studychanho0717@gmail.com",
   },

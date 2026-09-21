@@ -1,16 +1,15 @@
 "use client";
 
 import { ArrowDownRight, Mail } from "lucide-react";
-import type { PointerEvent } from "react";
 import { portfolioContent } from "./content";
 import { Metric } from "./metric";
 import { useLanguage } from "./use-language";
 
 const capabilities = [
   { en: "Calibration", ko: "캘리브레이션" },
-  { en: "Time Sync", ko: "시간 동기화" },
   { en: "Sensor Quality", ko: "센서 품질" },
   { en: "Perception", ko: "인지" },
+  { en: "Integration", ko: "통합" },
 ] as const;
 
 export function Hero() {
@@ -18,21 +17,6 @@ export function Hero() {
   const profile = portfolioContent.profile;
   const lidarMetric = portfolioContent.featured[0].metrics[0];
   const scopeMetric = portfolioContent.featured[3].metrics[0];
-
-  function updateSignal(event: PointerEvent<HTMLDivElement>) {
-    if (event.pointerType === "touch") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = Math.max(
-      -1,
-      Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2),
-    );
-    const y = Math.max(
-      -1,
-      Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2),
-    );
-    event.currentTarget.style.setProperty("--signal-x", `${x * 10}px`);
-    event.currentTarget.style.setProperty("--signal-y", `${y * 10}px`);
-  }
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
@@ -45,15 +29,15 @@ export function Hero() {
           <h1 id="hero-title">
             {language === "en" ? (
               <>
-                RIGHT PLACE.<br />
-                RIGHT TIME.<br />
-                <span>TRUSTED DATA.</span>
+                THE SENSOR<br />
+                IS USUALLY<br />
+                <span>NOT THE PROBLEM.</span>
               </>
             ) : (
               <>
-                정확한 공간.<br />
-                정확한 시간.<br />
-                <span>신뢰할 수 있는 데이터.</span>
+                문제는<br />
+                대개<br />
+                <span>센서가 아닙니다.</span>
               </>
             )}
           </h1>
@@ -75,41 +59,21 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="hero__lab">
-          <div
-            className="signal-field"
-            aria-hidden="true"
-            onPointerMove={updateSignal}
-          >
-            <div className="signal-field__grid" />
-            <div className="signal-field__orbit signal-field__orbit--outer" />
-            <div className="signal-field__orbit signal-field__orbit--inner" />
-            <div className="signal-field__axis signal-field__axis--x" />
-            <div className="signal-field__axis signal-field__axis--y" />
-            <span className="signal-field__point signal-field__point--a" />
-            <span className="signal-field__point signal-field__point--b" />
-            <span className="signal-field__point signal-field__point--c" />
-            <span className="signal-field__label signal-field__label--a">t₀</span>
-            <span className="signal-field__label signal-field__label--b">Δθ</span>
-            <span className="signal-field__label signal-field__label--c">σ</span>
-            <span className="signal-field__readout">SENSOR FRAME · ALIGNED</span>
-          </div>
-          <div className="hero__metrics">
-            <Metric
-              label={t(lidarMetric.label)}
-              value={t(lidarMetric.value)}
-              context={t(lidarMetric.context)}
-            />
-            <Metric
-              label={t(scopeMetric.label)}
-              value={t(scopeMetric.value)}
-              context={t(scopeMetric.context)}
-            />
-          </div>
+        <div className="hero__metrics">
+          <Metric
+            label={t(lidarMetric.label)}
+            value={t(lidarMetric.value)}
+            context={t(lidarMetric.context)}
+          />
+          <Metric
+            label={t(scopeMetric.label)}
+            value={t(scopeMetric.value)}
+            context={t(scopeMetric.context)}
+          />
         </div>
       </div>
       <p className="hero__scroll" aria-hidden="true">
-        SCROLL TO TRACE THE SIGNAL <span>↓</span>
+        SELECTED WORK <span>↓</span>
       </p>
     </section>
   );
