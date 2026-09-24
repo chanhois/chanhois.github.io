@@ -20,6 +20,7 @@ describe("public portfolio content", () => {
       "sensor-integration",
       "lidar-stability",
       "amr-calibration",
+      "rgbd-pipeline",
       "camera-iqc-uncertainty",
     ]);
     expect(portfolioContent.projects).toHaveLength(2);

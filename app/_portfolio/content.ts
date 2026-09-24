@@ -70,7 +70,7 @@ export const portfolioContent: PortfolioContent = {
         "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
         "서빙로봇, 산업용 AMR, 휴머노이드. 겹치는 일정, 17개월, 세 대 모두 단독 담당.",
       ),
-      tags: ["Bring-up", "URDF / TF", "ROS 1 drivers", "Linux interfaces", "Factory test"],
+      tags: ["Bring-up", "URDF / TF", "Linux interfaces", "Factory test", "Field reliability"],
       metrics: [
         {
           label: copy("Platforms owned in parallel", "동시 전담 플랫폼"),
@@ -97,18 +97,6 @@ export const portfolioContent: PortfolioContent = {
           copy("The three programs run across one another.", "세 과제가 서로 겹쳐 진행됩니다."),
         ),
         storyStep(
-          "integration-evidence",
-          stages.evidence,
-          copy("Most of it was never at the sensor", "대부분은 센서에 있지 않았습니다"),
-          copy(
-            "A field-of-view crop came from angular bounds written for a sensor that publishes ±π being reused for one that publishes 0 to 2π, which let only a wrong 138° sector through. A publisher delay came from a vendor driver emitting redundant static transforms, which I filed upstream. Neither was a sensor fault.",
-            "FOV crop은 ±π로 발행하는 센서용 angular bounds가 0~2π로 발행하는 센서에 그대로 쓰여, 엉뚱한 138° 섹터만 통과시킨 것이었습니다. Publisher 지연은 벤더 드라이버가 중복 static transform을 내보낸 것이었고 upstream에 제기했습니다. 둘 다 센서 결함이 아니었습니다.",
-          ),
-          "integration",
-          copy("Two driver-level defects sitting between the sensor and the robot", "센서와 로봇 사이에 있던 두 개의 드라이버 결함"),
-          copy("Integration work lands in the driver and the transform tree.", "통합 작업은 드라이버와 transform tree에서 이뤄집니다."),
-        ),
-        storyStep(
           "integration-decision",
           stages.decision,
           copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
@@ -121,24 +109,12 @@ export const portfolioContent: PortfolioContent = {
           copy("Five stages, applied three times.", "다섯 단계를 세 번 적용했습니다."),
         ),
         storyStep(
-          "integration-implementation",
-          stages.implementation,
-          copy("Build the interface that was missing", "없던 접점을 직접 만들기"),
-          copy(
-            "Sensor mounting geometry lived with mechanical engineering and reached software late, or not at all. I opened a standing channel between the two teams. Its field-of-view and mounting-position documents became the specification the rest of us cite.",
-            "센서 장착 기하는 기구팀에 있었고 소프트웨어에는 늦게 오거나 아예 오지 않았습니다. 두 팀 사이에 상시 채널을 열었습니다. 거기서 나온 FOV·장착 위치 문서가 다른 팀이 인용하는 스펙이 됐습니다.",
-          ),
-          "integration",
-          copy("A shared channel between software and mechanical engineering feeding one specification", "하나의 스펙으로 모이는 소프트웨어와 기구팀 사이의 공용 채널"),
-          copy("Mounting geometry now arrives as a document, not a question.", "장착 기하가 질문이 아니라 문서로 옵니다."),
-        ),
-        storyStep(
           "integration-result",
           stages.result,
           copy("All three shipped", "세 대 모두 출하됐습니다"),
           copy(
-            "Depth, ToF, RGB, and range sensing integrated on each robot and carried through factory test into field operation, including a humanoid configuration finished against a hard shipment date. Integration here meant the whole path: vendor ROS drivers and their SDK upgrades, URDF and TF, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
-            "세 로봇에 depth, ToF, RGB, 거리 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 촉박한 출하 일정에 맞춘 휴머노이드 configuration도 포함됩니다. 여기서 통합은 전체 경로를 뜻합니다. 벤더 ROS 드라이버와 SDK 업그레이드, URDF·TF, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
+            "RGB-D, LiDAR and RGB sensing integrated on each robot and carried through factory test into field operation. Integration meant the whole path: URDF and TF, runtime calibration, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
+            "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 통합은 전체 경로를 뜻합니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
           ),
           "integration",
           copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
@@ -266,19 +242,19 @@ export const portfolioContent: PortfolioContent = {
       id: "amr-calibration",
       eyebrow: copy("03 · Production Calibration", "03 · 생산 캘리브레이션"),
       title: copy(
-        "LiDAR-to-LiDAR Calibration, Built in a Week",
-        "일주일 만에 만든 LiDAR 간 캘리브레이션",
+        "A Calibration Method That Reached the Production Line",
+        "생산 라인까지 간 캘리브레이션 방법",
       ),
       summary: copy(
-        "One LiDAR sat upside down with an unknown yaw offset, so its returns missed the wall the reference sensor hit. Estimated the SE(2) offset from wall geometry and had the tool running on robots in under a week.",
-        "한 LiDAR가 뒤집혀 장착되고 yaw 오프셋을 몰라, 기준 센서가 맞히는 벽을 빗나갔습니다. 벽면 기하로 SE(2) 오프셋을 추정해 일주일 안에 로봇에서 도구를 돌렸습니다.",
+        "One LiDAR sat upside down with an unknown yaw offset, so its returns missed the wall the reference sensor hit. Estimated the offset from wall geometry and put the method on the production line.",
+        "한 LiDAR가 뒤집혀 장착되고 yaw 오프셋을 몰라, 기준 센서가 맞히는 벽을 빗나갔습니다. 벽면 기하로 오프셋을 추정해 그 방법을 생산 라인에 올렸습니다.",
       ),
-      tags: ["SE(2)", "RANSAC", "PCA", "Huber loss", "Rapid response"],
+      tags: ["RANSAC", "PCA", "Huber loss", "Production", "On-robot workflow"],
       metrics: [
         {
-          label: copy("Problem to deployed tool", "문제 인식에서 적용까지"),
-          value: copy("Under a week", "1주 이내"),
-          context: copy("Diagnosis, estimator, and on-robot workflow", "진단, 추정기, on-robot workflow"),
+          label: copy("Alignment criterion", "정렬 기준"),
+          value: copy("Measurable residual", "측정 가능한 residual"),
+          context: copy("Replaced operator judgment", "작업자 판단을 대체"),
         },
       ],
       steps: [
@@ -327,10 +303,10 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "calibration-result",
           label: stages.result,
-          title: copy("Under a week, and it transfers", "일주일 이내, 그리고 다른 로봇에도"),
+          title: copy("It transfers to robots it never saw", "처음 보는 로봇에서도 수렴합니다"),
           body: copy(
-            "Diagnosis to a working on-robot tool took under a week: capture, estimate, validate, save. The same procedure converges on robots it was never tuned against.",
-            "진단부터 로봇에서 동작하는 도구까지 일주일이 걸리지 않았습니다. 수집, 추정, 검증, 저장까지 포함해서입니다. 같은 절차가 튜닝하지 않은 로봇에서도 수렴합니다.",
+            "Capture, estimate, validate, save: one on-robot workflow that runs where the robot is built. It replaced alignment by operator judgment with a residual anyone can read, and converges on robots it was never tuned against.",
+            "수집, 추정, 검증, 저장을 하나의 on-robot workflow로 묶어 로봇이 만들어지는 자리에서 돌립니다. 작업자 판단에 의존하던 정렬을 누구나 읽을 수 있는 residual로 바꿨고, 튜닝하지 않은 로봇에서도 수렴합니다.",
           ),
           media: {
             kind: "image",
@@ -340,25 +316,83 @@ export const portfolioContent: PortfolioContent = {
               "두 로봇에서 두 거리 센서로 측정한 벽 스캔으로, 캘리브레이션 전에는 두 선으로 갈라지고 후에는 하나의 선으로 겹칩니다",
             ),
             caption: copy(
-              "Two robots, before and after, one week after the problem surfaced.",
-              "문제가 드러나고 일주일 뒤, 두 대의 로봇에서 얻은 캘리브레이션 전후입니다.",
+              "Two robots, before and after the same procedure.",
+              "같은 절차를 적용한 두 대의 로봇, 전후 비교입니다.",
             ),
           },
         },
       ],
     },
     {
+      id: "rgbd-pipeline",
+      eyebrow: copy("04 · Runtime Performance", "04 · 런타임 성능"),
+      title: copy(
+        "26% of the CPU Was Sorting Points Nobody Needed",
+        "CPU의 26%는 아무도 필요로 하지 않는 정렬이었습니다",
+      ),
+      summary: copy(
+        "Three depth camera processes were eating the robot's CPU. Profiling put the cost inside PCL VoxelGrid's sort, and a sort-free downsampling pass gave 26% back.",
+        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링 결과 비용은 PCL VoxelGrid의 정렬 안에 있었고, 정렬 없는 downsampling으로 26%를 돌려받았습니다.",
+      ),
+      tags: ["Profiling", "PCL", "Point cloud", "C++", "Runtime"],
+      metrics: [
+        {
+          label: copy("CPU reclaimed", "CPU 절감"),
+          value: copy("26%", "26%"),
+          context: copy("Across three camera processes", "카메라 프로세스 3개 합산"),
+        },
+      ],
+      steps: [
+        storyStep(
+          "rgbd-problem",
+          stages.problem,
+          copy("Three cameras, and the CPU had nothing left", "카메라 셋, 그리고 남지 않은 CPU"),
+          copy(
+            "Each depth camera ran its own downsampling stage. On a robot that also has to navigate, three of them together left little headroom for anything else.",
+            "depth 카메라마다 자체 downsampling 단계를 돌렸습니다. 주행까지 해야 하는 로봇에서 셋이 합쳐지니 다른 일에 쓸 여유가 거의 없었습니다.",
+          ),
+          "uncertainty",
+          copy("Three camera processes competing for the same CPU budget", "같은 CPU 예산을 두고 경쟁하는 세 개의 카메라 프로세스"),
+          copy("The cost scales with the number of cameras, not with the scene.", "비용이 장면이 아니라 카메라 대수에 비례해 늘어납니다."),
+        ),
+        storyStep(
+          "rgbd-evidence",
+          stages.evidence,
+          copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
+          copy(
+            "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
+            "로봇에서 파이프라인을 프로파일링하자 시간이 PCL VoxelGrid 안에 있었습니다. 이 구현은 점들을 voxel로 묶기 위해 정렬을 하는데, 비싼 쪽은 downsampling 자체가 아니라 그 정렬이었습니다.",
+          ),
+          "uncertainty",
+          copy("Profiler output placing the cost inside the voxel grid sort", "voxel grid 정렬에 비용이 몰려 있음을 보여주는 프로파일러 결과"),
+          copy("Measured on the robot, not on a workstation.", "워크스테이션이 아니라 로봇에서 측정했습니다."),
+        ),
+        storyStep(
+          "rgbd-result",
+          stages.result,
+          copy("26% back, same output", "같은 결과, CPU 26% 반환"),
+          copy(
+            "Replacing the stage with a sort-free downsampling pass cut CPU across the three camera processes by 26%, with the same downsampled cloud going downstream.",
+            "이 단계를 정렬 없는 downsampling으로 교체해 세 카메라 프로세스 합산 CPU를 26% 줄였습니다. 후단으로 가는 downsampled cloud는 그대로입니다.",
+          ),
+          "uncertainty",
+          copy("CPU usage before and after the sort-free downsampling pass", "정렬 없는 downsampling 적용 전후의 CPU 사용량"),
+          copy("26% reclaimed across three camera processes.", "카메라 프로세스 세 개 합산 26%를 되찾았습니다."),
+        ),
+      ],
+    },
+    {
       id: "camera-iqc-uncertainty",
-      eyebrow: copy("04 · Measurement Variation", "04 · 측정 산포"),
+      eyebrow: copy("05 · Measurement Variation", "05 · 측정 산포"),
       title: copy(
         "52 Cameras, Two Verdicts",
         "카메라 52대, 두 개의 판정",
       ),
       summary: copy(
-        "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Remounting the same camera showed the jig was moving the result, so the jig changed.",
-        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 같은 카메라를 다시 장착해 보니 지그가 결과를 흔들고 있었고, 지그를 바꿨습니다.",
+        "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Built the acceptance criteria and the measurement-system analysis behind them, which traced the disagreement to the fixture.",
+        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준과 그 뒤의 측정 시스템 분석을 만들었고, 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
       ),
-      tags: ["Measurement variation", "Remount study", "Fixture design", "IQC"],
+      tags: ["IQC", "3-sigma thresholds", "Measurement variation", "Fixture design"],
       metrics: [
         {
           label: copy("Conflicting decisions", "상충 판정"),
@@ -395,6 +429,18 @@ export const portfolioContent: PortfolioContent = {
           "uncertainty",
           copy("Inspection fixture treated as a measured source of variation", "산포 원인으로 다루어지는 검사 지그"),
           copy("The fixture is one of the things being measured.", "지그도 측정 대상 중 하나입니다."),
+        ),
+        storyStep(
+          "uncertainty-evidence",
+          stages.evidence,
+          copy("There were no numeric criteria to disagree about", "애초에 다툴 수치 기준이 없었습니다"),
+          copy(
+            "Acceptance rested on judgement, not on a quantity. I defined what a camera has to satisfy, field of view and optical-centre offset, from the development requirements, and set the production thresholds from a 3-sigma analysis of the measured distribution.",
+            "합격 여부가 수치가 아니라 판단에 기대고 있었습니다. 카메라가 만족해야 할 항목을 개발 요구사항에서 정의했습니다. 화각과 광학 중심 오프셋입니다. 생산 기준값은 측정 분포의 3-sigma 분석으로 정했습니다.",
+          ),
+          "uncertainty",
+          copy("Acceptance criteria derived from a measured distribution", "측정 분포에서 도출한 합격 기준"),
+          copy("Field of view and optical-centre offset, with thresholds set at 3 sigma.", "화각과 광학 중심 오프셋, 기준값은 3-sigma."),
         ),
         storyStep(
           "uncertainty-implementation",
@@ -591,7 +637,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "space",
       title: copy("Spatial Calibration", "공간 캘리브레이션"),
-      skills: ["SE(2) / SE(3)", "RANSAC", "MSAC", "PCA", "Huber Loss", "URDF / TF", "Multiple-View Geometry"],
+      skills: ["RANSAC", "MSAC", "PCA", "Huber Loss", "URDF / TF", "Multiple-View Geometry"],
     },
     {
       id: "interfaces",
@@ -601,7 +647,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "quality",
       title: copy("Sensor Quality", "센서 품질"),
-      skills: ["Measurement Variation", "Remount Study", "Fixture Design", "IQC", "Root Cause Analysis"],
+      skills: ["Measurement Variation", "Fixture Design", "IQC", "Root Cause Analysis"],
     },
     {
       id: "perception",

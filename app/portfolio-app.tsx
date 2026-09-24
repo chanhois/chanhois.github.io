@@ -26,14 +26,15 @@ function PortfolioSurface() {
         <Hero />
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-intro page-shell">
-            <p className="section-index">01 — 04</p>
+            <p className="section-index">01 — 05</p>
             <h2 id="work-title">
               {language === "en" ? "Selected Work" : "주요 작업"}
             </h2>
             <p>
+              {/* Counted, not spelled out: the copy went stale the last time a case moved. */}
               {language === "en"
-                ? "Five cases where a sensor problem became a measurable engineering decision."
-                : "센서 문제를 측정 가능한 엔지니어링 판단으로 바꾼 다섯 가지 사례입니다."}
+                ? `${portfolioContent.featured.length} cases where a sensor problem became a measurable engineering decision.`
+                : `센서 문제를 측정 가능한 엔지니어링 판단으로 바꾼 ${portfolioContent.featured.length}가지 사례입니다.`}
             </p>
           </div>
           {portfolioContent.featured.map((study, index) => (
