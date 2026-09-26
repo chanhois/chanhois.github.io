@@ -447,48 +447,68 @@ export const portfolioContent: PortfolioContent = {
             "Each depth camera ran its own downsampling stage. On a robot that also has to navigate, three of them together left little headroom for anything else.",
             "depth 카메라마다 자체 downsampling 단계를 돌렸습니다. 주행까지 해야 하는 로봇에서 셋이 합쳐지니 다른 일에 쓸 여유가 거의 없었습니다.",
           ),
-          "uncertainty",
+          "runtime",
           copy("Three camera processes competing for the same CPU budget", "같은 CPU 예산을 두고 경쟁하는 세 개의 카메라 프로세스"),
           copy("The cost scales with the number of cameras, not with the scene.", "비용이 장면이 아니라 카메라 대수에 비례해 늘어납니다."),
         ),
-        storyStep(
-          "rgbd-evidence",
-          stages.evidence,
-          copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
-          copy(
+        {
+          id: "rgbd-evidence",
+          label: stages.evidence,
+          title: copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
+          body: copy(
             "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
             "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현은 점들을 voxel로 묶으려고 정렬을 하는데 비싼 쪽은 downsampling이 아니라 바로 그 정렬이었습니다.",
           ),
-          "uncertainty",
-          copy("Profiler output placing the cost inside the voxel grid sort", "voxel grid 정렬에 비용이 몰려 있음을 보여주는 프로파일러 결과"),
-          copy("Measured on the robot, not on a workstation.", "워크스테이션이 아니라 로봇에서 측정했습니다."),
-        ),
-        storyStep(
-          "rgbd-result",
-          stages.result,
-          copy("26% back, same output", "같은 결과, CPU 26% 반환"),
-          copy(
-            "Replacing the stage with a sort-free downsampling pass cut CPU across the three camera processes by 26%, with the same downsampled cloud going downstream.",
-            "이 단계를 정렬 없는 downsampling으로 교체해 세 카메라 프로세스 합산 CPU를 26% 줄였습니다. 후단으로 가는 downsampled cloud는 그대로입니다.",
+          media: {
+            kind: "image",
+            src: "/media/rgbd-pipeline/voxelgrid-sort-as-is.webp",
+            tone: "light",
+            alt: copy(
+              "Diagram of the existing path: points in a voxel grid are copied out into a flat list, reordered by voxel index with arrows crossing each other, grouped, and only then averaged into one point per voxel",
+              "기존 경로를 그린 도식입니다. voxel 그리드의 점들을 평평한 목록으로 꺼낸 뒤 화살표가 서로 엇갈리며 voxel 인덱스 순으로 재배열하고, 묶은 다음에야 voxel당 한 점으로 평균을 냅니다",
+            ),
+            caption: copy(
+              "The reordering in the middle is the whole cost. The two ends are what the pipeline actually needs.",
+              "가운데 재배열이 비용의 전부입니다. 파이프라인이 실제로 필요로 하는 것은 양쪽 끝뿐입니다.",
+            ),
+          },
+        },
+        {
+          id: "rgbd-result",
+          label: stages.result,
+          title: copy("26% back, same output", "같은 결과, CPU 26% 반환"),
+          body: copy(
+            "Each point is accumulated into its voxel where it already sits, in one pass. Nothing is reordered and nothing is copied out. Replacing the stage cut CPU across the three camera processes by 26%, with the same downsampled cloud going downstream.",
+            "점을 이미 속해 있는 voxel에서 바로 누적합니다. 한 번만 순회하고 재배열도 복사도 하지 않습니다. 이 단계를 교체해 세 카메라 프로세스 합산 CPU를 26% 줄였습니다. 후단으로 가는 downsampled cloud는 그대로입니다.",
           ),
-          "uncertainty",
-          copy("CPU usage before and after the sort-free downsampling pass", "정렬 없는 downsampling 적용 전후의 CPU 사용량"),
-          copy("26% reclaimed across three camera processes.", "카메라 프로세스 세 개 합산 26%를 되찾았습니다."),
-        ),
+          media: {
+            kind: "image",
+            src: "/media/rgbd-pipeline/voxelgrid-sortfree-to-be.webp",
+            tone: "light",
+            alt: copy(
+              "Diagram of the replacement: points stay in the voxel grid and are averaged in place inside each cell, giving the same one point per voxel with no list and no reordering",
+              "교체한 경로를 그린 도식입니다. 점들은 voxel 그리드에 그대로 남아 각 칸 안에서 바로 평균이 되고, 목록도 재배열도 없이 voxel당 한 점이라는 같은 결과가 나옵니다",
+            ),
+            caption: copy(
+              "Same first frame, same last frame. The middle step is gone.",
+              "첫 장면도 마지막 장면도 같습니다. 가운데 단계가 없어졌을 뿐입니다.",
+            ),
+          },
+        },
       ],
     },
     {
       id: "camera-iqc-uncertainty",
-      eyebrow: copy("05 · Measurement Variation", "05 · 측정 산포"),
+      eyebrow: copy("05 · Measurement System", "05 · 측정 시스템"),
       title: copy(
         "52 Cameras, Two Verdicts",
         "카메라 52대, 두 개의 판정",
       ),
       summary: copy(
-        "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Built the acceptance criteria and the measurement-system analysis behind them, which traced the disagreement to the fixture.",
-        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준을 세우고 그 기준을 받치는 측정 시스템 분석까지 만들었습니다. 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
+        "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Measured the inspection setup itself and traced the disagreement to how the fixture seats each sensor size.",
+        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 검사 환경 자체를 측정해 불일치의 원인을 센서 크기별 지그 안착으로 좁혔습니다.",
       ),
-      tags: ["IQC", "3-sigma thresholds", "Measurement variation", "Fixture design"],
+      tags: ["Measurement system analysis", "Measurement variation", "Remount study", "Fixture design"],
       metrics: [
         {
           label: copy("Conflicting decisions", "상충 판정"),
@@ -529,18 +549,6 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "uncertainty-evidence",
           stages.evidence,
-          copy("There were no numeric criteria to disagree about", "애초에 다툴 수치 기준이 없었습니다"),
-          copy(
-            "Acceptance rested on judgement, not on a quantity. I defined what a camera has to satisfy, field of view and optical-centre offset, from the development requirements, and set the production thresholds from a 3-sigma analysis of the measured distribution.",
-            "합격 여부가 수치가 아니라 판단에 기대고 있었습니다. 카메라가 만족해야 할 항목을 개발 요구사항에서 뽑았습니다. 화각과 광학 중심 오프셋 두 가지입니다. 양산 기준값은 측정 분포를 3-sigma로 분석해 정했습니다.",
-          ),
-          "uncertainty",
-          copy("Acceptance criteria derived from a measured distribution", "측정 분포에서 도출한 합격 기준"),
-          copy("Field of view and optical-centre offset, with thresholds set at 3 sigma.", "화각과 광학 중심 오프셋, 기준값은 3-sigma."),
-        ),
-        storyStep(
-          "uncertainty-implementation",
-          stages.implementation,
           copy("Remount the same camera, over and over", "같은 카메라를 반복해서 다시 장착하기"),
           copy(
             "Take one camera off the jig, put it back, measure. Repeat. The spread that shows up belongs to the fixture. Run it across sensor sizes and the spread changes with how each size seats.",

@@ -42,6 +42,29 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
     );
   }
 
+  if (visual === "runtime") {
+    return (
+      <div className="evidence-graphic evidence-graphic--runtime">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">CPU · DOWNSAMPLING STAGE PER CAMERA</p>
+        {/* No per-camera split is claimed: the point is that the stage repeats. */}
+        <div className="lidar-bars">
+          {["CAMERA 1", "CAMERA 2", "CAMERA 3"].map((label) => (
+            <div className="lidar-bar" key={label}>
+              <div className="lidar-bar__label">
+                <span>{label}</span><strong>VOXEL GRID</strong>
+              </div>
+              <span className="lidar-bar__track"><i style={{ width: "100%" }} /></span>
+            </div>
+          ))}
+        </div>
+        <p className="graphic-conclusion">
+          One downsampling stage per camera, on a robot that also has to navigate
+        </p>
+      </div>
+    );
+  }
+
   if (visual === "integration") {
     const lanes = [
       { id: "serving", label: "SERVING ROBOT", start: 0, span: 100 },

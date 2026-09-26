@@ -773,6 +773,12 @@ section[id] {
   background: #0b0f0d;
 }
 
+/* Line diagrams are drawn on white, so the dark recorded ground would frame them
+   as a bright slab. Keep the wide frame, change what sits behind it. */
+.media-stage__frame--light {
+  background: #ffffff;
+}
+
 .evidence-video { position: relative; }
 
 .media-control {
@@ -794,7 +800,9 @@ section[id] {
 
 .case-progress {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* Cases carry different numbers of steps, so the columns follow the buttons. */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   margin-top: 18px;
   border-top: 1px solid var(--border);
 }

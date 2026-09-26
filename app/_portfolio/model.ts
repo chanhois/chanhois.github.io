@@ -5,7 +5,8 @@ export type EvidenceVisual =
   | "lidar"
   | "calibration"
   | "uncertainty"
-  | "integration";
+  | "integration"
+  | "runtime";
 
 export interface MediaSpec {
   kind: EvidenceKind;
@@ -13,6 +14,8 @@ export interface MediaSpec {
   src?: string;
   mp4Src?: string;
   poster?: string;
+  /** Line art is drawn on white; photographs and plots sit on the dark ground. */
+  tone?: "light";
   alt: LocalizedText;
   caption: LocalizedText;
 }
