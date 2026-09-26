@@ -42,20 +42,20 @@ export const portfolioContent: PortfolioContent = {
   sections: {
     work: true,
     projects: true,
-    experience: true,
+    experience: false,
     research: true,
-    about: true,
+    about: false,
   },
   // Switch a block off here and it leaves the page. Copy for it stays put.
   elements: {
     heroEyebrow: true,
-    heroChips: true,
-    heroActions: true,
+    heroChips: false,
+    heroActions: false,
     heroScrollHint: true,
     caseTags: true,
     caseMetrics: true,
     lifecycle: true,
-    principles: true,
+    principles: false,
     publications: true,
     skills: true,
   },
@@ -75,7 +75,7 @@ export const portfolioContent: PortfolioContent = {
   site: {
     // The hero shows the first metric of each case named here. Drop an id and
     // that metric leaves the hero; empty the list and the band goes with it.
-    heroMetrics: ["sensor-integration", "lidar-stability"],
+    heroMetrics: [],
     headline: {
       line1: copy("BRING-UP", "센서의"),
       line2: copy("to", "시작부터"),

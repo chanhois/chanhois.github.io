@@ -34,9 +34,12 @@ describe("PortfolioApp", () => {
       if (metric) expect(within(hero).getByText(metric.value.en)).toBeInTheDocument();
     }
 
-    expect(
-      screen.getByRole("link", { name: site.actions.work.en }),
-    ).toHaveAttribute("href", "#work");
+    // The hero buttons are one of the blocks that can be switched off.
+    if (portfolioContent.elements.heroActions) {
+      expect(
+        screen.getByRole("link", { name: site.actions.work.en }),
+      ).toHaveAttribute("href", "#work");
+    }
   });
 
   it("renders every public project and the contact path", () => {

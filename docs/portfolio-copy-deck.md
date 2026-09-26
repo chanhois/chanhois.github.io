@@ -19,9 +19,9 @@
 
 - [x] `work` — 주요 작업 · Selected Work
 - [x] `projects` — 프로젝트 · Project Index
-- [x] `experience` — 경험 · Experience
+- [ ] `experience` — 경험 · Experience
 - [x] `research` — 연구 · Research
-- [x] `about` — 소개 · How I Work
+- [ ] `about` — 소개 · How I Work
 
 ---
 
@@ -30,13 +30,13 @@
 섹션보다 작은 덩어리입니다. 체크를 지우면 그 덩어리만 사라집니다.
 
 - [x] `heroEyebrow` — 히어로 직함 줄 · Role line
-- [x] `heroChips` — 히어로 영역 칩 · Capability chips
-- [x] `heroActions` — 히어로 버튼 · Hero buttons
+- [ ] `heroChips` — 히어로 영역 칩 · Capability chips
+- [ ] `heroActions` — 히어로 버튼 · Hero buttons
 - [x] `heroScrollHint` — 스크롤 안내 · Scroll hint
 - [x] `caseTags` — 케이스 태그 · Case tags
 - [x] `caseMetrics` — 케이스 지표 밴드 · Case metrics
 - [x] `lifecycle` — 센서 생애주기 띠 · Lifecycle strip
-- [x] `principles` — 원칙 세 줄 · Principles
+- [ ] `principles` — 원칙 세 줄 · Principles
 - [x] `publications` — 논문 목록 · Publications list
 - [x] `skills` — 기술 그리드 · Skills grid
 
@@ -46,8 +46,8 @@
 
 히어로에 띄울 지표입니다. 체크한 케이스의 첫 지표가 체크한 순서대로 나옵니다.
 
-- [x] `sensor-integration` — 동시 전담 플랫폼 · 3
-- [x] `lidar-stability` — Yaw 표준편차 · 0.378° → 0.067°
+- [ ] `sensor-integration` — 동시 전담 플랫폼 · 3
+- [ ] `lidar-stability` — Yaw 표준편차 · 0.378° → 0.067°
 - [ ] `amr-calibration` — 정렬 기준 · 측정 가능한 residual
 - [ ] `rgbd-pipeline` — CPU 절감 · 26%
 - [ ] `camera-iqc-uncertainty` — 상충 판정 · 52
