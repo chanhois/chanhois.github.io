@@ -7,7 +7,10 @@ export type EvidenceVisual =
   | "uncertainty"
   | "integration"
   | "runtime"
-  | "cpu";
+  | "cpu"
+  | "decomposition"
+  | "remount"
+  | "seating";
 
 export interface MediaSpec {
   kind: EvidenceKind;

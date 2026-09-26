@@ -121,29 +121,100 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
     );
   }
 
+  if (visual === "decomposition") {
+    return (
+      <div className="evidence-graphic evidence-graphic--decomposition">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">WHAT A VERDICT ACTUALLY CONTAINS</p>
+        {/* No split is drawn to scale: the point is that one term was never measured. */}
+        <div className="decomposition">
+          <div className="decomposition__term">
+            <span>MEASURED VALUE</span>
+            <strong>PASS / FAIL</strong>
+          </div>
+          <span className="decomposition__op" aria-hidden="true">=</span>
+          <div className="decomposition__term">
+            <span>THE CAMERA</span>
+            <strong>PART SPREAD</strong>
+          </div>
+          <span className="decomposition__op" aria-hidden="true">+</span>
+          <div className="decomposition__term decomposition__term--open">
+            <span>THE SETUP</span>
+            <strong>FIXTURE SPREAD</strong>
+          </div>
+        </div>
+        <p className="decomposition__note">The third term was the one nobody was measuring</p>
+        <p className="graphic-conclusion">A verdict at the edge is worth only its repeatability</p>
+      </div>
+    );
+  }
+
+  if (visual === "remount") {
+    // Fixed offsets, not random: the server and the browser must draw the same dots.
+    const remounts = [12, 31, 24, 58, 44, 77, 65, 90, 38, 71];
+    return (
+      <div className="evidence-graphic evidence-graphic--remount">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">ONE CAMERA · REPEATED REMOUNTS</p>
+        <div className="remount-plot">
+          <span className="remount-plot__axis" aria-hidden="true" />
+          {remounts.map((left, index) => (
+            <i key={left} style={{ left: `${left}%`, top: `${(index % 3) * 26 + 8}%` }} />
+          ))}
+          <span className="remount-plot__bracket" aria-hidden="true" />
+        </div>
+        <p className="remount-plot__caption">
+          Same part, off the jig and back on. The spread left over is the jig&rsquo;s.
+        </p>
+        <div className="variance-chips">
+          {["REPEATED ACROSS SENSOR SIZES"].map((item) => <span key={item}>{item}</span>)}
+        </div>
+        <p className="graphic-conclusion">Seating turns out to be a source in its own right</p>
+      </div>
+    );
+  }
+
+  if (visual === "seating") {
+    return (
+      <div className="evidence-graphic evidence-graphic--seating">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">REMOUNT SPREAD · BEFORE AND AFTER THE FIX</p>
+        <div className="seating-compare">
+          <span className="seating-compare__threshold" aria-hidden="true">
+            <i />
+            <b>THRESHOLD</b>
+          </span>
+          {[
+            { id: "before", label: "SEATING AS FOUND", left: 18, width: 64 },
+            { id: "after", label: "SEATING IMPROVED", left: 38, width: 24 },
+          ].map((band) => (
+            <div className="seating-band" key={band.id}>
+              <span className="seating-band__label">{band.label}</span>
+              <span className="seating-band__track" aria-hidden="true">
+                <i style={{ left: `${band.left}%`, width: `${band.width}%` }} />
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="graphic-conclusion">The threshold did not move. The spread did.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="evidence-graphic evidence-graphic--uncertainty">
       <div className="evidence-grid" aria-hidden="true" />
-      <p className="graphic-kicker">MEASUREMENT SETUP · REMOUNT SPREAD</p>
+      <p className="graphic-kicker">SAME UNITS · TWO INSPECTION SITES</p>
       <div className="verdict-split">
-        <div><span>SITE A</span><strong>PASS</strong></div>
+        <div><span>SUPPLIER</span><strong>PASS</strong></div>
         <span aria-hidden="true">≠</span>
-        <div><span>SITE B</span><strong>FAIL</strong></div>
-      </div>
-      <div className="variance-chips">
-        {[
-          "PART",
-          "FIXTURE",
-          "SEATING",
-          "REMOUNT",
-          "SENSOR SIZE",
-        ].map((item) => <span key={item}>{item}</span>)}
+        <div><span>FACTORY</span><strong>FAIL</strong></div>
       </div>
       <div className="uncertainty-results">
         <span><strong>52</strong> conflicting decisions</span>
         <span><strong>32 / 116</strong> fail → pass</span>
       </div>
-      <p className="graphic-conclusion">Remount spread → seating as a source → fixture improved</p>
+      <p className="graphic-conclusion">The cameras did not change between the two answers</p>
     </div>
   );
 }

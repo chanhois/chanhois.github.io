@@ -560,8 +560,11 @@ export const portfolioContent: PortfolioContent = {
             "A verdict at the specification edge is only as good as its repeatability. I went after the inspection fixture as a source of spread in its own right.",
             "규격 경계의 판정은 같은 측정을 다시 해도 같은 답이 나올 때만 의미가 있습니다. 그래서 검사 지그를 그 자체로 산포 원인으로 보고 파고들었습니다.",
           ),
-          "uncertainty",
-          copy("Inspection fixture treated as a measured source of variation", "산포 원인으로 다루어지는 검사 지그"),
+          "decomposition",
+          copy(
+            "A pass or fail verdict written out as two terms, the camera's own spread and the inspection setup's spread, with the second drawn as an open box because it had never been measured",
+            "합격·불합격 판정을 두 항으로 풀어 쓴 도식입니다. 카메라 자체의 산포와 검사 환경의 산포이며, 두 번째 항은 그동안 측정된 적이 없어 점선 상자로 그렸습니다",
+          ),
           copy("The fixture is one of the things being measured.", "지그도 측정 대상 중 하나입니다."),
         ),
         storyStep(
@@ -572,8 +575,11 @@ export const portfolioContent: PortfolioContent = {
             "Take one camera off the jig, put it back, measure. Repeat. The spread that shows up belongs to the fixture. Run it across sensor sizes and the spread changes with how each size seats.",
             "카메라 하나를 지그에서 떼고 다시 얹어 측정합니다. 반복합니다. 이때 나오는 산포는 지그의 것입니다. 센서 크기별로 돌리면 크기마다 안착 방식에 따라 산포가 달라집니다.",
           ),
-          "uncertainty",
-          copy("Repeated remount measurements spreading by sensor size", "센서 크기별로 벌어지는 반복 재장착 측정"),
+          "remount",
+          copy(
+            "Repeated measurements of one camera taken off the jig and put back, drawn as dots scattered along an axis under a bracket marking the spread",
+            "카메라 하나를 지그에서 떼고 다시 얹어 측정한 값들을 축 위에 점으로 뿌리고, 그 폭을 괄호로 표시한 그림입니다",
+          ),
           copy("Same camera, repeated remounts, one spread per sensor size.", "같은 카메라, 반복 재장착, 센서 크기별 산포."),
         ),
         storyStep(
@@ -584,8 +590,11 @@ export const portfolioContent: PortfolioContent = {
             "Seating turned out to be a real contributor to the disagreement, and the fixture was improved. A borderline verdict now reflects the camera.",
             "안착이 판정 불일치의 실제 원인 중 하나로 확인돼 지그를 고쳤습니다. 이제 경계에 걸린 판정은 장착 상태가 아니라 카메라 자체를 말해 줍니다.",
           ),
-          "uncertainty",
-          copy("Improved fixture seating narrowing the remount spread", "안착 개선으로 좁아진 재장착 산포"),
+          "seating",
+          copy(
+            "Two spread bands above one another, the wider one before the fixture was changed and the narrower one after, against an acceptance threshold line that stays in the same place",
+            "산포 띄 두 개를 위아래로 놓은 그림입니다. 위쪽이 지그를 고치기 전, 아래쪽이 고친 뒤이고, 합격 기준선은 같은 자리에 그대로 있습니다",
+          ),
           copy("The outcome is a steadier fixture, reached by measuring it.", "재 보고 고친 만큼 지그가 안정됐습니다."),
         ),
       ],

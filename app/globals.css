@@ -745,6 +745,156 @@ section[id] {
   font-size: 1.15rem;
 }
 
+/* Case 05, decision step: a verdict written out as its terms. */
+.decomposition {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.decomposition__term {
+  display: flex;
+  flex: 1 1 130px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.56);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-align: center;
+}
+
+.decomposition__term span { color: var(--muted); }
+.decomposition__term strong { margin-top: 6px; color: var(--ink); font-size: 0.66rem; }
+
+.decomposition__term--open {
+  border-style: dashed;
+  border-color: var(--indigo);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.decomposition__term--open strong { color: var(--indigo); }
+
+.decomposition__op {
+  align-self: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+}
+
+.decomposition__note {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* Case 05, evidence step: one part measured again and again. */
+.remount-plot {
+  position: relative;
+  height: clamp(88px, 14vw, 124px);
+  margin-top: 8px;
+}
+
+.remount-plot__axis {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.remount-plot i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--indigo);
+}
+
+.remount-plot__bracket {
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  width: 78%;
+  height: 10px;
+  border: 1px solid var(--muted);
+  border-top: 0;
+}
+
+.remount-plot__caption {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  text-align: center;
+}
+
+/* Case 05, result step: the spread narrows while the limit stays put. */
+.seating-compare {
+  position: relative;
+  display: grid;
+  gap: 20px;
+}
+
+.seating-compare__threshold {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 78%;
+  z-index: 1;
+}
+
+.seating-compare__threshold i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-left: 1px dashed var(--accent-strong);
+}
+
+.seating-compare__threshold b {
+  position: absolute;
+  top: -14px;
+  left: 4px;
+  color: var(--accent-strong);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.seating-band__label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.07em;
+}
+
+.seating-band__track {
+  position: relative;
+  display: block;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.56);
+  border: 1px solid var(--border);
+}
+
+.seating-band__track i {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  background: var(--indigo);
+}
+
 .media-fallback {
   display: flex;
   align-items: center;
