@@ -90,7 +90,7 @@ export const portfolioContent: PortfolioContent = {
           copy("Three programs, one of me", "세 개의 과제, 한 명"),
           copy(
             "Three robots each needed a full sensing stack: parts chosen, mounted, calibrated, kept alive in the field. The schedules overlapped. There was no second sensor engineer.",
-            "로봇 세 대가 저마다 완전한 센서 스택을 필요로 했습니다. 부품을 고르고, 붙이고, 캘리브레이션하고, 현장에서 유지하는 일까지 있었습니다. 일정은 겹쳤고, 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
+            "로봇 세 대가 저마다 완전한 센서 스택을 필요로 했습니다. 부품을 고르고 붙이고 캘리브레이션하고 현장에서 유지하는 일까지 있었습니다. 일정은 겹쳤고 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
           ),
           "integration",
           copy("Three platform schedules drawn on one time axis, overlapping in the middle", "하나의 시간축에 그린 세 플랫폼 일정으로, 가운데 구간이 겹칩니다"),
@@ -306,7 +306,7 @@ export const portfolioContent: PortfolioContent = {
           title: copy("It transfers to robots it never saw", "처음 보는 로봇에서도 수렴합니다"),
           body: copy(
             "Capture, estimate, validate, save: one on-robot workflow that runs where the robot is built. It replaced alignment by operator judgment with a residual anyone can read, and converges on robots it was never tuned against.",
-            "수집, 추정, 검증, 저장을 하나의 on-robot workflow로 묶어 로봇이 만들어지는 자리에서 돌립니다. 작업자 판단에 의존하던 정렬을 누구나 읽을 수 있는 residual로 바꿨고, 튜닝하지 않은 로봇에서도 수렴합니다.",
+            "수집, 추정, 검증, 저장을 하나의 on-robot workflow로 묶어 로봇이 만들어지는 자리에서 돌립니다. 작업자 판단에 의존하던 정렬을 누구나 읽을 수 있는 residual로 바꿨고 튜닝하지 않은 로봇에서도 수렴합니다.",
           ),
           media: {
             kind: "image",
@@ -332,7 +332,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "Three depth camera processes were eating the robot's CPU. Profiling put the cost inside PCL VoxelGrid's sort, and a sort-free downsampling pass gave 26% back.",
-        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링해 보니 비용은 PCL VoxelGrid의 정렬에 몰려 있었고, 정렬 없는 downsampling으로 바꿔 CPU 26%를 되찾았습니다.",
+        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링해 보니 비용은 PCL VoxelGrid의 정렬에 몰려 있었고 정렬 없는 downsampling으로 바꿔 CPU 26%를 되찾았습니다.",
       ),
       tags: ["Profiling", "PCL", "Point cloud", "C++", "Runtime"],
       metrics: [
@@ -361,7 +361,7 @@ export const portfolioContent: PortfolioContent = {
           copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
           copy(
             "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
-            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현은 점들을 voxel로 묶으려고 정렬을 하는데, 비싼 쪽은 downsampling이 아니라 바로 그 정렬이었습니다.",
+            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현은 점들을 voxel로 묶으려고 정렬을 하는데 비싼 쪽은 downsampling이 아니라 바로 그 정렬이었습니다.",
           ),
           "uncertainty",
           copy("Profiler output placing the cost inside the voxel grid sort", "voxel grid 정렬에 비용이 몰려 있음을 보여주는 프로파일러 결과"),
@@ -390,7 +390,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Built the acceptance criteria and the measurement-system analysis behind them, which traced the disagreement to the fixture.",
-        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준을 세우고 그 기준을 받치는 측정 시스템 분석까지 만들었고, 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
+        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준을 세우고 그 기준을 받치는 측정 시스템 분석까지 만들었습니다. 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
       ),
       tags: ["IQC", "3-sigma thresholds", "Measurement variation", "Fixture design"],
       metrics: [
@@ -464,7 +464,7 @@ export const portfolioContent: PortfolioContent = {
           ),
           "uncertainty",
           copy("Improved fixture seating narrowing the remount spread", "안착 개선으로 좁아진 재장착 산포"),
-          copy("The outcome is a steadier fixture, reached by measuring it.", "결과는 측정을 통해 도달한 더 안정적인 지그입니다."),
+          copy("The outcome is a steadier fixture, reached by measuring it.", "재 보고 고친 만큼 지그가 안정됐습니다."),
         ),
       ],
     },
@@ -520,7 +520,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "Tracked several moving objects from range scans alone, no camera appearance. DBSCAN formed the observations, an EKF held the motion state, the Hungarian algorithm linked frames.",
-        "카메라 외형 정보 없이 거리 스캔만으로 여러 이동 객체를 추적했습니다. DBSCAN이 관측을 만들고, EKF가 motion state를 유지하고, Hungarian algorithm이 프레임을 연결했습니다.",
+        "카메라 외형 정보 없이 거리 스캔만으로 여러 이동 객체를 추적했습니다. DBSCAN이 관측을 만들고 EKF가 motion state를 유지하고 Hungarian algorithm이 프레임을 연결했습니다.",
       ),
       outcome: copy(
         "Range gives you a centroid and nothing else. No colour, no texture, no box to re-identify by. Identity has to come from motion alone.",
