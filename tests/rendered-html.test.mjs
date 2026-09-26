@@ -1,5 +1,18 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { portfolioContent } from "../app/_portfolio/content.ts";
+
+/** Copy is edited in content.ts, so the expectations are read from there. */
+const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** React escapes quotes and ampersands on the way out; compare against plain text. */
+const decode = (html) =>
+  html
+    .replace(/&(?:#x27|#39|apos);/gi, "'")
+    .replace(/&(?:quot|#34);/gi, '"')
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&amp;/gi, "&");
 
 const developmentPreviewMeta =
   /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
@@ -30,17 +43,23 @@ test("server-renders the complete English portfolio", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
-  const html = await response.text();
+  const html = decode(await response.text());
+  const { profile, site, featured, projects } = portfolioContent;
+
   assert.match(html, /<title>Chan-ho Seo · Robotics Sensor Engineer<\/title>/i);
-  assert.match(html, /THE SENSOR[\s\S]*IS USUALLY[\s\S]*NOT THE PROBLEM/i);
-  assert.match(html, /Yaw Jitter Down 82% on a Low-Cost LiDAR/);
-  assert.match(html, /A Calibration Method That Reached the Production Line/);
-  assert.match(html, /26% of the CPU Was Sorting Points Nobody Needed/);
-  assert.match(html, /52 Cameras, Two Verdicts/);
-  assert.match(html, /Three Robots, One Sensor Engineer/);
-  assert.match(html, /Camera Calibration from Pedestrians/);
-  assert.match(html, /Multi-Object Tracking with a 2D LiDAR/);
-  assert.match(html, /studychanho0717@gmail\.com/);
+
+  const headline = [site.headline.line1, site.headline.line2, site.headline.line3]
+    .map((line) => escape(line.en))
+    .join("[\\s\\S]*");
+  assert.match(html, new RegExp(headline, "i"));
+
+  const titles = [...featured, ...projects].map((entry) => entry.title.en);
+  assert.ok(titles.length > 0, "content.ts lists no work to render");
+  for (const title of titles) {
+    assert.match(html, new RegExp(escape(title)));
+  }
+
+  assert.match(html, new RegExp(escape(profile.email)));
   assert.doesNotMatch(html, developmentPreviewMeta);
   assert.doesNotMatch(html, /react-loading-skeleton|Building your site/);
 });
