@@ -127,7 +127,20 @@ export interface SiteCopy {
   };
 }
 
+/** The page's main sections, in the order they are laid out. */
+export const SECTION_IDS = [
+  "work",
+  "projects",
+  "experience",
+  "research",
+  "about",
+] as const;
+
+export type SectionId = (typeof SECTION_IDS)[number];
+
 export interface PortfolioContent {
+  /** Which sections the page renders. Hidden sections leave the nav too. */
+  sections: Record<SectionId, boolean>;
   profile: ProfileContent;
   site: SiteCopy;
   navigation: Record<

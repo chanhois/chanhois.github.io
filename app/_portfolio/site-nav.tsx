@@ -2,20 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { portfolioContent } from "./content";
+import { SECTION_IDS, type SectionId } from "./model";
 import { useLanguage } from "./use-language";
 
-const sectionIds = [
-  "work",
-  "projects",
-  "experience",
-  "research",
-  "about",
-] as const;
+// A hidden section has no anchor to scroll to, so it has no nav link either.
+const sectionIds = SECTION_IDS.filter((id) => portfolioContent.sections[id]);
 
 export function SiteNav() {
   const { language, setLanguage, t } = useLanguage();
-  const [activeSection, setActiveSection] = useState<(typeof sectionIds)[number]>(
-    "work",
+  const [activeSection, setActiveSection] = useState<SectionId | undefined>(
+    sectionIds[0],
   );
 
   useEffect(() => {
@@ -24,8 +20,8 @@ export function SiteNav() {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible && sectionIds.includes(visible.target.id as (typeof sectionIds)[number])) {
-          setActiveSection(visible.target.id as (typeof sectionIds)[number]);
+        if (visible && sectionIds.includes(visible.target.id as SectionId)) {
+          setActiveSection(visible.target.id as SectionId);
         }
       },
       { rootMargin: "-20% 0px -65%", threshold: [0, 0.2, 0.5] },

@@ -38,9 +38,15 @@ describe("PortfolioApp", () => {
 
   it("renders every public project and the contact path", () => {
     render(<PortfolioApp />);
+    // A section switched off in content.ts renders nothing, so only ask for
+    // the titles the page is actually meant to be showing.
     const titles = [
-      ...portfolioContent.featured.map((study) => study.title.en),
-      ...portfolioContent.projects.map((project) => project.title.en),
+      ...(portfolioContent.sections.work
+        ? portfolioContent.featured.map((study) => study.title.en)
+        : []),
+      ...(portfolioContent.sections.projects
+        ? portfolioContent.projects.map((project) => project.title.en)
+        : []),
     ];
     expect(titles.length).toBeGreaterThan(0);
     for (const name of titles) {

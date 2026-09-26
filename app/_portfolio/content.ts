@@ -38,6 +38,14 @@ const stages = {
 };
 
 export const portfolioContent: PortfolioContent = {
+  // Turn a section off here and it leaves the page, the nav and the numbering.
+  sections: {
+    work: true,
+    projects: true,
+    experience: true,
+    research: true,
+    about: true,
+  },
   profile: {
     name: "Chan-ho Seo",
     role: copy("Robotics Sensor Engineer", "로보틱스 센서 엔지니어"),

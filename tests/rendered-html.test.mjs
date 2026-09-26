@@ -53,8 +53,12 @@ test("server-renders the complete English portfolio", async () => {
     .join("[\\s\\S]*");
   assert.match(html, new RegExp(headline, "i"));
 
-  const titles = [...featured, ...projects].map((entry) => entry.title.en);
-  assert.ok(titles.length > 0, "content.ts lists no work to render");
+  // Sections switched off in content.ts render nothing, so they are not expected.
+  const titles = [
+    ...(portfolioContent.sections.work ? featured : []),
+    ...(portfolioContent.sections.projects ? projects : []),
+  ].map((entry) => entry.title.en);
+  assert.ok(titles.length > 0, "content.ts lists no visible work to render");
   for (const title of titles) {
     assert.match(html, new RegExp(escape(title)));
   }

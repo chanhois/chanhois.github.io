@@ -18,9 +18,15 @@ function range(start: number, count: number) {
   };
 }
 
-const work = range(1, portfolioContent.featured.length);
-const projects = range(work.next, portfolioContent.projects.length);
-const experience = range(projects.next, portfolioContent.experience.length);
+const shown = (id: "work" | "projects" | "experience", count: number) =>
+  portfolioContent.sections[id] ? count : 0;
+
+const work = range(1, shown("work", portfolioContent.featured.length));
+const projects = range(work.next, shown("projects", portfolioContent.projects.length));
+const experience = range(
+  projects.next,
+  shown("experience", portfolioContent.experience.length),
+);
 
 export const numbering = {
   work,

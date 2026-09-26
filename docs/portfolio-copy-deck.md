@@ -9,6 +9,19 @@
 - 백틱으로 감싼 키(`featured[0].title`)는 건드리지 말 것 — 되돌릴 자리를 잃습니다
 - 한 줄로 쓸 것. 줄바꿈은 무시됩니다
 - `{count}` 같은 중괄호 자리표시자는 그대로 둘 것
+- 항목 하나를 통째로 빼려면 덱이 아니라 `content.ts`의 배열에서 지울 것
+
+---
+
+## 섹션 표시 · Sections
+
+체크를 지우면 그 섹션이 페이지와 메뉴에서 사라집니다. 문구는 그대로 남습니다.
+
+- [x] `work` — 주요 작업 · Selected Work
+- [x] `projects` — 프로젝트 · Project Index
+- [x] `experience` — 경험 · Experience
+- [x] `research` — 연구 · Research
+- [x] `about` — 소개 · How I Work
 
 ---
 

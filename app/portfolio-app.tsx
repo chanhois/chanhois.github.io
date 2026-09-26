@@ -16,6 +16,7 @@ import { LanguageProvider, useLanguage } from "./_portfolio/use-language";
 
 function PortfolioSurface() {
   const { t } = useLanguage();
+  const shows = portfolioContent.sections;
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -25,6 +26,7 @@ function PortfolioSurface() {
       <main id="main-content">
         <div id="top" aria-hidden="true" />
         <Hero />
+        {shows.work ? (
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-intro page-shell">
             <p className="section-index">{numbering.work.label}</p>
@@ -41,10 +43,11 @@ function PortfolioSurface() {
             <CaseStudyView study={study} index={index} key={study.id} />
           ))}
         </section>
-        <ProjectIndex />
-        <ExperienceSection />
-        <ResearchSection />
-        <AboutSection />
+        ) : null}
+        {shows.projects ? <ProjectIndex /> : null}
+        {shows.experience ? <ExperienceSection /> : null}
+        {shows.research ? <ResearchSection /> : null}
+        {shows.about ? <AboutSection /> : null}
       </main>
       <ContactFooter />
     </>

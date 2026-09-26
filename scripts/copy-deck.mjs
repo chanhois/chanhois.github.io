@@ -15,6 +15,13 @@ import { dirname, resolve } from "node:path";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CONTENT = resolve(root, "app/_portfolio/content.ts");
+const SECTION_LABELS = {
+  work: "주요 작업 · Selected Work",
+  projects: "프로젝트 · Project Index",
+  experience: "경험 · Experience",
+  research: "연구 · Research",
+  about: "소개 · How I Work",
+};
 const DECK = resolve(root, "docs/portfolio-copy-deck.md");
 
 const isLocalized = (v) =>
@@ -82,10 +89,19 @@ async function doExport() {
     "- 백틱으로 감싼 키(`featured[0].title`)는 건드리지 말 것 — 되돌릴 자리를 잃습니다",
     "- 한 줄로 쓸 것. 줄바꿈은 무시됩니다",
     "- `{count}` 같은 중괄호 자리표시자는 그대로 둘 것",
+    "- 항목 하나를 통째로 빼려면 덱이 아니라 `content.ts`의 배열에서 지울 것",
     "",
     "---",
     "",
   ];
+
+  const shown = (await loadContent()).sections;
+  lines.push("## 섹션 표시 · Sections", "");
+  lines.push("체크를 지우면 그 섹션이 페이지와 메뉴에서 사라집니다. 문구는 그대로 남습니다.", "");
+  for (const [id, label] of Object.entries(SECTION_LABELS)) {
+    lines.push(`- [${shown[id] ? "x" : " "}] \`${id}\` — ${label}`);
+  }
+  lines.push("", "---", "");
 
   let section = null;
   for (const entry of entries) {
@@ -102,6 +118,15 @@ async function doExport() {
 
   writeFileSync(DECK, lines.join("\n"), "utf8");
   console.log(`exported ${entries.length} strings -> docs/portfolio-copy-deck.md`);
+}
+
+function parseSections() {
+  const shown = {};
+  for (const raw of readFileSync(DECK, "utf8").split("\n")) {
+    const line = raw.match(/^- \[([ xX])\] `([a-z]+)` —/);
+    if (line) shown[line[2]] = line[1].toLowerCase() === "x";
+  }
+  return shown;
 }
 
 function parseDeck() {
@@ -125,6 +150,24 @@ async function doImport() {
   const deck = parseDeck();
   let source = readFileSync(CONTENT, "utf8");
 
+  const sections = parseSections();
+  const expectedIds = Object.keys(SECTION_LABELS);
+  const gotIds = expectedIds.filter((id) => id in sections);
+  if (gotIds.length !== expectedIds.length) {
+    console.error(
+      `the section checklist is missing ${expectedIds.filter((id) => !(id in sections)).join(", ")}`,
+    );
+    console.error("re-export before importing, or restore the missing lines");
+    process.exit(1);
+  }
+  if (!expectedIds.some((id) => sections[id])) {
+    console.error("every section is unchecked; the page would be a hero and a footer only");
+    process.exit(1);
+  }
+
+  const current = (await loadContent()).sections;
+  const sectionChanged = expectedIds.filter((id) => sections[id] !== current[id]);
+
   const changes = [];
   const missing = [];
   for (const entry of entries) {
@@ -141,9 +184,22 @@ async function doImport() {
     console.error("re-export before importing, or restore the missing headings");
     process.exit(1);
   }
-  if (!changes.length) {
+  if (!changes.length && !sectionChanged.length) {
     console.log("no changes in the deck");
     return;
+  }
+
+  if (sectionChanged.length) {
+    const body = expectedIds.map((id) => `    ${id}: ${sections[id]},`).join("\n");
+    const block = /( {2}sections: \{\n)[\s\S]*?(\n {2}\},)/;
+    if (!block.test(source)) {
+      console.error("could not find the sections block in content.ts");
+      process.exit(1);
+    }
+    source = source.replace(block, `$1${body}$2`);
+    for (const id of sectionChanged) {
+      console.log(`  section ${id}: ${current[id]} -> ${sections[id]}`);
+    }
   }
 
   const failed = [];
@@ -184,7 +240,8 @@ async function doImport() {
   }
 
   writeFileSync(CONTENT, source, "utf8");
-  console.log(`\napplied ${changes.length} change(s) -> app/_portfolio/content.ts`);
+  const total = changes.length + sectionChanged.length;
+  console.log(`\napplied ${total} change(s) -> app/_portfolio/content.ts`);
 }
 
 function escapeRe(text) {
