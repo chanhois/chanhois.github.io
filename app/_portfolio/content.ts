@@ -46,10 +46,106 @@ export const portfolioContent: PortfolioContent = {
       "정확한 공간. 정확한 시간. 신뢰할 수 있는 데이터.",
     ),
     introduction: copy(
-      "I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. When a measurement goes wrong the cause is usually upstream of the sensor, in a timestamp, an index, or a fixture that shifts. I have been the only sensor engineer on three commercial robot platforms.",
-      "로봇에 센서를 올리고 끝까지 책임집니다. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 측정이 틀어지면 원인은 대개 센서가 아니라 그 앞단에 있습니다. 타임스탬프거나, 인덱스거나, 흔들리는 지그입니다. 상용 로봇 세 종의 센서를 혼자 맡아 왔습니다.",
+      "I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. I have been the robot sensor engineer on three commercial robot platforms.",
+      "로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다.. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다.",
     ),
     email: "studychanho0717@gmail.com",
+  },
+  site: {
+    headline: {
+      line1: copy("Bring-up", "센서의"),
+      line2: copy("to", "시작부터"),
+      line3: copy("Deploy..", "끝까지."),
+    },
+    functions: [
+      copy("Robotics SW", "로보틱스 SW"),
+      copy("Mechanical", "기구"),
+      copy("Factory", "공장"),
+      copy("Field", "필드"),
+    ],
+    actions: {
+      work: copy("Explore selected work", "주요 작업 보기"),
+      email: copy("Email me", "이메일 보내기"),
+    },
+    work: {
+      heading: copy("Selected Work", "주요 작업"),
+      /* {count} is filled from featured.length so the number cannot go stale. */
+      description: copy(
+        "{count} cases where a sensor problem became a measurable engineering decision.",
+        "로봇 양산 과정에 참여하며 해결한 센서 관{count}가지 사례입니다.",
+      ),
+    },
+    projects: {
+      heading: copy("Project Index", "프로젝트"),
+      description: copy(
+        "Platform breadth and research foundations behind the featured work.",
+        "주요 작업을 뒷받침하는 플랫폼 경험과 연구 기반입니다.",
+      ),
+    },
+    experience: {
+      heading: copy("Experience", "경험"),
+      description: copy(
+        "One sensor lifecycle, carried from the first integration to field reliability.",
+        "센서 인터그레이션 부터 필드 신뢰성까지 하나의 센서 생애주기로 다뤄습니다.",
+      ),
+    },
+    research: {
+      heading: copy("Research", "연구"),
+      description: copy(
+        "Geometry and tracking research that shaped how I reason about sensor.",
+        "센서를 해석하는 방식을 만든 기하와 추적 연구입니다.",
+      ),
+    },
+    about: {
+      heading: copy("How I Work", "일하는 방식"),
+      description: copy(
+        "I make sensor behavior observable, find the physical cause, and leave a process that another engineer can repeat.",
+        "센서 동작을 관측 가능하게 만들고 물리적 원인을 찾은 뒤, 다른 엔지니어도 반복할 수 있는 프로세스를 남깁니다.",
+      ),
+    },
+    lifecycle: ["BRING-UP", "CALIBRATE", "VALIDATE", "PRODUCE", "RELIABILITY"],
+    principles: [
+      {
+        number: "01",
+        label: "MEASURE",
+        text: copy("Start with observable evidence", "관측 가능한 근거에서 시작"),
+      },
+      {
+        number: "02",
+        label: "MODEL",
+        text: copy("Match the model to the physics", "물리 현상에 맞는 모델 선택"),
+      },
+      {
+        number: "03",
+        label: "SHIP",
+        text: copy("Turn the fix into a repeatable tool", "반복 가능한 도구로 완성"),
+      },
+    ],
+    publicationsHeading: copy("Selected writing", "주요 논문"),
+    contact: {
+      eyebrow: copy(
+        "Open to the next hard sensor problem",
+        "다음 어려운 센서 문제를 기다립니다",
+      ),
+      headline: copy(
+        "Let’s make the signal trustworthy.",
+        "신뢰할 수 있는 신호를 함께 만듭시다.",
+      ),
+      backToTop: copy("Back to top ↑", "맨 위로 ↑"),
+    },
+    ui: {
+      readOutcome: copy("Read the outcome", "결과 보기"),
+      mediaUnavailable: copy(
+        "Evidence unavailable",
+        "증거 자료를 불러올 수 없습니다",
+      ),
+      mediaUnavailableHint: copy(
+        "The written finding remains available below.",
+        "아래의 분석 결과는 계속 확인할 수 있습니다.",
+      ),
+      play: copy("Play", "재생"),
+      pause: copy("Pause", "일시정지"),
+    },
   },
   navigation: {
     work: copy("Selected Work", "주요 작업"),
@@ -64,11 +160,11 @@ export const portfolioContent: PortfolioContent = {
       eyebrow: copy("01 · Sensor Integration", "01 · 센서 통합"),
       title: copy(
         "Three Robots, One Sensor Engineer",
-        "로봇 세 대, 센서 엔지니어 한 명",
+        "로봇 세 대, 한명의 센서 엔지니어",
       ),
       summary: copy(
         "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
-        "서빙로봇, 산업용 AMR, 휴머노이드. 겹치는 일정, 17개월, 세 대 모두 단독 담당.",
+        "서빙로봇, 산업용 AMR, 휴머노이드. 시작부터 끝까지 담당한 로봇들.",
       ),
       tags: ["Bring-up", "URDF / TF", "Linux interfaces", "Factory test", "Field reliability"],
       metrics: [
@@ -242,8 +338,8 @@ export const portfolioContent: PortfolioContent = {
       id: "amr-calibration",
       eyebrow: copy("03 · Production Calibration", "03 · 생산 캘리브레이션"),
       title: copy(
-        "A Calibration Method That Reached the Production Line",
-        "생산 라인까지 간 캘리브레이션 방법",
+        "LiDAR-to-LiDAR Extrinsic Calibration Method That Reached the Production Line",
+        "라이다-라이다 캘리브레이션: 문제 주도를 통해 생산에 적용한 사례",
       ),
       summary: copy(
         "One LiDAR sat upside down with an unknown yaw offset, so its returns missed the wall the reference sensor hit. Estimated the offset from wall geometry and put the method on the production line.",

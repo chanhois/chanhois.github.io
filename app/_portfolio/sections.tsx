@@ -2,29 +2,24 @@
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import { portfolioContent } from "./content";
+import type { SectionCopy } from "./model";
 import { useLanguage } from "./use-language";
 
 function SectionHeading({
   id,
   index,
-  en,
-  ko,
-  descriptionEn,
-  descriptionKo,
+  copy,
 }: {
   id: string;
   index: string;
-  en: string;
-  ko: string;
-  descriptionEn: string;
-  descriptionKo: string;
+  copy: SectionCopy;
 }) {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div className="section-intro section-intro--compact">
       <p className="section-index">{index}</p>
-      <h2 id={id}>{language === "en" ? en : ko}</h2>
-      <p>{language === "en" ? descriptionEn : descriptionKo}</p>
+      <h2 id={id}>{t(copy.heading)}</h2>
+      <p>{t(copy.description)}</p>
     </div>
   );
 }
@@ -37,13 +32,10 @@ export function ExperienceSection() {
         <SectionHeading
           id="experience-title"
           index="08 — 10"
-          en="Experience"
-          ko="경험"
-          descriptionEn="One sensor lifecycle, carried from the first electrical signal to field reliability."
-          descriptionKo="첫 전기 신호부터 필드 신뢰성까지 하나의 센서 생애주기로 다뤘습니다."
+          copy={portfolioContent.site.experience}
         />
         <div className="lifecycle" aria-label={language === "en" ? "Sensor lifecycle" : "센서 생애주기"}>
-          {["BRING-UP", "CALIBRATE", "VALIDATE", "PRODUCE", "RELIABILITY"].map((stage, index) => (
+          {portfolioContent.site.lifecycle.map((stage, index) => (
             <span key={stage}><i>{String(index + 1).padStart(2, "0")}</i>{stage}</span>
           ))}
         </div>
@@ -72,10 +64,7 @@ export function ResearchSection() {
         <SectionHeading
           id="research-title"
           index="R · 01"
-          en="Research"
-          ko="연구"
-          descriptionEn="Geometry and tracking research that shaped how I reason about sensor evidence."
-          descriptionKo="센서 근거를 해석하는 방식을 만든 기하와 추적 연구입니다."
+          copy={portfolioContent.site.research}
         />
         <div className="research-grid">
           {portfolioContent.research.map((entry, index) => (
@@ -94,7 +83,7 @@ export function ResearchSection() {
         <div className="publications-block">
           <div>
             <p className="section-index">PUBLICATIONS</p>
-            <h3>{language === "en" ? "Selected writing" : "주요 논문"}</h3>
+            <h3>{t(portfolioContent.site.publicationsHeading)}</h3>
           </div>
           <ol className="publication-list">
             {portfolioContent.publications.map((publication, index) => (
@@ -115,25 +104,22 @@ export function ResearchSection() {
 }
 
 export function AboutSection() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   return (
     <section className="about-section" id="about" aria-labelledby="about-title">
       <div className="page-shell">
         <SectionHeading
           id="about-title"
           index="ABOUT · CHS"
-          en="How I Work"
-          ko="일하는 방식"
-          descriptionEn="I make sensor behavior observable, find the physical cause, and leave a process that another engineer can repeat."
-          descriptionKo="센서 동작을 관측 가능하게 만들고 물리적 원인을 찾은 뒤, 다른 엔지니어도 반복할 수 있는 프로세스를 남깁니다."
+          copy={portfolioContent.site.about}
         />
         <div className="principle-row">
-          {[
-            ["01", "MEASURE", "Start with observable evidence", "관측 가능한 근거에서 시작"],
-            ["02", "MODEL", "Match the model to the physics", "물리 현상에 맞는 모델 선택"],
-            ["03", "SHIP", "Turn the fix into a repeatable tool", "반복 가능한 도구로 완성"],
-          ].map(([number, label, en, ko]) => (
-            <article key={number}><span>{number}</span><strong>{label}</strong><p>{language === "en" ? en : ko}</p></article>
+          {portfolioContent.site.principles.map((principle) => (
+            <article key={principle.number}>
+              <span>{principle.number}</span>
+              <strong>{principle.label}</strong>
+              <p>{t(principle.text)}</p>
+            </article>
           ))}
         </div>
         <div className="skills-grid">
@@ -151,13 +137,13 @@ export function AboutSection() {
 }
 
 export function ContactFooter() {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const email = portfolioContent.profile.email;
   return (
     <footer className="contact-footer">
       <div className="page-shell">
-        <p className="eyebrow"><span className="status-dot" aria-hidden="true" />{language === "en" ? "Open to the next hard sensor problem" : "다음 어려운 센서 문제를 기다립니다"}</p>
-        <h2>{language === "en" ? "Let’s make the signal trustworthy." : "신뢰할 수 있는 신호를 함께 만듭시다."}</h2>
+        <p className="eyebrow"><span className="status-dot" aria-hidden="true" />{t(portfolioContent.site.contact.eyebrow)}</p>
+        <h2>{t(portfolioContent.site.contact.headline)}</h2>
         <a className="contact-link" href={`mailto:${email}`}>
           <Mail aria-hidden="true" size={22} strokeWidth={1.6} />
           <span>{email}</span>
@@ -165,7 +151,7 @@ export function ContactFooter() {
         </a>
         <div className="footer-meta">
           <span>CHAN-HO SEO · ROBOTICS SENSOR ENGINEER</span>
-          <a href="#top">{language === "en" ? "Back to top ↑" : "맨 위로 ↑"}</a>
+          <a href="#top">{t(portfolioContent.site.contact.backToTop)}</a>
         </div>
       </div>
     </footer>

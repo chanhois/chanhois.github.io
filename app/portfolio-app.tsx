@@ -14,7 +14,7 @@ import { SiteNav } from "./_portfolio/site-nav";
 import { LanguageProvider, useLanguage } from "./_portfolio/use-language";
 
 function PortfolioSurface() {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -27,14 +27,13 @@ function PortfolioSurface() {
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-intro page-shell">
             <p className="section-index">01 — 05</p>
-            <h2 id="work-title">
-              {language === "en" ? "Selected Work" : "주요 작업"}
-            </h2>
+            <h2 id="work-title">{t(portfolioContent.site.work.heading)}</h2>
             <p>
               {/* Counted, not spelled out: the copy went stale the last time a case moved. */}
-              {language === "en"
-                ? `${portfolioContent.featured.length} cases where a sensor problem became a measurable engineering decision.`
-                : `센서 문제를 측정 가능한 엔지니어링 판단으로 바꾼 ${portfolioContent.featured.length}가지 사례입니다.`}
+              {t(portfolioContent.site.work.description).replace(
+                "{count}",
+                String(portfolioContent.featured.length),
+              )}
             </p>
           </div>
           {portfolioContent.featured.map((study, index) => (

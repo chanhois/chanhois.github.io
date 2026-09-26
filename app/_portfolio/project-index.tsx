@@ -24,12 +24,8 @@ export function ProjectIndex() {
       <div className="page-shell">
         <div className="section-intro section-intro--compact">
           <p className="section-index">06 — 07</p>
-          <h2 id="projects-title">{language === "en" ? "Project Index" : "프로젝트"}</h2>
-          <p>
-            {language === "en"
-              ? "Platform breadth and research foundations behind the featured work."
-              : "주요 작업을 뒷받침하는 플랫폼 경험과 연구 기반입니다."}
-          </p>
+          <h2 id="projects-title">{t(portfolioContent.site.projects.heading)}</h2>
+          <p>{t(portfolioContent.site.projects.description)}</p>
         </div>
         <div className="project-grid">
           {portfolioContent.projects.map((project, index) => (
@@ -52,7 +48,7 @@ export function ProjectIndex() {
               <h3>{t(project.title)}</h3>
               <p>{t(project.summary)}</p>
               <details>
-                <summary>{language === "en" ? "Read the outcome" : "결과 보기"}</summary>
+                <summary>{t(portfolioContent.site.ui.readOutcome)}</summary>
                 <p>{t(project.outcome)}</p>
               </details>
             </article>

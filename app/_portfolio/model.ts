@@ -89,8 +89,40 @@ export interface ProfileContent {
   email: string;
 }
 
+export interface SectionCopy {
+  heading: LocalizedText;
+  description: LocalizedText;
+}
+
+/** Copy that used to sit inline in components. Everything a reader sees is here. */
+export interface SiteCopy {
+  headline: { line1: LocalizedText; line2: LocalizedText; line3: LocalizedText };
+  /** Chips under the headline: the functions the work crosses. */
+  functions: LocalizedText[];
+  actions: { work: LocalizedText; email: LocalizedText };
+  work: SectionCopy;
+  projects: SectionCopy;
+  experience: SectionCopy;
+  research: SectionCopy;
+  about: SectionCopy;
+  /** The five lifecycle stages shown above the experience rows. */
+  lifecycle: string[];
+  principles: { number: string; label: string; text: LocalizedText }[];
+  publicationsHeading: LocalizedText;
+  contact: { eyebrow: LocalizedText; headline: LocalizedText; backToTop: LocalizedText };
+  /** Labels on controls and fallbacks, short enough to be missed but still read. */
+  ui: {
+    readOutcome: LocalizedText;
+    mediaUnavailable: LocalizedText;
+    mediaUnavailableHint: LocalizedText;
+    play: LocalizedText;
+    pause: LocalizedText;
+  };
+}
+
 export interface PortfolioContent {
   profile: ProfileContent;
+  site: SiteCopy;
   navigation: Record<
     "work" | "projects" | "experience" | "research" | "about",
     LocalizedText

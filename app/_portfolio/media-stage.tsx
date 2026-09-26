@@ -2,6 +2,7 @@
 
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { portfolioContent } from "./content";
 import { EvidenceGraphic } from "./evidence-graphic";
 import type { MediaSpec } from "./model";
 import { useLanguage } from "./use-language";
@@ -14,12 +15,12 @@ interface MediaStageProps {
 }
 
 function MediaFallback() {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div className="media-fallback" role="status">
       <span aria-hidden="true">×</span>
-      <strong>{language === "en" ? "Evidence unavailable" : "증거 자료를 불러올 수 없습니다"}</strong>
-      <p>{language === "en" ? "The written finding remains available below." : "아래의 분석 결과는 계속 확인할 수 있습니다."}</p>
+      <strong>{t(portfolioContent.site.ui.mediaUnavailable)}</strong>
+      <p>{t(portfolioContent.site.ui.mediaUnavailableHint)}</p>
     </div>
   );
 }
@@ -29,7 +30,7 @@ function ControlledEvidenceVideo({
   active,
   onFailure,
 }: Omit<MediaStageProps, "labelledBy">) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -95,8 +96,8 @@ function ControlledEvidenceVideo({
       <button type="button" className="media-control" onClick={togglePlayback}>
         {playing ? <Pause aria-hidden="true" size={15} /> : <Play aria-hidden="true" size={15} />}
         {playing
-          ? language === "en" ? "Pause" : "일시정지"
-          : language === "en" ? "Play" : "재생"}
+          ? t(portfolioContent.site.ui.pause)
+          : t(portfolioContent.site.ui.play)}
       </button>
     </div>
   );
