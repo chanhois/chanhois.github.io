@@ -47,7 +47,7 @@ export const portfolioContent: PortfolioContent = {
     ),
     introduction: copy(
       "I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. When a measurement goes wrong the cause is usually upstream of the sensor, in a timestamp, an index, or a fixture that shifts. I have been the only sensor engineer on three commercial robot platforms.",
-      "로봇 센서를 처음부터 끝까지 담당합니다. Bring-up, 캘리브레이션, 공장 검사, 현장 장애까지. 측정이 틀어졌을 때 원인은 대개 센서보다 위에 있습니다. 타임스탬프, 인덱스, 혹은 흔들리는 지그입니다. 상용 로봇 세 대에서 센서를 맡은 유일한 엔지니어였습니다.",
+      "로봇에 센서를 올리고 끝까지 책임집니다. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 측정이 틀어지면 원인은 대개 센서가 아니라 그 앞단에 있습니다. 타임스탬프거나, 인덱스거나, 흔들리는 지그입니다. 상용 로봇 세 종의 센서를 혼자 맡아 왔습니다.",
     ),
     email: "studychanho0717@gmail.com",
   },
@@ -90,7 +90,7 @@ export const portfolioContent: PortfolioContent = {
           copy("Three programs, one of me", "세 개의 과제, 한 명"),
           copy(
             "Three robots each needed a full sensing stack: parts chosen, mounted, calibrated, kept alive in the field. The schedules overlapped. There was no second sensor engineer.",
-            "로봇 세 대가 각각 완전한 센서 스택을 필요로 했습니다. 부품 선정, 장착, 캘리브레이션, 현장 유지까지입니다. 일정은 겹쳤습니다. 다른 센서 엔지니어는 없었습니다.",
+            "로봇 세 대가 저마다 완전한 센서 스택을 필요로 했습니다. 부품을 고르고, 붙이고, 캘리브레이션하고, 현장에서 유지하는 일까지 있었습니다. 일정은 겹쳤고, 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
           ),
           "integration",
           copy("Three platform schedules drawn on one time axis, overlapping in the middle", "하나의 시간축에 그린 세 플랫폼 일정으로, 가운데 구간이 겹칩니다"),
@@ -102,7 +102,7 @@ export const portfolioContent: PortfolioContent = {
           copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
           copy(
             "I ran the same five stages on all three: bring-up, URDF and TF, calibration, factory validation, field reliability. Closing a stage once made closing it on the next robot cheap.",
-            "세 대 모두에 같은 다섯 단계를 적용했습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성입니다. 한 번 닫은 단계는 다음 로봇에서 훨씬 싸게 닫혔습니다.",
+            "세 대 모두에 같은 다섯 단계를 돌렸습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성 순입니다. 한 로봇에서 한 단계를 끝내 놓으면 다음 로봇에서는 훨씬 빨리 끝났습니다.",
           ),
           "integration",
           copy("One shared lifecycle applied across the three platforms", "세 플랫폼에 공통으로 적용한 하나의 생애주기"),
@@ -114,7 +114,7 @@ export const portfolioContent: PortfolioContent = {
           copy("All three shipped", "세 대 모두 출하됐습니다"),
           copy(
             "RGB-D, LiDAR and RGB sensing integrated on each robot and carried through factory test into field operation. Integration meant the whole path: URDF and TF, runtime calibration, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
-            "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 통합은 전체 경로를 뜻합니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 그리고 자꾸 끊기던 카메라의 USB enumeration과 전원 설정까지입니다.",
+            "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 통합이라고 하면 이 경로 전부를 말합니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 자꾸 끊기던 카메라의 USB enumeration과 전원 설정이 여기 들어갑니다.",
           ),
           "integration",
           copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
@@ -186,7 +186,7 @@ export const portfolioContent: PortfolioContent = {
           copy("Fix the geometry first, then estimate", "기하를 먼저 고정하고 추정하기"),
           copy(
             "400 angular bins, so index i always means the same physical direction. Then one independent 1-D EKF per beam, because the beams do not share a noise source.",
-            "400개 각도 bin으로 나눠 인덱스 i가 항상 같은 물리 방향을 가리키게 했습니다. 그 위에 빔마다 독립적인 1차원 EKF를 뒀습니다. 빔들은 노이즈 원인을 공유하지 않기 때문입니다.",
+            "400개 각도 bin으로 나눠 인덱스 i가 항상 같은 물리 방향을 가리키게 했습니다. 그 위에 빔마다 독립적인 1차원 EKF를 뒀습니다. 빔끼리 노이즈 원인이 다르니 따로 추정하는 편이 맞습니다.",
           ),
           "lidar",
           copy("Fixed 400-bin angular grid feeding per-beam EKF filters", "400-bin 고정 각도 그리드와 빔별 EKF 구조"),
@@ -198,7 +198,7 @@ export const portfolioContent: PortfolioContent = {
           title: copy("Gate the outliers, keep the real motion", "이상치는 막고 실제 움직임은 통과"),
           body: copy(
             "Each beam carries a Mahalanobis gate sized to its own uncertainty. Readings that fail the gate are dropped. A sudden obstacle still gets through, because the gate resets on a run of rejections.",
-            "빔마다 자기 불확도에 맞춘 Mahalanobis gate를 둡니다. gate를 통과하지 못한 측정은 버립니다. 급출현 장애물은 그대로 통과합니다. 연속 거부가 쌓이면 gate가 리셋되기 때문입니다.",
+            "빔마다 자기 불확도에 맞춘 Mahalanobis gate를 둡니다. gate를 통과하지 못한 측정은 버립니다. 그래도 갑자기 나타난 장애물은 그대로 통과합니다. 거부가 연달아 쌓이면 gate를 리셋하기 때문입니다.",
           ),
           media: {
             kind: "video",
@@ -247,7 +247,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "One LiDAR sat upside down with an unknown yaw offset, so its returns missed the wall the reference sensor hit. Estimated the offset from wall geometry and put the method on the production line.",
-        "한 LiDAR가 뒤집혀 장착되고 yaw 오프셋을 몰라, 기준 센서가 맞히는 벽을 빗나갔습니다. 벽면 기하로 오프셋을 추정해 그 방법을 생산 라인에 올렸습니다.",
+        "LiDAR 하나가 뒤집혀 달렸는데 yaw 오프셋을 알 수 없었습니다. 그래서 기준 센서가 제대로 맞히는 벽을 이 센서만 빗나갔습니다. 벽면 기하로 오프셋을 추정해 그 방법을 생산 라인에 올렸습니다.",
       ),
       tags: ["RANSAC", "PCA", "Huber loss", "Production", "On-robot workflow"],
       metrics: [
@@ -285,7 +285,7 @@ export const portfolioContent: PortfolioContent = {
           title: copy("A wall is a good ruler", "벽은 좋은 자입니다"),
           body: copy(
             "RANSAC pulls wall candidates out of the clutter. PCA gives each wall a direction and a normal. Measure every point along that normal and the misalignment becomes a number to minimize.",
-            "RANSAC이 clutter에서 벽 후보를 뽑습니다. PCA가 각 벽의 방향과 normal을 줍니다. 모든 점을 그 normal 방향으로 재면 정렬 오차가 최소화할 수 있는 수치가 됩니다.",
+            "RANSAC이 clutter에서 벽 후보를 뽑고, PCA가 각 벽의 방향과 normal을 줍니다. 모든 점을 그 normal 방향으로 재면 정렬 오차를 줄여야 할 하나의 수치로 다룰 수 있습니다.",
           ),
           media: {
             kind: "image",
@@ -332,7 +332,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "Three depth camera processes were eating the robot's CPU. Profiling put the cost inside PCL VoxelGrid's sort, and a sort-free downsampling pass gave 26% back.",
-        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링 결과 비용은 PCL VoxelGrid의 정렬 안에 있었고, 정렬 없는 downsampling으로 26%를 돌려받았습니다.",
+        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링해 보니 비용은 PCL VoxelGrid의 정렬에 몰려 있었고, 정렬 없는 downsampling으로 바꿔 CPU 26%를 되찾았습니다.",
       ),
       tags: ["Profiling", "PCL", "Point cloud", "C++", "Runtime"],
       metrics: [
@@ -361,7 +361,7 @@ export const portfolioContent: PortfolioContent = {
           copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
           copy(
             "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
-            "로봇에서 파이프라인을 프로파일링하자 시간이 PCL VoxelGrid 안에 있었습니다. 이 구현은 점들을 voxel로 묶기 위해 정렬을 하는데, 비싼 쪽은 downsampling 자체가 아니라 그 정렬이었습니다.",
+            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현은 점들을 voxel로 묶으려고 정렬을 하는데, 비싼 쪽은 downsampling이 아니라 바로 그 정렬이었습니다.",
           ),
           "uncertainty",
           copy("Profiler output placing the cost inside the voxel grid sort", "voxel grid 정렬에 비용이 몰려 있음을 보여주는 프로파일러 결과"),
@@ -390,7 +390,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "The supplier passed 52 cameras the factory failed. Retesting 116 units flipped 32 from fail to pass. Built the acceptance criteria and the measurement-system analysis behind them, which traced the disagreement to the fixture.",
-        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준과 그 뒤의 측정 시스템 분석을 만들었고, 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
+        "공급사가 통과시킨 52대를 공장이 불합격시켰습니다. 116대를 재검하니 32대가 fail에서 pass로 바뀌었습니다. 합격 기준을 세우고 그 기준을 받치는 측정 시스템 분석까지 만들었고, 그 분석이 불일치의 원인을 지그로 좁혔습니다.",
       ),
       tags: ["IQC", "3-sigma thresholds", "Measurement variation", "Fixture design"],
       metrics: [
@@ -424,7 +424,7 @@ export const portfolioContent: PortfolioContent = {
           copy("Measure the setup before judging the part", "부품을 판정하기 전에 측정 환경을 재기"),
           copy(
             "A verdict at the specification edge is only as good as its repeatability. I went after the inspection fixture as a source of spread in its own right.",
-            "규격 경계의 판정은 재현성만큼만 신뢰할 수 있습니다. 검사 지그를 그 자체로 산포 원인으로 보고 파고들었습니다.",
+            "규격 경계의 판정은 같은 측정을 다시 해도 같은 답이 나올 때만 의미가 있습니다. 그래서 검사 지그를 그 자체로 산포 원인으로 보고 파고들었습니다.",
           ),
           "uncertainty",
           copy("Inspection fixture treated as a measured source of variation", "산포 원인으로 다루어지는 검사 지그"),
@@ -436,7 +436,7 @@ export const portfolioContent: PortfolioContent = {
           copy("There were no numeric criteria to disagree about", "애초에 다툴 수치 기준이 없었습니다"),
           copy(
             "Acceptance rested on judgement, not on a quantity. I defined what a camera has to satisfy, field of view and optical-centre offset, from the development requirements, and set the production thresholds from a 3-sigma analysis of the measured distribution.",
-            "합격 여부가 수치가 아니라 판단에 기대고 있었습니다. 카메라가 만족해야 할 항목을 개발 요구사항에서 정의했습니다. 화각과 광학 중심 오프셋입니다. 생산 기준값은 측정 분포의 3-sigma 분석으로 정했습니다.",
+            "합격 여부가 수치가 아니라 판단에 기대고 있었습니다. 카메라가 만족해야 할 항목을 개발 요구사항에서 뽑았습니다. 화각과 광학 중심 오프셋 두 가지입니다. 양산 기준값은 측정 분포를 3-sigma로 분석해 정했습니다.",
           ),
           "uncertainty",
           copy("Acceptance criteria derived from a measured distribution", "측정 분포에서 도출한 합격 기준"),
@@ -460,7 +460,7 @@ export const portfolioContent: PortfolioContent = {
           copy("The jig changed, not the threshold", "기준이 아니라 지그를 바꿨습니다"),
           copy(
             "Seating turned out to be a real contributor to the disagreement, and the fixture was improved. A borderline verdict now reflects the camera.",
-            "안착이 판정 불일치의 실제 원인 중 하나로 확인돼 지그를 개선했습니다. 이제 경계 판정은 카메라를 반영합니다.",
+            "안착이 판정 불일치의 실제 원인 중 하나로 확인돼 지그를 고쳤습니다. 이제 경계에 걸린 판정은 장착 상태가 아니라 카메라 자체를 말해 줍니다.",
           ),
           "uncertainty",
           copy("Improved fixture seating narrowing the remount spread", "안착 개선으로 좁아진 재장착 산포"),
@@ -482,7 +482,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       outcome: copy(
         "RANSAC and MSAC absorb the outliers real footage produces: partial bodies, groups, reflections. A pedestrian is only usable when both endpoints are clean.",
-        "실제 영상에서 나오는 이상치를 RANSAC과 MSAC으로 흡수했습니다. 몸이 잘린 사람, 겹친 무리, 반사입니다. 양 끝점이 깨끗한 보행자만 쓸 수 있습니다.",
+        "실제 영상에서 나오는 이상치를 RANSAC과 MSAC으로 흡수했습니다. 몸이 잘린 사람, 겹쳐 선 무리, 유리에 비친 상 같은 것들입니다. 양 끝점이 깨끗하게 잡힌 보행자만 씁니다.",
       ),
       tags: ["Camera calibration", "RANSAC", "MSAC", "Geometry"],
       media: [
@@ -524,7 +524,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       outcome: copy(
         "Range gives you a centroid and nothing else. No colour, no texture, no box to re-identify by. Identity has to come from motion alone.",
-        "거리 센서가 주는 것은 centroid뿐입니다. 색도, 질감도, 다시 알아볼 박스도 없습니다. 식별은 움직임만으로 만들어야 합니다.",
+        "거리 센서가 주는 것은 centroid뿐입니다. 색도, 질감도, 다시 알아볼 박스도 없습니다. 결국 움직임만 보고 같은 객체인지 가려내야 합니다.",
       ),
       tags: ["DBSCAN", "EKF", "Hungarian", "MOT"],
       media: [
@@ -583,7 +583,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "Marker-free camera parameter estimation from pedestrian line segments perpendicular to the ground plane.",
-        "지면에 수직인 보행자 line segment를 이용한 marker-free 카메라 파라미터 추정 연구입니다.",
+        "지면에 수직인 보행자 선분으로 marker 없이 카메라 파라미터를 추정했습니다.",
       ),
       result: copy(
         "Improved accuracy by 82% over the ICPR 2021 baseline under real CCTV conditions.",
