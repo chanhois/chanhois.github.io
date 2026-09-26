@@ -9,8 +9,8 @@ export type EvidenceVisual =
   | "runtime"
   | "cpu"
   | "decomposition"
-  | "remount"
-  | "seating";
+  | "experiment"
+  | "sigma";
 
 export interface MediaSpec {
   kind: EvidenceKind;

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import type { EvidenceVisual } from "./model";
 
 export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
@@ -129,74 +130,78 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
         {/* No split is drawn to scale: the point is that one term was never measured. */}
         <div className="decomposition">
           <div className="decomposition__term">
-            <span>MEASURED VALUE</span>
-            <strong>PASS / FAIL</strong>
+            <span>OBSERVED SPREAD</span>
+            <strong>σ (px)</strong>
           </div>
           <span className="decomposition__op" aria-hidden="true">=</span>
-          <div className="decomposition__term">
-            <span>THE CAMERA</span>
-            <strong>PART SPREAD</strong>
-          </div>
-          <span className="decomposition__op" aria-hidden="true">+</span>
-          <div className="decomposition__term decomposition__term--open">
-            <span>THE SETUP</span>
-            <strong>FIXTURE SPREAD</strong>
+          <div className="decomposition__system">
+            <div className="decomposition__system-terms">
+              {["PROGRAM", "SEATING", "ENVIRONMENT"].map((term, index) => (
+                <Fragment key={term}>
+                  {index > 0 ? <span className="decomposition__op" aria-hidden="true">+</span> : null}
+                  <span className="decomposition__system-term">{term}</span>
+                </Fragment>
+              ))}
+            </div>
+            <span className="decomposition__system-label">MEASUREMENT SYSTEM</span>
           </div>
         </div>
-        <p className="decomposition__note">The third term was the one nobody was measuring</p>
+        <p className="decomposition__note">Hold one sensor as the reference and the part term drops out</p>
         <p className="graphic-conclusion">A verdict at the edge is worth only its repeatability</p>
       </div>
     );
   }
 
-  if (visual === "remount") {
-    // Fixed offsets, not random: the server and the browser must draw the same dots.
-    const remounts = [12, 31, 24, 58, 44, 77, 65, 90, 38, 71];
+  if (visual === "experiment") {
+    const conditions = [
+      { id: "recapture", label: "RECAPTURE", detail: "same seating, measured again" },
+      { id: "remount", label: "REMOUNT", detail: "taken off and re-seated each time" },
+      { id: "brightness", label: "BRIGHTNESS", detail: "two lighting levels" },
+      { id: "colour", label: "LIGHT COLOUR", detail: "lighting colour changed" },
+    ];
     return (
-      <div className="evidence-graphic evidence-graphic--remount">
+      <div className="evidence-graphic evidence-graphic--experiment">
         <div className="evidence-grid" aria-hidden="true" />
-        <p className="graphic-kicker">ONE CAMERA · REPEATED REMOUNTS</p>
-        <div className="remount-plot">
-          <span className="remount-plot__axis" aria-hidden="true" />
-          {remounts.map((left, index) => (
-            <i key={left} style={{ left: `${left}%`, top: `${(index % 3) * 26 + 8}%` }} />
+        <p className="graphic-kicker">5 SENSORS · 4 CONDITIONS · 30 REPEATS EACH</p>
+        <ol className="condition-list">
+          {conditions.map((condition, index) => (
+            <li key={condition.id}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{condition.label}</strong>
+              <em>{condition.detail}</em>
+            </li>
           ))}
-          <span className="remount-plot__bracket" aria-hidden="true" />
-        </div>
-        <p className="remount-plot__caption">
-          Same part, off the jig and back on. The spread left over is the jig&rsquo;s.
-        </p>
-        <div className="variance-chips">
-          {["REPEATED ACROSS SENSOR SIZES"].map((item) => <span key={item}>{item}</span>)}
-        </div>
-        <p className="graphic-conclusion">Seating turns out to be a source in its own right</p>
+        </ol>
+        <div className="graphic-result"><strong>600</strong><span>MEASUREMENTS · 7 METRICS EACH</span></div>
+        <p className="graphic-conclusion">One sensor held as the reference, so what moves is the setup</p>
       </div>
     );
   }
 
-  if (visual === "seating") {
+  if (visual === "sigma") {
+    // Widths are relative to the 1.8 px remount figure; colour is off that scale entirely.
+    const rows = [
+      { id: "recapture", label: "RECAPTURE", value: "0.15 px", width: "8%" },
+      { id: "brightness", label: "BRIGHTNESS", value: "≈ baseline", width: "9%" },
+      { id: "remount", label: "REMOUNT", value: "up to 1.8 px", width: "100%" },
+    ];
     return (
-      <div className="evidence-graphic evidence-graphic--seating">
+      <div className="evidence-graphic evidence-graphic--sigma">
         <div className="evidence-grid" aria-hidden="true" />
-        <p className="graphic-kicker">REMOUNT SPREAD · BEFORE AND AFTER THE FIX</p>
-        <div className="seating-compare">
-          <span className="seating-compare__threshold" aria-hidden="true">
-            <i />
-            <b>THRESHOLD</b>
-          </span>
-          {[
-            { id: "before", label: "SEATING AS FOUND", left: 18, width: 64 },
-            { id: "after", label: "SEATING IMPROVED", left: 38, width: 24 },
-          ].map((band) => (
-            <div className="seating-band" key={band.id}>
-              <span className="seating-band__label">{band.label}</span>
-              <span className="seating-band__track" aria-hidden="true">
-                <i style={{ left: `${band.left}%`, width: `${band.width}%` }} />
-              </span>
+        <p className="graphic-kicker">POSITION SPREAD BY CONDITION</p>
+        <div className="sigma-rows">
+          {rows.map((row) => (
+            <div className="sigma-row" key={row.id}>
+              <div className="sigma-row__label"><span>{row.label}</span><strong>{row.value}</strong></div>
+              <span className="sigma-row__track"><i style={{ width: row.width }} /></span>
             </div>
           ))}
+          <div className="sigma-row sigma-row--broken">
+            <div className="sigma-row__label"><span>LIGHT COLOUR</span><strong>detection breaks</strong></div>
+            <span className="sigma-row__track"><i /></span>
+          </div>
         </div>
-        <p className="graphic-conclusion">The threshold did not move. The spread did.</p>
+        <p className="graphic-conclusion">Seating moved the number. Brightness did not.</p>
       </div>
     );
   }
