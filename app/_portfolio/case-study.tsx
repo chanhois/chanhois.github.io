@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CaseStudy } from "./model";
 import { MediaStage } from "./media-stage";
+import { portfolioContent } from "./content";
 import { Metric } from "./metric";
 import { useLanguage } from "./use-language";
 
@@ -41,20 +42,28 @@ export function CaseStudyView({ study, index = 0 }: { study: CaseStudy; index?: 
           </span>
         </div>
         <p className="case-study__summary">{t(study.summary)}</p>
-        <ul className="tag-list" aria-label={language === "en" ? "Tools and methods" : "도구와 방법"}>
-          {study.tags.map((tag) => <li key={tag}>{tag}</li>)}
-        </ul>
-        <div className="case-study__metrics">
-          {study.metrics.map((metric) => (
-            <Metric key={metric.value.en} label={t(metric.label)} value={t(metric.value)} context={t(metric.context)} />
-          ))}
-        </div>
+        {portfolioContent.elements.caseTags ? (
+          <ul className="tag-list" aria-label={language === "en" ? "Tools and methods" : "도구와 방법"}>
+            {study.tags.map((tag) => <li key={tag}>{tag}</li>)}
+          </ul>
+        ) : null}
+        {portfolioContent.elements.caseMetrics ? (
+          <div className="case-study__metrics">
+            {study.metrics.map((metric) => (
+              <Metric key={metric.value.en} label={t(metric.label)} value={t(metric.value)} context={t(metric.context)} />
+            ))}
+          </div>
+        ) : null}
       </header>
 
       <div className="case-study__story page-shell">
         <div className="case-study__media" id={`${study.id}-media`} aria-live="polite">
           <div className="media-stage__meta">
-            <span>{String(study.steps.findIndex((step) => step.id === activeStep.id) + 1).padStart(2, "0")} / 05</span>
+            <span>
+              {String(study.steps.findIndex((step) => step.id === activeStep.id) + 1).padStart(2, "0")}
+              {" / "}
+              {String(study.steps.length).padStart(2, "0")}
+            </span>
             <span>{t(activeStep.label)}</span>
           </div>
           <MediaStage

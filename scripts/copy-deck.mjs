@@ -15,6 +15,18 @@ import { dirname, resolve } from "node:path";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CONTENT = resolve(root, "app/_portfolio/content.ts");
+const ELEMENT_LABELS = {
+  heroEyebrow: "히어로 직함 줄 · Role line",
+  heroChips: "히어로 영역 칩 · Capability chips",
+  heroActions: "히어로 버튼 · Hero buttons",
+  heroScrollHint: "스크롤 안내 · Scroll hint",
+  caseTags: "케이스 태그 · Case tags",
+  caseMetrics: "케이스 지표 밴드 · Case metrics",
+  lifecycle: "센서 생애주기 띠 · Lifecycle strip",
+  principles: "원칙 세 줄 · Principles",
+  publications: "논문 목록 · Publications list",
+  skills: "기술 그리드 · Skills grid",
+};
 const SECTION_LABELS = {
   work: "주요 작업 · Selected Work",
   projects: "프로젝트 · Project Index",
@@ -76,7 +88,9 @@ async function loadContent() {
 }
 
 async function doExport() {
-  const entries = collect(await loadContent());
+  const content = await loadContent();
+  const shown = content.sections;
+  const entries = collect(content);
   const lines = [
     "# 포트폴리오 카피 덱",
     "",
@@ -95,11 +109,27 @@ async function doExport() {
     "",
   ];
 
-  const shown = (await loadContent()).sections;
   lines.push("## 섹션 표시 · Sections", "");
   lines.push("체크를 지우면 그 섹션이 페이지와 메뉴에서 사라집니다. 문구는 그대로 남습니다.", "");
   for (const [id, label] of Object.entries(SECTION_LABELS)) {
     lines.push(`- [${shown[id] ? "x" : " "}] \`${id}\` — ${label}`);
+  }
+  lines.push("", "---", "");
+
+  lines.push("## 요소 표시 · Elements", "");
+  lines.push("섹션보다 작은 덩어리입니다. 체크를 지우면 그 덩어리만 사라집니다.", "");
+  for (const [id, label] of Object.entries(ELEMENT_LABELS)) {
+    lines.push(`- [${content.elements[id] ? "x" : " "}] \`${id}\` — ${label}`);
+  }
+  lines.push("", "---", "");
+
+  lines.push("## 히어로 지표 · Hero metrics", "");
+  lines.push("히어로에 띄울 지표입니다. 체크한 케이스의 첫 지표가 체크한 순서대로 나옵니다.", "");
+  for (const study of content.featured) {
+    const metric = study.metrics[0];
+    const shown = content.site.heroMetrics.includes(study.id);
+    const note = metric ? `${metric.label.ko} · ${metric.value.ko}` : "지표 없음";
+    lines.push(`- [${shown ? "x" : " "}] \`${study.id}\` — ${note}`);
   }
   lines.push("", "---", "");
 
@@ -120,13 +150,40 @@ async function doExport() {
   console.log(`exported ${entries.length} strings -> docs/portfolio-copy-deck.md`);
 }
 
-function parseSections() {
-  const shown = {};
+/**
+ * All three checklists share a line shape, so they are read per heading:
+ * a tick under Sections means something different from one under Elements.
+ */
+function parseChecklists() {
+  const buckets = { sections: {}, elements: {}, heroMetrics: [] };
+  let bucket = null;
   for (const raw of readFileSync(DECK, "utf8").split("\n")) {
-    const line = raw.match(/^- \[([ xX])\] `([a-z]+)` —/);
-    if (line) shown[line[2]] = line[1].toLowerCase() === "x";
+    if (raw.startsWith("## ")) {
+      if (raw.includes("섹션 표시")) bucket = "sections";
+      else if (raw.includes("요소 표시")) bucket = "elements";
+      else if (raw.includes("히어로 지표")) bucket = "heroMetrics";
+      else bucket = null;
+      continue;
+    }
+    const line = raw.match(/^- \[([ xX])\] `([A-Za-z][\w-]*)` —/);
+    if (!line || !bucket) continue;
+    const [, mark, id] = line;
+    const ticked = mark.toLowerCase() === "x";
+    if (bucket === "heroMetrics") {
+      if (ticked) buckets.heroMetrics.push(id);
+    } else {
+      buckets[bucket][id] = ticked;
+    }
   }
-  return shown;
+  return buckets;
+}
+
+/** Rewrite a `key: { a: true, ... }` record in place, keeping its indentation. */
+function replaceRecord(source, key, values) {
+  const block = new RegExp(`( {2}${key}: \\{\\n)[\\s\\S]*?(\\n {2}\\},)`);
+  if (!block.test(source)) return null;
+  const body = Object.entries(values).map(([k, v]) => `    ${k}: ${v},`).join("\n");
+  return source.replace(block, `$1${body}$2`);
 }
 
 function parseDeck() {
@@ -150,7 +207,7 @@ async function doImport() {
   const deck = parseDeck();
   let source = readFileSync(CONTENT, "utf8");
 
-  const sections = parseSections();
+  const { sections, elements, heroMetrics } = parseChecklists();
   const expectedIds = Object.keys(SECTION_LABELS);
   const gotIds = expectedIds.filter((id) => id in sections);
   if (gotIds.length !== expectedIds.length) {
@@ -165,8 +222,20 @@ async function doImport() {
     process.exit(1);
   }
 
-  const current = (await loadContent()).sections;
+  const elementIds = Object.keys(ELEMENT_LABELS);
+  const missingElements = elementIds.filter((id) => !(id in elements));
+  if (missingElements.length) {
+    console.error(`the element checklist is missing ${missingElements.join(", ")}`);
+    console.error("re-export before importing, or restore the missing lines");
+    process.exit(1);
+  }
+
+  const content = await loadContent();
+  const current = content.sections;
   const sectionChanged = expectedIds.filter((id) => sections[id] !== current[id]);
+  const elementChanged = elementIds.filter((id) => elements[id] !== content.elements[id]);
+  const heroBefore = content.site.heroMetrics;
+  const heroChanged = heroBefore.join("\u0000") !== heroMetrics.join("\u0000");
 
   const changes = [];
   const missing = [];
@@ -184,7 +253,7 @@ async function doImport() {
     console.error("re-export before importing, or restore the missing headings");
     process.exit(1);
   }
-  if (!changes.length && !sectionChanged.length) {
+  if (!changes.length && !sectionChanged.length && !elementChanged.length && !heroChanged) {
     console.log("no changes in the deck");
     return;
   }
@@ -200,6 +269,31 @@ async function doImport() {
     for (const id of sectionChanged) {
       console.log(`  section ${id}: ${current[id]} -> ${sections[id]}`);
     }
+  }
+
+  if (elementChanged.length) {
+    const next = replaceRecord(source, "elements", Object.fromEntries(
+      elementIds.map((id) => [id, elements[id]]),
+    ));
+    if (!next) {
+      console.error("could not find the elements block in content.ts");
+      process.exit(1);
+    }
+    source = next;
+    for (const id of elementChanged) {
+      console.log(`  element ${id}: ${content.elements[id]} -> ${elements[id]}`);
+    }
+  }
+
+  if (heroChanged) {
+    const list = /( {4}heroMetrics: )\[[^\]]*\](,)/;
+    if (!list.test(source)) {
+      console.error("could not find the heroMetrics list in content.ts");
+      process.exit(1);
+    }
+    const rendered = heroMetrics.map((id) => JSON.stringify(id)).join(", ");
+    source = source.replace(list, `$1[${rendered}]$2`);
+    console.log(`  hero metrics: [${heroBefore.join(", ")}] -> [${heroMetrics.join(", ")}]`);
   }
 
   const failed = [];
@@ -240,7 +334,8 @@ async function doImport() {
   }
 
   writeFileSync(CONTENT, source, "utf8");
-  const total = changes.length + sectionChanged.length;
+  const total =
+    changes.length + sectionChanged.length + elementChanged.length + (heroChanged ? 1 : 0);
   console.log(`\napplied ${total} change(s) -> app/_portfolio/content.ts`);
 }
 

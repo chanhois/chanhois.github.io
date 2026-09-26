@@ -35,11 +35,13 @@ export function ExperienceSection() {
           index={numbering.experience.label}
           copy={portfolioContent.site.experience}
         />
+        {portfolioContent.elements.lifecycle ? (
         <div className="lifecycle" aria-label={language === "en" ? "Sensor lifecycle" : "센서 생애주기"}>
           {portfolioContent.site.lifecycle.map((stage, index) => (
             <span key={stage}><i>{String(index + 1).padStart(2, "0")}</i>{stage}</span>
           ))}
         </div>
+        ) : null}
         <div className="experience-list">
           {portfolioContent.experience.map((entry, index) => (
             <article className="experience-row" key={entry.id}>
@@ -81,6 +83,7 @@ export function ResearchSection() {
           ))}
         </div>
 
+        {portfolioContent.elements.publications ? (
         <div className="publications-block">
           <div>
             <p className="section-index">PUBLICATIONS</p>
@@ -99,6 +102,7 @@ export function ResearchSection() {
             ))}
           </ol>
         </div>
+        ) : null}
       </div>
     </section>
   );
@@ -114,6 +118,7 @@ export function AboutSection() {
           index="ABOUT · CHS"
           copy={portfolioContent.site.about}
         />
+        {portfolioContent.elements.principles ? (
         <div className="principle-row">
           {portfolioContent.site.principles.map((principle) => (
             <article key={principle.number}>
@@ -123,6 +128,8 @@ export function AboutSection() {
             </article>
           ))}
         </div>
+        ) : null}
+        {portfolioContent.elements.skills ? (
         <div className="skills-grid">
           {portfolioContent.skills.map((group) => (
             <article className="skill-group" key={group.id}>
@@ -132,6 +139,7 @@ export function AboutSection() {
             </article>
           ))}
         </div>
+        ) : null}
       </div>
     </section>
   );

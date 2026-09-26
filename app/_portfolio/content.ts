@@ -46,6 +46,19 @@ export const portfolioContent: PortfolioContent = {
     research: true,
     about: true,
   },
+  // Switch a block off here and it leaves the page. Copy for it stays put.
+  elements: {
+    heroEyebrow: true,
+    heroChips: true,
+    heroActions: true,
+    heroScrollHint: true,
+    caseTags: true,
+    caseMetrics: true,
+    lifecycle: true,
+    principles: true,
+    publications: true,
+    skills: true,
+  },
   profile: {
     name: "Chan-ho Seo",
     role: copy("Robotics Sensor Engineer", "로보틱스 센서 엔지니어"),
@@ -60,6 +73,9 @@ export const portfolioContent: PortfolioContent = {
     email: "studychanho0717@gmail.com",
   },
   site: {
+    // The hero shows the first metric of each case named here. Drop an id and
+    // that metric leaves the hero; empty the list and the band goes with it.
+    heroMetrics: ["sensor-integration", "lidar-stability"],
     headline: {
       line1: copy("BRING-UP", "센서의"),
       line2: copy("to", "시작부터"),

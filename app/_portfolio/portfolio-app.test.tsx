@@ -17,7 +17,7 @@ const headline = new RegExp(
   "i",
 );
 const metricOf = (id: string) =>
-  portfolioContent.featured.find((study) => study.id === id)!.metrics[0];
+  portfolioContent.featured.find((study) => study.id === id)?.metrics[0];
 
 describe("PortfolioApp", () => {
   it("leads with the positioning and verified proof metrics", () => {
@@ -27,8 +27,11 @@ describe("PortfolioApp", () => {
       within(hero).getByRole("heading", { name: headline }),
     ).toBeInTheDocument();
 
-    for (const id of ["sensor-integration", "lidar-stability"]) {
-      expect(within(hero).getByText(metricOf(id).value.en)).toBeInTheDocument();
+    // Which metrics the hero carries is a content decision, and the list can be
+    // emptied, so check the ones named rather than two fixed ids.
+    for (const id of site.heroMetrics) {
+      const metric = metricOf(id);
+      if (metric) expect(within(hero).getByText(metric.value.en)).toBeInTheDocument();
     }
 
     expect(

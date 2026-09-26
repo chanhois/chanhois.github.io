@@ -8,35 +8,38 @@ import { useLanguage } from "./use-language";
 export function Hero() {
   const { language, t } = useLanguage();
   const profile = portfolioContent.profile;
-  // Read by id: the featured order is a content decision, not a contract with the
-  // hero. A named case can also be deleted outright, so fall back rather than throw.
-  const byId = (id: string, fallbackIndex: number) => {
-    const named = portfolioContent.featured.find((study) => study.id === id);
-    return (named ?? portfolioContent.featured[fallbackIndex])?.metrics[0];
-  };
   const site = portfolioContent.site;
-  const scopeMetric = byId("sensor-integration", 0);
-  const lidarMetric = byId("lidar-stability", 1);
+  const shows = portfolioContent.elements;
+  // Named by id, not by position, and a name that no longer matches a case is
+  // simply dropped: deleting a case should not take the hero down with it.
+  const heroMetrics = site.heroMetrics
+    .map((id) => portfolioContent.featured.find((study) => study.id === id)?.metrics[0])
+    .filter((metric) => metric !== undefined);
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
       <div className="hero__content page-shell">
         <div className="hero__copy">
-          <p className="eyebrow">
-            <span className="status-dot" aria-hidden="true" />
-            {t(profile.role)} · Seoul, KR
-          </p>
+          {shows.heroEyebrow ? (
+            <p className="eyebrow">
+              <span className="status-dot" aria-hidden="true" />
+              {t(profile.role)} · Seoul, KR
+            </p>
+          ) : null}
           <h1 id="hero-title">
             {t(site.headline.line1)}<br />
             {t(site.headline.line2)}<br />
             <span>{t(site.headline.line3)}</span>
           </h1>
           <p className="hero__intro">{t(profile.introduction)}</p>
-          <ul className="capability-list" aria-label={language === "en" ? "Functions this work crosses" : "이 일이 걸친 영역"}>
-            {site.functions.map((fn) => (
-              <li key={fn.en}>{t(fn)}</li>
-            ))}
-          </ul>
+          {shows.heroChips ? (
+            <ul className="capability-list" aria-label={language === "en" ? "Functions this work crosses" : "이 일이 걸친 영역"}>
+              {site.functions.map((fn) => (
+                <li key={fn.en}>{t(fn)}</li>
+              ))}
+            </ul>
+          ) : null}
+          {shows.heroActions ? (
           <div className="hero__actions">
             <a className="button button--primary" href="#work">
               {t(site.actions.work)}
@@ -47,24 +50,27 @@ export function Hero() {
               {t(site.actions.email)}
             </a>
           </div>
+          ) : null}
         </div>
 
-        <div className="hero__metrics">
-          {[scopeMetric, lidarMetric].map((metric, index) =>
-            metric ? (
+        {heroMetrics.length ? (
+          <div className="hero__metrics">
+            {heroMetrics.map((metric, index) => (
               <Metric
                 key={index}
                 label={t(metric.label)}
                 value={t(metric.value)}
                 context={t(metric.context)}
               />
-            ) : null,
-          )}
-        </div>
+            ))}
+          </div>
+        ) : null}
       </div>
-      <p className="hero__scroll" aria-hidden="true">
-        SELECTED WORK <span>↓</span>
-      </p>
+      {shows.heroScrollHint ? (
+        <p className="hero__scroll" aria-hidden="true">
+          SELECTED WORK <span>↓</span>
+        </p>
+      ) : null}
     </section>
   );
 }

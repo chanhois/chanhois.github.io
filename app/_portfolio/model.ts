@@ -104,6 +104,8 @@ export interface SectionCopy {
 /** Copy that used to sit inline in components. Everything a reader sees is here. */
 export interface SiteCopy {
   headline: { line1: LocalizedText; line2: LocalizedText; line3: LocalizedText };
+  /** Case ids whose first metric the hero shows, in the order shown. */
+  heroMetrics: string[];
   /** Chips under the headline: the functions the work crosses. */
   functions: LocalizedText[];
   actions: { work: LocalizedText; email: LocalizedText };
@@ -138,9 +140,27 @@ export const SECTION_IDS = [
 
 export type SectionId = (typeof SECTION_IDS)[number];
 
+/** Smaller blocks a reader sees, each of which can be switched off on its own. */
+export const ELEMENT_IDS = [
+  "heroEyebrow",
+  "heroChips",
+  "heroActions",
+  "heroScrollHint",
+  "caseTags",
+  "caseMetrics",
+  "lifecycle",
+  "principles",
+  "publications",
+  "skills",
+] as const;
+
+export type ElementId = (typeof ELEMENT_IDS)[number];
+
 export interface PortfolioContent {
   /** Which sections the page renders. Hidden sections leave the nav too. */
   sections: Record<SectionId, boolean>;
+  /** Which of the smaller blocks the page renders. */
+  elements: Record<ElementId, boolean>;
   profile: ProfileContent;
   site: SiteCopy;
   navigation: Record<
