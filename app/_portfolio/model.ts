@@ -6,7 +6,8 @@ export type EvidenceVisual =
   | "calibration"
   | "uncertainty"
   | "integration"
-  | "runtime";
+  | "runtime"
+  | "cpu";
 
 export interface MediaSpec {
   kind: EvidenceKind;

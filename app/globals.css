@@ -543,6 +543,27 @@ section[id] {
   font-size: clamp(0.63rem, 1vw, 0.76rem);
 }
 
+/* The headline number a graphic is making, used by the calibration and CPU panels. */
+.graphic-result {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  margin-top: clamp(18px, 3vw, 28px);
+}
+
+.graphic-result strong {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.graphic-result span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 1vw, 0.7rem);
+  letter-spacing: 0.09em;
+}
+
 .lidar-bars {
   display: grid;
   gap: 18px;

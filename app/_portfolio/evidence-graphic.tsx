@@ -65,6 +65,31 @@ export function EvidenceGraphic({ visual }: { visual: EvidenceVisual }) {
     );
   }
 
+  if (visual === "cpu") {
+    return (
+      <div className="evidence-graphic evidence-graphic--cpu">
+        <div className="evidence-grid" aria-hidden="true" />
+        <p className="graphic-kicker">THREE CAMERA PROCESSES · CPU, COMBINED</p>
+        {/* Normalised against the before figure: the measured quantity is the 26%. */}
+        <div className="lidar-bars">
+          {[
+            ["PCL VOXELGRID", "100%", "100%"],
+            ["SORT-FREE PASS", "74%", "74%"],
+          ].map(([label, value, width]) => (
+            <div className="lidar-bar" key={label}>
+              <div className="lidar-bar__label">
+                <span>{label}</span><strong>{value}</strong>
+              </div>
+              <span className="lidar-bar__track"><i style={{ width }} /></span>
+            </div>
+          ))}
+        </div>
+        <div className="graphic-result"><strong>26%</strong><span>CPU RECLAIMED</span></div>
+        <p className="graphic-conclusion">Same downsampled cloud going downstream</p>
+      </div>
+    );
+  }
+
   if (visual === "integration") {
     const lanes = [
       { id: "serving", label: "SERVING ROBOT", start: 0, span: 100 },

@@ -474,12 +474,12 @@ export const portfolioContent: PortfolioContent = {
           },
         },
         {
-          id: "rgbd-result",
-          label: stages.result,
-          title: copy("26% back, same output", "같은 결과, CPU 26% 반환"),
+          id: "rgbd-implementation",
+          label: stages.implementation,
+          title: copy("Accumulate in place, in one pass", "제자리에서, 한 번에 누적하기"),
           body: copy(
-            "Each point is accumulated into its voxel where it already sits, in one pass. Nothing is reordered and nothing is copied out. Replacing the stage cut CPU across the three camera processes by 26%, with the same downsampled cloud going downstream.",
-            "점을 이미 속해 있는 voxel에서 바로 누적합니다. 한 번만 순회하고 재배열도 복사도 하지 않습니다. 이 단계를 교체해 세 카메라 프로세스 합산 CPU를 26% 줄였습니다. 후단으로 가는 downsampled cloud는 그대로입니다.",
+            "Each point is accumulated into the voxel it already sits in. Nothing is copied into a list, nothing is reordered, and one pass is enough. The voxel keeps a running sum and a count, so the centroid falls out at the end.",
+            "점을 이미 속해 있는 voxel에서 바로 누적합니다. 목록으로 복사하지도, 재배열하지도 않고 한 번만 순회합니다. voxel마다 합과 개수만 들고 있으면 끝에가서 중심점이 바로 나옵니다.",
           ),
           media: {
             kind: "image",
@@ -495,6 +495,24 @@ export const portfolioContent: PortfolioContent = {
             ),
           },
         },
+        storyStep(
+          "rgbd-result",
+          stages.result,
+          copy("26% back across the three cameras", "세 카메라 합산 CPU 26% 반환"),
+          copy(
+            "Measured on the robot with all three camera processes running. The downsampled cloud going downstream is the same, so the saving costs nothing anywhere else in the pipeline.",
+            "세 카메라 프로세스를 모두 돌린 상태로 로봇에서 측정했습니다. 후단으로 가는 downsampled cloud는 그대로라 파이프라인 다른 곳에서 치르는 대가가 없습니다.",
+          ),
+          "cpu",
+          copy(
+            "Bar chart of the three camera processes' combined CPU, normalised: the PCL VoxelGrid path at 100% and the sort-free pass at 74%",
+            "세 카메라 프로세스 합산 CPU를 정규화해 그린 막대그래프입니다. PCL VoxelGrid 경로가 100%, 정렬 없는 경로가 74%입니다",
+          ),
+          copy(
+            "Normalised against the before figure. What was measured is the 26%.",
+            "적용 전을 100%로 두고 그렸습니다. 측정한 값은 26%입니다.",
+          ),
+        ),
       ],
     },
     {
