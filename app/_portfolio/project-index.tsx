@@ -2,6 +2,7 @@
 
 import { portfolioContent } from "./content";
 import { MediaStage } from "./media-stage";
+import { numbering } from "./numbering";
 import { useLanguage } from "./use-language";
 
 function ProjectMotif({ id }: { id: string }) {
@@ -23,7 +24,7 @@ export function ProjectIndex() {
     <section className="projects-section" id="projects" aria-labelledby="projects-title">
       <div className="page-shell">
         <div className="section-intro section-intro--compact">
-          <p className="section-index">06 — 07</p>
+          <p className="section-index">{numbering.projects.label}</p>
           <h2 id="projects-title">{t(portfolioContent.site.projects.heading)}</h2>
           <p>{t(portfolioContent.site.projects.description)}</p>
         </div>
@@ -31,7 +32,7 @@ export function ProjectIndex() {
           {portfolioContent.projects.map((project, index) => (
             <article className="project-card" key={project.id}>
               <div className="project-card__topline">
-                <p>{String(index + 6).padStart(2, "0")}</p>
+                <p>{numbering.projectNumber(index)}</p>
                 <ul aria-label={language === "en" ? "Technologies" : "기술"}>
                   {project.tags.slice(0, 2).map((tag) => <li key={tag}>{tag}</li>)}
                 </ul>

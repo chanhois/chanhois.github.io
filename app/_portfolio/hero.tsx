@@ -8,12 +8,15 @@ import { useLanguage } from "./use-language";
 export function Hero() {
   const { language, t } = useLanguage();
   const profile = portfolioContent.profile;
-  // Read by id: the featured order is a content decision, not a contract with the hero.
-  const byId = (id: string) =>
-    portfolioContent.featured.find((study) => study.id === id)!.metrics[0];
+  // Read by id: the featured order is a content decision, not a contract with the
+  // hero. A named case can also be deleted outright, so fall back rather than throw.
+  const byId = (id: string, fallbackIndex: number) => {
+    const named = portfolioContent.featured.find((study) => study.id === id);
+    return (named ?? portfolioContent.featured[fallbackIndex])?.metrics[0];
+  };
   const site = portfolioContent.site;
-  const scopeMetric = byId("sensor-integration");
-  const lidarMetric = byId("lidar-stability");
+  const scopeMetric = byId("sensor-integration", 0);
+  const lidarMetric = byId("lidar-stability", 1);
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
@@ -47,16 +50,16 @@ export function Hero() {
         </div>
 
         <div className="hero__metrics">
-          <Metric
-            label={t(scopeMetric.label)}
-            value={t(scopeMetric.value)}
-            context={t(scopeMetric.context)}
-          />
-          <Metric
-            label={t(lidarMetric.label)}
-            value={t(lidarMetric.value)}
-            context={t(lidarMetric.context)}
-          />
+          {[scopeMetric, lidarMetric].map((metric, index) =>
+            metric ? (
+              <Metric
+                key={index}
+                label={t(metric.label)}
+                value={t(metric.value)}
+                context={t(metric.context)}
+              />
+            ) : null,
+          )}
         </div>
       </div>
       <p className="hero__scroll" aria-hidden="true">

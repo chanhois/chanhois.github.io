@@ -11,6 +11,7 @@ import {
   ResearchSection,
 } from "./_portfolio/sections";
 import { SiteNav } from "./_portfolio/site-nav";
+import { numbering } from "./_portfolio/numbering";
 import { LanguageProvider, useLanguage } from "./_portfolio/use-language";
 
 function PortfolioSurface() {
@@ -26,7 +27,7 @@ function PortfolioSurface() {
         <Hero />
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-intro page-shell">
-            <p className="section-index">01 — 05</p>
+            <p className="section-index">{numbering.work.label}</p>
             <h2 id="work-title">{t(portfolioContent.site.work.heading)}</h2>
             <p>
               {/* Counted, not spelled out: the copy went stale the last time a case moved. */}

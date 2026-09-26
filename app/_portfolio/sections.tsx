@@ -3,6 +3,7 @@
 import { ArrowUpRight, Mail } from "lucide-react";
 import { portfolioContent } from "./content";
 import type { SectionCopy } from "./model";
+import { numbering } from "./numbering";
 import { useLanguage } from "./use-language";
 
 function SectionHeading({
@@ -31,7 +32,7 @@ export function ExperienceSection() {
       <div className="page-shell">
         <SectionHeading
           id="experience-title"
-          index="08 — 10"
+          index={numbering.experience.label}
           copy={portfolioContent.site.experience}
         />
         <div className="lifecycle" aria-label={language === "en" ? "Sensor lifecycle" : "센서 생애주기"}>
