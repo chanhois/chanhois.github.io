@@ -53,9 +53,9 @@ export const portfolioContent: PortfolioContent = {
   },
   site: {
     headline: {
-      line1: copy("Bring-up", "센서의"),
+      line1: copy("BRING-UP", "센서의"),
       line2: copy("to", "시작부터"),
-      line3: copy("Deploy..", "끝까지."),
+      line3: copy("DEPLOY", "끝까지."),
     },
     functions: [
       copy("Robotics SW", "로보틱스 SW"),
@@ -457,7 +457,7 @@ export const portfolioContent: PortfolioContent = {
           title: copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
           body: copy(
             "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
-            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현은 점들을 voxel로 묶으려고 정렬을 하는데 비싼 쪽은 downsampling이 아니라 바로 그 정렬이었습니다.",
+            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현의 문제는 downsampling에 cache 친화적 구현을 위한 정렬이 포함되어 있어 불필요한 추가 연산을 포함했습니다.",
           ),
           media: {
             kind: "image",
@@ -500,8 +500,8 @@ export const portfolioContent: PortfolioContent = {
           stages.result,
           copy("26% back across the three cameras", "세 카메라 합산 CPU 26% 반환"),
           copy(
-            "Measured on the robot with all three camera processes running. The downsampled cloud going downstream is the same, so the saving costs nothing anywhere else in the pipeline.",
-            "세 카메라 프로세스를 모두 돌린 상태로 로봇에서 측정했습니다. 후단으로 가는 downsampled cloud는 그대로라 파이프라인 다른 곳에서 치르는 대가가 없습니다.",
+            "Measured on the robot with all three camera processes running.",
+            "세 카메라 프로세스를 모두 돌린 상태로 로봇에서 측정했습니다.",
           ),
           "cpu",
           copy(
@@ -524,7 +524,7 @@ export const portfolioContent: PortfolioContent = {
       ),
       summary: copy(
         "The supplier passed 52 cameras the factory failed, and a 116-unit retest flipped 32 of them. I held sensors as the reference and measured the inspection setup instead: four conditions, thirty repeats each. Re-seating moved position σ from 0.15 px to 1.8 px. Brightness did nothing.",
-        "공급사가 통과시킨 52대를 공장이 불합격시켰고, 116대 재검에서 32대가 뒤집혔습니다. 센서를 기준물로 고정해 두고 검사 환경 쪽을 측정했습니다. 조건 네 가지를 각 30회씩 돌렸습니다. 재안착이 위치 σ를 0.15 px에서 1.8 px까지 밀어 올렸고, 밝기는 아무 영향이 없었습니다.",
+        "소형 RGB 카메라의 벤더사와 자사 IQC 결과 중 32대가 불일치 했습니다. 이를 해결하고자 지그 측정 시스템 분석을 통해 해결하고자 했습니다.",
       ),
       tags: ["Measurement system analysis", "Measurement uncertainty", "Repeatability study", "Fixture design"],
       metrics: [
@@ -558,7 +558,7 @@ export const portfolioContent: PortfolioContent = {
           copy("Hold the part still and measure the setup", "부품을 고정해 두고 측정 환경을 재기"),
           copy(
             "Fix a sensor as the reference and measure it again and again. Whatever spread comes back cannot be the part, so it is the measurement system: the program, the seating, the environment. That turns an argument about verdicts into a number.",
-            "센서 하나를 기준물로 고정해 놓고 반복해서 측정합니다. 그래도 산포가 남는다면 그건 부품일 수 없고 측정 시스템의 못입니다. 프로그램, 안착, 환경이 여기 들어갑니다. 판정을 두고 다튀던 문제가 숫자 문제로 바뀝니다.",
+            "IQC 판정은 같은 측정을 다시 해도 같은 답이 나와야 합니다. 그래서 검사 지그의 산포 원인을 분석하고자 했습니다.",
           ),
           "decomposition",
           copy(
