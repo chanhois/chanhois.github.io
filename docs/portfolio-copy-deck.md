@@ -68,8 +68,8 @@
 
 ### `profile.introduction`
 
-- **EN** — I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. I have been the robot sensor engineer on three commercial robot platforms.
-- **KO** — 로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다.
+- **EN** — Sensor engineer responsible for the sensors that go on every robot the company builds. Has covered the full path of putting a sensor on a robot, from integration on a new platform through incoming quality control (IQC), calibration, pipeline optimization, interface stability, and field issues after deployment.
+- **KO** — 회사의 모든 로봇에 들어가는 센서를 담당하는 센서 엔지니어입니다. 신규 로봇의 센서 통합을 시작으로 IQC(incoming quality control), 캘리브레이션, 파이프라인 최적화, 연결 안정성, 배포 이후의 현장 이슈까지 로봇에 센서를 붙이는 전 과정을 거쳤습니다.
 
 ## 헤드라인 · Headline
 
