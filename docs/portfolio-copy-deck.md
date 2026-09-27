@@ -364,8 +364,8 @@
 
 ### `featured[0].steps[2].body`
 
-- **EN** — RGB-D, LiDAR, and RGB sensing were integrated on each robot and carried through production validation into field operation. The work covered URDF and TF, runtime calibration, point-cloud filtering, Ethernet LiDAR addressing, and USB enumeration and power settings for camera stability.
-- **KO** — 세 로봇에 RGB-D, LiDAR, RGB 센서를 통합하고 생산 검증부터 현장 운용까지 연결했습니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR addressing, 카메라 안정성을 위한 USB enumeration과 전원 설정까지 포함했습니다.
+- **EN** — RGB-D, LiDAR, and RGB sensing were integrated on each robot and carried through production validation into field operation. The work covered URDF and TF,  point-cloud filtering, Ethernet LiDAR addressing, and USB enumeration and power settings for camera stability.
+- **KO** — 세 로봇에 RGB-D, LiDAR, RGB 센서를 통합하고 생산 검증부터 현장 운용까지 연결했습니다. URDF·TF, 포인트클라우드 필터, Ethernet LiDAR addressing, 카메라 안정성을 위한 USB enumeration과 전원 설정까지 포함했습니다.
 
 ### `featured[0].steps[2].media.alt`
 
@@ -391,8 +391,8 @@
 
 ### `featured[1].summary`
 
-- **EN** — Stationary scans showed 0.378° of yaw variation. Diagnostic playback isolated the instability to scan timing and angular indexing. A fixed angular grid and per-beam EKF reduced it to 0.067°.
-- **KO** — 정지 상태 스캔에서 yaw 변동이 0.378°까지 나타났습니다. 진단 재생으로 원인을 스캔 타이밍과 각도 인덱싱으로 분리했고, 고정 각도 그리드와 빔별 EKF를 적용해 0.067°까지 줄였습니다.
+- **EN** — Stabilized the scan output of a low-cost LiDAR. Diagnostic playback separated the cause into scan timing and angular indexing, and a fixed angular grid with a per-beam EKF brought it down to 0.067°.
+- **KO** — 저가형 라이다의 스캔값 안정화를 진행했습니다. 진단 재생으로 원인을 스캔 타이밍과 각도 인덱싱으로 분리했고, 고정 각도 그리드와 빔별 EKF를 적용해 0.067°까지 줄였습니다.
 
 ### `featured[1].metrics[0].label`
 
@@ -462,7 +462,7 @@
 ### `featured[1].steps[1].body`
 
 - **EN** — Diagnostic playback separated publish time, angle wrapping, and beam order. The apparent motion followed the assembled scan while individual ranges remained stable. Fixing the angular grid alone reduced yaw variation to 0.166°.
-- **KO** — 진단 재생으로 publish time, angle wrapping, beam order를 분리해 확인했습니다. 흔들림은 개별 거리값보다 조립된 스캔을 따라 나타났습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°까지 줄었습니다.
+- **KO** — 진단 재생으로 publish time, angle wrapping, beam order를 분리해 확인했습니다. 흔들림은 개별 거리값보다 기존 벤더 코드가 고정된 스캔 인덱싱을 주지 않는 점에 있었습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°까지 줄었습니다.
 
 ### `featured[1].steps[1].media.alt`
 
@@ -486,8 +486,8 @@
 
 ### `featured[1].steps[2].body`
 
-- **EN** — I mapped every scan onto 400 fixed angular bins so that index i always represented the same physical direction. Each beam then used an independent 1-D EKF to estimate its own range state.
-- **KO** — 모든 스캔을 400개의 고정 각도 bin에 매핑해 인덱스 i가 항상 같은 물리 방향을 가리키도록 했습니다. 그 위에서 각 빔에 독립적인 1차원 EKF를 적용해 거리 상태를 추정했습니다.
+- **EN** — With the scan indexing stabilized, each beam used an independent 1-D EKF to estimate its own range state.
+- **KO** — 스캔 인덱싱을 안정화 한 후 각 빔에 독립적인 1차원 EKF를 적용해 거리 상태를 추정했습니다.
 
 ### `featured[1].steps[2].media.alt`
 
@@ -512,7 +512,7 @@
 ### `featured[1].steps[3].body`
 
 - **EN** — Each beam used a Mahalanobis gate based on its estimated uncertainty. Outliers were rejected, while repeated rejections reset the gate so that genuine scene changes such as a new obstacle could still be accepted.
-- **KO** — 각 빔의 추정 불확도에 맞춘 Mahalanobis gate로 이상치를 제거했습니다. 연속적인 rejection이 발생하면 gate를 초기화해 새로 등장한 장애물과 같은 실제 환경 변화는 다시 받아들이도록 했습니다.
+- **KO** — 실 장애물 감지 환경을 대응하기 위해, 각 빔의 추정 불확도에 맞춘 Mahalanobis gate로 이상치를 제거했습니다. 연속적인 rejection이 발생하면 gate를 초기화해 새로 등장한 장애물과 같은 실제 환경 변화는 다시 받아들이도록 했습니다.
 
 ### `featured[1].steps[3].media.alt`
 
@@ -594,12 +594,12 @@
 ### `featured[2].steps[0].body`
 
 - **EN** — Two range sensors had an unknown planar offset, including yaw. Their scans did not align on the same wall, and the existing workflow relied on visual comparison. Production use required a repeatable numerical criterion.
-- **KO** — 두 거리 센서 사이에는 yaw를 포함한 알 수 없는 평면 offset이 있었습니다. 같은 벽을 측정해도 스캔이 서로 어긋났고, 기존 절차는 시각적 비교에 의존했습니다. 생산 적용을 위해서는 반복 가능한 수치 기준이 필요했습니다.
+- **KO** — 두 라이다 센서 간에는 yaw를 포함한 알 수 없는 평면 misalignment가 있었습니다. 같은 벽을 측정해도 스캔이 서로 어긋났고, 기존 절차는 시각적 비교에 의존했습니다. 생산 적용을 위해서는 반복 가능한 수치 기준이 필요했습니다.
 
 ### `featured[2].steps[0].media.alt`
 
 - **EN** — Top-down view of two range sensors on one robot, where the reference beams end on the wall and the uncalibrated beams end short of it
-- **KO** — 한 로봇의 두 거리 센서를 위에서 본 그림으로, 기준 센서의 빔은 벽에 닿고 미보정 센서의 빔은 벽에 못 미쳐 끝납니다
+- **KO** — 한 로봇의 두 라이다 센서를 위에서 본 그림으로, 기준 센서에 비해 미보정 센서의 빔이 틀어졌습니다.
 
 ### `featured[2].steps[0].media.caption`
 
@@ -696,7 +696,7 @@
 ### `featured[3].steps[0].title`
 
 - **EN** — Three cameras left limited CPU headroom
-- **KO** — 세 카메라를 동시에 실행하면 CPU 여유가 줄었습니다
+- **KO** — 세 카메라를 동시에 실행할때, CPU 최적화의 주요 대상이였습니다. 
 
 ### `featured[3].steps[0].body`
 

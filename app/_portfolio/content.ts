@@ -196,7 +196,7 @@ export const portfolioContent: PortfolioContent = {
           "integration-result",
           stages.result,
           copy("All three reached shipment", "세 플랫폼 모두 출하 단계까지 연결"),
-          copy("RGB-D, LiDAR, and RGB sensing were integrated on each robot and carried through production validation into field operation. The work covered URDF and TF, runtime calibration, point-cloud filtering, Ethernet LiDAR addressing, and USB enumeration and power settings for camera stability.", "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합하고 생산 검증부터 현장 운용까지 연결했습니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR addressing, 카메라 안정성을 위한 USB enumeration과 전원 설정까지 포함했습니다."),
+          copy("RGB-D, LiDAR, and RGB sensing were integrated on each robot and carried through production validation into field operation. The work covered URDF and TF,  point-cloud filtering, Ethernet LiDAR addressing, and USB enumeration and power settings for camera stability.", "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합하고 생산 검증부터 현장 운용까지 연결했습니다. URDF·TF, 포인트클라우드 필터, Ethernet LiDAR addressing, 카메라 안정성을 위한 USB enumeration과 전원 설정까지 포함했습니다."),
           "integration",
           copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
           copy("The same five-stage lifecycle was completed on each platform.", "세 플랫폼 모두에서 같은 다섯 단계의 생애주기를 완료했습니다."),
@@ -207,7 +207,7 @@ export const portfolioContent: PortfolioContent = {
       id: "lidar-stability",
       eyebrow: copy("02 · Measurement Stability", "02 · 측정 안정화"),
       title: copy("Reducing LiDAR Yaw Jitter by 82%", "LiDAR Yaw 지터를 82% 줄이기"),
-      summary: copy("Stationary scans showed 0.378° of yaw variation. Diagnostic playback isolated the instability to scan timing and angular indexing. A fixed angular grid and per-beam EKF reduced it to 0.067°.", "정지 상태 스캔에서 yaw 변동이 0.378°까지 나타났습니다. 진단 재생으로 원인을 스캔 타이밍과 각도 인덱싱으로 분리했고, 고정 각도 그리드와 빔별 EKF를 적용해 0.067°까지 줄였습니다."),
+      summary: copy("Stabilized the scan output of a low-cost LiDAR. Diagnostic playback separated the cause into scan timing and angular indexing, and a fixed angular grid with a per-beam EKF brought it down to 0.067°.", "저가형 라이다의 스캔값 안정화를 진행했습니다. 진단 재생으로 원인을 스캔 타이밍과 각도 인덱싱으로 분리했고, 고정 각도 그리드와 빔별 EKF를 적용해 0.067°까지 줄였습니다."),
       tags: ["2D LiDAR", "EKF", "Mahalanobis gating", "ROS 1"],
       metrics: [
         {
@@ -241,7 +241,7 @@ export const portfolioContent: PortfolioContent = {
           "lidar-evidence",
           stages.evidence,
           copy("Separate the range from the scan geometry", "거리값과 스캔 기하를 분리해 확인"),
-          copy("Diagnostic playback separated publish time, angle wrapping, and beam order. The apparent motion followed the assembled scan while individual ranges remained stable. Fixing the angular grid alone reduced yaw variation to 0.166°.", "진단 재생으로 publish time, angle wrapping, beam order를 분리해 확인했습니다. 흔들림은 개별 거리값보다 조립된 스캔을 따라 나타났습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°까지 줄었습니다."),
+          copy("Diagnostic playback separated publish time, angle wrapping, and beam order. The apparent motion followed the assembled scan while individual ranges remained stable. Fixing the angular grid alone reduced yaw variation to 0.166°.", "진단 재생으로 publish time, angle wrapping, beam order를 분리해 확인했습니다. 흔들림은 개별 거리값보다 기존 벤더 코드가 고정된 스캔 인덱싱을 주지 않는 점에 있었습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°까지 줄었습니다."),
           "lidar",
           copy("Diagnostic comparison of timestamps and wrapped scan angles", "타임스탬프와 래핑된 스캔 각도 진단 비교"),
           copy("A fixed angle grid lowered yaw variation to 0.166°.", "고정 각도 그리드에서 yaw 변동이 0.166°로 줄었습니다."),
@@ -250,7 +250,7 @@ export const portfolioContent: PortfolioContent = {
           "lidar-decision",
           stages.decision,
           copy("Stabilize the geometry before estimation", "추정 전에 스캔 기하부터 안정화"),
-          copy("I mapped every scan onto 400 fixed angular bins so that index i always represented the same physical direction. Each beam then used an independent 1-D EKF to estimate its own range state.", "모든 스캔을 400개의 고정 각도 bin에 매핑해 인덱스 i가 항상 같은 물리 방향을 가리키도록 했습니다. 그 위에서 각 빔에 독립적인 1차원 EKF를 적용해 거리 상태를 추정했습니다."),
+          copy("With the scan indexing stabilized, each beam used an independent 1-D EKF to estimate its own range state.", "스캔 인덱싱을 안정화 한 후 각 빔에 독립적인 1차원 EKF를 적용해 거리 상태를 추정했습니다."),
           "lidar",
           copy("Fixed 400-bin angular grid feeding per-beam EKF filters", "400-bin 고정 각도 그리드와 빔별 EKF 구조"),
           copy("The estimator works on consistent angular observations.", "일관된 각도 관측값 위에서 추정기가 동작합니다."),
@@ -259,7 +259,7 @@ export const portfolioContent: PortfolioContent = {
           id: "lidar-implementation",
           label: stages.implementation,
           title: copy("Reject outliers without suppressing real motion", "이상치는 제거하고 실제 움직임은 유지"),
-          body: copy("Each beam used a Mahalanobis gate based on its estimated uncertainty. Outliers were rejected, while repeated rejections reset the gate so that genuine scene changes such as a new obstacle could still be accepted.", "각 빔의 추정 불확도에 맞춘 Mahalanobis gate로 이상치를 제거했습니다. 연속적인 rejection이 발생하면 gate를 초기화해 새로 등장한 장애물과 같은 실제 환경 변화는 다시 받아들이도록 했습니다."),
+          body: copy("Each beam used a Mahalanobis gate based on its estimated uncertainty. Outliers were rejected, while repeated rejections reset the gate so that genuine scene changes such as a new obstacle could still be accepted.", "실 장애물 감지 환경을 대응하기 위해, 각 빔의 추정 불확도에 맞춘 Mahalanobis gate로 이상치를 제거했습니다. 연속적인 rejection이 발생하면 gate를 초기화해 새로 등장한 장애물과 같은 실제 환경 변화는 다시 받아들이도록 했습니다."),
           media: {
             kind: "video",
             src: "/media/lidar-stability/scan-stability-before-after.webm",
@@ -310,14 +310,11 @@ export const portfolioContent: PortfolioContent = {
           id: "calibration-problem",
           label: stages.problem,
           title: copy("Turn visual alignment into a repeatable process", "시각적 정렬을 반복 가능한 절차로 전환"),
-          body: copy("Two range sensors had an unknown planar offset, including yaw. Their scans did not align on the same wall, and the existing workflow relied on visual comparison. Production use required a repeatable numerical criterion.", "두 거리 센서 사이에는 yaw를 포함한 알 수 없는 평면 offset이 있었습니다. 같은 벽을 측정해도 스캔이 서로 어긋났고, 기존 절차는 시각적 비교에 의존했습니다. 생산 적용을 위해서는 반복 가능한 수치 기준이 필요했습니다."),
+          body: copy("Two range sensors had an unknown planar offset, including yaw. Their scans did not align on the same wall, and the existing workflow relied on visual comparison. Production use required a repeatable numerical criterion.", "두 라이다 센서 간에는 yaw를 포함한 알 수 없는 평면 misalignment가 있었습니다. 같은 벽을 측정해도 스캔이 서로 어긋났고, 기존 절차는 시각적 비교에 의존했습니다. 생산 적용을 위해서는 반복 가능한 수치 기준이 필요했습니다."),
           media: {
             kind: "image",
             src: "/media/amr-calibration/two-lidar-setup.webp",
-            alt: copy(
-              "Top-down view of two range sensors on one robot, where the reference beams end on the wall and the uncalibrated beams end short of it",
-              "한 로봇의 두 거리 센서를 위에서 본 그림으로, 기준 센서의 빔은 벽에 닿고 미보정 센서의 빔은 벽에 못 미쳐 끝납니다",
-            ),
+            alt: copy("Top-down view of two range sensors on one robot, where the reference beams end on the wall and the uncalibrated beams end short of it", "한 로봇의 두 라이다 센서를 위에서 본 그림으로, 기준 센서에 비해 미보정 센서의 빔이 틀어졌습니다."),
             caption: copy(
               "The unknown is a planar transform: yaw and two translations.",
               "미지수는 평면 변환, 즉 yaw와 두 방향의 이동입니다.",
@@ -379,7 +376,7 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "rgbd-problem",
           stages.problem,
-          copy("Three cameras left limited CPU headroom", "세 카메라를 동시에 실행하면 CPU 여유가 줄었습니다"),
+          copy("Three cameras left limited CPU headroom", "세 카메라를 동시에 실행할때, CPU 최적화의 주요 대상이였습니다."),
           copy("Each depth camera ran its own downsampling stage. With all three cameras active alongside navigation, their combined processing cost reduced the CPU headroom available to the rest of the system.", "각 depth camera가 독립적으로 downsampling을 수행했습니다. 세 카메라와 navigation을 동시에 실행하면 누적 처리 비용 때문에 시스템의 CPU 여유가 크게 줄었습니다."),
           "runtime",
           copy("Three camera processes competing for the same CPU budget", "같은 CPU 예산을 두고 경쟁하는 세 개의 카메라 프로세스"),
