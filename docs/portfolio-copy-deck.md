@@ -50,7 +50,7 @@
 - [ ] `lidar-stability` — Yaw 표준편차 · 0.378° → 0.067°
 - [ ] `amr-calibration` — 정렬 기준 · 측정 가능한 residual
 - [ ] `rgbd-pipeline` — CPU 절감 · 26%
-- [ ] `camera-iqc-uncertainty` — 상충 판정 · 52
+- [ ] `camera-iqc-uncertainty` — 판정 불일치 · 52
 
 ---
 
@@ -696,7 +696,7 @@
 ### `featured[3].steps[0].title`
 
 - **EN** — Three cameras left limited CPU headroom
-- **KO** — 세 카메라를 동시에 실행할때, CPU 최적화의 주요 대상이였습니다. 
+- **KO** — 세 카메라를 동시에 실행할때, CPU 최적화의 주요 대상이였습니다.
 
 ### `featured[3].steps[0].body`
 
@@ -1080,13 +1080,13 @@
 
 ### `publications[0].venue`
 
-- **EN** — IEEE Access, under review
-- **KO** — IEEE Access, 심사 중
+- **EN** — M.S. thesis, Seoul National University of Science and Technology, 2025
+- **KO** — 석사학위논문, 서울과학기술대학교, 2025
 
 ### `publications[0].contribution`
 
-- **EN** — First author
-- **KO** — 제1저자
+- **EN** — Sole author
+- **KO** — 단독 저자
 
 ### `publications[1].venue`
 
@@ -1139,4 +1139,3 @@
 
 - **EN** — Languages and Tools
 - **KO** — 언어와 도구
-
