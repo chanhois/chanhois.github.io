@@ -631,7 +631,7 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "quality",
       title: copy("Sensor Quality", "센서 품질"),
-      skills: ["Measurement Variation", "Fixture Design", "IQC", "Root Cause Analysis"],
+      skills: ["IQC", "Statistical Analysis"],
     },
     {
       id: "perception",
