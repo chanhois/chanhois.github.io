@@ -1085,8 +1085,8 @@
 
 ### `publications[0].contribution`
 
-- **EN** — Sole author
-- **KO** — 단독 저자
+- **EN** — First author
+- **KO** — 제1저자
 
 ### `publications[1].venue`
 

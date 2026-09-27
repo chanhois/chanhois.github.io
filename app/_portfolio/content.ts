@@ -597,7 +597,7 @@ export const portfolioContent: PortfolioContent = {
       id: "pedestrian-calibration-paper",
       title: "Accurate and Robust Surveillance Camera Calibration using Pedestrians",
       venue: copy("M.S. thesis, Seoul National University of Science and Technology, 2025", "석사학위논문, 서울과학기술대학교, 2025"),
-      contribution: copy("Sole author", "단독 저자"),
+      contribution: copy("First author", "제1저자"),
     },
     {
       id: "mot-trends",
