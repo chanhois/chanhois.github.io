@@ -69,7 +69,7 @@
 ### `profile.introduction`
 
 - **EN** — I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. I have been the robot sensor engineer on three commercial robot platforms.
-- **KO** — 로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다.. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다.
+- **KO** — 로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다.
 
 ## 헤드라인 · Headline
 
@@ -80,7 +80,7 @@
 
 ### `site.headline.line2`
 
-- **EN** — to
+- **EN** — TO
 - **KO** — 시작부터
 
 ### `site.headline.line3`
@@ -1139,3 +1139,4 @@
 
 - **EN** — Languages and Tools
 - **KO** — 언어와 도구
+

@@ -66,10 +66,7 @@ export const portfolioContent: PortfolioContent = {
       "RIGHT PLACE. RIGHT TIME. TRUSTED DATA.",
       "정확한 공간. 정확한 시간. 신뢰할 수 있는 데이터.",
     ),
-    introduction: copy(
-      "I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. I have been the robot sensor engineer on three commercial robot platforms.",
-      "로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다.. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다.",
-    ),
+    introduction: copy("I own robot sensors end to end: bring-up, calibration, factory inspection, field failures. I have been the robot sensor engineer on three commercial robot platforms.", "로봇에 센서를 올리고 끝까지 책임지는 엔지니어 입니다. Bring-up부터 캘리브레이션, 공장 검사, 현장 장애 대응까지 합니다. 상용 로봇 세 종의 센서를 맡은 경험이 있습니다."),
     email: "studychanho0717@gmail.com",
   },
   site: {
@@ -78,7 +75,7 @@ export const portfolioContent: PortfolioContent = {
     heroMetrics: [],
     headline: {
       line1: copy("BRING-UP", "센서의"),
-      line2: copy("to", "시작부터"),
+      line2: copy("TO", "시작부터"),
       line3: copy("DEPLOY", "끝까지."),
     },
     functions: [
