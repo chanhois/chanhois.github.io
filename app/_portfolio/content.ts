@@ -94,45 +94,30 @@ export const portfolioContent: PortfolioContent = {
     work: {
       heading: copy("Selected Work", "주요 작업"),
       /* {count} is filled from featured.length so the number cannot go stale. */
-      description: copy(
-        "{count} cases where a sensor problem became a measurable engineering decision.",
-        "로봇 양산 과정에 참여하며 해결한 센서 관{count}가지 사례입니다.",
-      ),
+      description: copy("{count} cases where sensor problems became measurable engineering improvements.", "센서 문제를 측정하고 원인을 찾아 실제 개선으로 연결한 {count}가지 사례입니다."),
     },
     projects: {
       heading: copy("Project Index", "프로젝트"),
-      description: copy(
-        "Platform breadth and research foundations behind the featured work.",
-        "주요 작업을 뒷받침하는 플랫폼 경험과 연구 기반입니다.",
-      ),
+      description: copy("Platform experience and research that support the featured engineering work.", "주요 엔지니어링 작업을 뒷받침하는 플랫폼 경험과 연구입니다."),
     },
     experience: {
       heading: copy("Experience", "경험"),
-      description: copy(
-        "One sensor lifecycle, carried from the first integration to field reliability.",
-        "센서 인터그레이션 부터 필드 신뢰성까지 하나의 센서 생애주기로 다뤄습니다.",
-      ),
+      description: copy("Sensor systems carried from first integration through production validation and field reliability.", "센서 통합부터 생산 검증과 필드 신뢰성까지 이어진 경험입니다."),
     },
     research: {
       heading: copy("Research", "연구"),
-      description: copy(
-        "Geometry and tracking research that shaped how I reason about sensor.",
-        "센서를 해석하는 방식을 만든 기하와 추적 연구입니다.",
-      ),
+      description: copy("Research in geometry and tracking that shaped how I approach sensor problems.", "센서 문제를 바라보는 기반이 된 기하와 추적 연구입니다."),
     },
     about: {
       heading: copy("How I Work", "일하는 방식"),
-      description: copy(
-        "I make sensor behavior observable, find the physical cause, and leave a process that another engineer can repeat.",
-        "센서 동작을 관측 가능하게 만들고 물리적 원인을 찾은 뒤, 다른 엔지니어도 반복할 수 있는 프로세스를 남깁니다.",
-      ),
+      description: copy("I make sensor behavior measurable, trace issues to their physical cause, and turn fixes into repeatable processes.", "센서 동작을 측정 가능한 형태로 만들고 물리적 원인을 찾아 반복 가능한 프로세스로 정리합니다."),
     },
     lifecycle: ["BRING-UP", "CALIBRATE", "VALIDATE", "PRODUCE", "RELIABILITY"],
     principles: [
       {
         number: "01",
         label: "MEASURE",
-        text: copy("Start with observable evidence", "관측 가능한 근거에서 시작"),
+        text: copy("Start with measurable evidence", "측정 가능한 근거에서 시작"),
       },
       {
         number: "02",
@@ -142,19 +127,13 @@ export const portfolioContent: PortfolioContent = {
       {
         number: "03",
         label: "SHIP",
-        text: copy("Turn the fix into a repeatable tool", "반복 가능한 도구로 완성"),
+        text: copy("Turn the fix into a repeatable process", "해결책을 반복 가능한 프로세스로 완성"),
       },
     ],
     publicationsHeading: copy("Selected writing", "주요 논문"),
     contact: {
-      eyebrow: copy(
-        "Open to the next hard sensor problem",
-        "다음 어려운 센서 문제를 기다립니다",
-      ),
-      headline: copy(
-        "Let’s make the signal trustworthy.",
-        "신뢰할 수 있는 신호를 함께 만듭시다.",
-      ),
+      eyebrow: copy("Open to the next sensor challenge", "다음 센서 문제를 해결할 기회를 찾고 있습니다"),
+      headline: copy("Let’s make sensor data trustworthy.", "신뢰할 수 있는 센서 데이터를 만듭니다."),
       backToTop: copy("Back to top ↑", "맨 위로 ↑"),
     },
     ui: {
@@ -182,14 +161,8 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "sensor-integration",
       eyebrow: copy("01 · Sensor Integration", "01 · 센서 통합"),
-      title: copy(
-        "Three Robots, One Sensor Engineer",
-        "로봇 세 대, 한명의 센서 엔지니어",
-      ),
-      summary: copy(
-        "Serving robot, industrial AMR, humanoid. Overlapping schedules, 17 months, sole sensor owner on all three.",
-        "서빙로봇, 산업용 AMR, 휴머노이드. 시작부터 끝까지 담당한 로봇들.",
-      ),
+      title: copy("Three Robot Platforms, One Sensor Lifecycle", "세 개의 로봇 플랫폼, 하나의 센서 생애주기"),
+      summary: copy("Serving robot, industrial AMR, and humanoid. Over 17 months of overlapping development, I carried the sensor stack across all three platforms from bring-up to field operation.", "서빙로봇, 산업용 AMR, 휴머노이드. 17개월간 개발 일정이 겹치는 환경에서 세 플랫폼의 센서 스택을 bring-up부터 현장 운용까지 담당했습니다."),
       tags: ["Bring-up", "URDF / TF", "Linux interfaces", "Factory test", "Field reliability"],
       metrics: [
         {
@@ -198,32 +171,26 @@ export const portfolioContent: PortfolioContent = {
           context: copy("Serving robot, industrial AMR, humanoid", "서빙로봇, 산업용 AMR, 휴머노이드"),
         },
         {
-          label: copy("As the only sensor engineer", "단독 담당 기간"),
+          label: copy("Sensor ownership period", "센서 전담 기간"),
           value: copy("17 months", "17개월"),
-          context: copy("No second sensor engineer on the programs", "해당 과제에 다른 센서 엔지니어 없음"),
+          context: copy("Across three concurrent platform programs", "세 플랫폼 개발 일정이 겹친 기간"),
         },
       ],
       steps: [
         storyStep(
           "integration-problem",
           stages.problem,
-          copy("Three programs, one of me", "세 개의 과제, 한 명"),
-          copy(
-            "Three robots each needed a full sensing stack: parts chosen, mounted, calibrated, kept alive in the field. The schedules overlapped. There was no second sensor engineer.",
-            "로봇 세 대가 저마다 완전한 센서 스택을 필요로 했습니다. 부품을 고르고 붙이고 캘리브레이션하고 현장에서 유지하는 일까지 있었습니다. 일정은 겹쳤고 나눠 맡을 다른 센서 엔지니어는 없었습니다.",
-          ),
+          copy("Three platforms, overlapping sensor work", "세 플랫폼에서 동시에 진행된 센서 작업"),
+          copy("Each robot required a complete sensing stack: sensor selection, mounting, calibration, integration, and field support. With the schedules overlapping, the work needed a consistent approach that could transfer across platforms.", "세 로봇 모두 센서 선정, 장착, 캘리브레이션, 통합, 필드 대응까지 완전한 센서 스택이 필요했습니다. 일정이 겹치는 만큼 플랫폼 간에 재사용할 수 있는 일관된 접근이 필요했습니다."),
           "integration",
           copy("Three platform schedules drawn on one time axis, overlapping in the middle", "하나의 시간축에 그린 세 플랫폼 일정으로, 가운데 구간이 겹칩니다"),
-          copy("The three programs run across one another.", "세 과제가 서로 겹쳐 진행됩니다."),
+          copy("Development schedules overlapped across all three platforms.", "세 플랫폼의 개발 일정이 서로 겹쳐 진행됐습니다."),
         ),
         storyStep(
           "integration-decision",
           stages.decision,
-          copy("One lifecycle, three robots", "하나의 생애주기, 세 대의 로봇"),
-          copy(
-            "I ran the same five stages on all three: bring-up, URDF and TF, calibration, factory validation, field reliability. Closing a stage once made closing it on the next robot cheap.",
-            "세 대 모두에 같은 다섯 단계를 돌렸습니다. Bring-up, URDF·TF, 캘리브레이션, 공장 검증, 필드 신뢰성 순입니다. 한 로봇에서 한 단계를 끝내 놓으면 다음 로봇에서는 훨씬 빨리 끝났습니다.",
-          ),
+          copy("One lifecycle across three robots", "세 로봇에 공통으로 적용한 하나의 생애주기"),
+          copy("I used the same five stages across all three platforms: bring-up, URDF and TF, calibration, production validation, and field reliability. Reusing the same lifecycle made each stage easier to repeat on the next robot.", "세 플랫폼 모두에 같은 다섯 단계를 적용했습니다. Bring-up, URDF·TF, 캘리브레이션, 생산 검증, 필드 신뢰성 순입니다. 같은 생애주기를 반복해 적용하면서 다음 플랫폼에서도 각 단계를 더 빠르고 일관되게 진행할 수 있었습니다."),
           "integration",
           copy("One shared lifecycle applied across the three platforms", "세 플랫폼에 공통으로 적용한 하나의 생애주기"),
           copy("Five stages, applied three times.", "다섯 단계를 세 번 적용했습니다."),
@@ -231,34 +198,25 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "integration-result",
           stages.result,
-          copy("All three shipped", "세 대 모두 출하됐습니다"),
-          copy(
-            "RGB-D, LiDAR and RGB sensing integrated on each robot and carried through factory test into field operation. Integration meant the whole path: URDF and TF, runtime calibration, point-cloud filters, static addressing for the Ethernet LiDARs, and USB enumeration and power settings for the cameras that kept dropping out.",
-            "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합해 공장 검사와 현장 운용까지 연결했습니다. 통합이라고 하면 이 경로 전부를 말합니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR의 static addressing, 자꾸 끊기던 카메라의 USB enumeration과 전원 설정이 여기 들어갑니다.",
-          ),
+          copy("All three reached shipment", "세 플랫폼 모두 출하 단계까지 연결"),
+          copy("RGB-D, LiDAR, and RGB sensing were integrated on each robot and carried through production validation into field operation. The work covered URDF and TF, runtime calibration, point-cloud filtering, Ethernet LiDAR addressing, and USB enumeration and power settings for camera stability.", "세 로봇에 RGB-D, LiDAR, RGB 센서를 통합하고 생산 검증부터 현장 운용까지 연결했습니다. URDF·TF, runtime calibration, 포인트클라우드 필터, Ethernet LiDAR addressing, 카메라 안정성을 위한 USB enumeration과 전원 설정까지 포함했습니다."),
           "integration",
           copy("Lifecycle stages closed on each of the three platforms", "세 플랫폼에서 각각 닫힌 생애주기 단계"),
-          copy("Same five stages closed on each of the three.", "세 대 각각에서 같은 다섯 단계를 닫았습니다."),
+          copy("The same five-stage lifecycle was completed on each platform.", "세 플랫폼 모두에서 같은 다섯 단계의 생애주기를 완료했습니다."),
         ),
       ],
     },
     {
       id: "lidar-stability",
       eyebrow: copy("02 · Measurement Stability", "02 · 측정 안정화"),
-      title: copy(
-        "Yaw Jitter Down 82% on a Low-Cost LiDAR",
-        "저가형 LiDAR의 Yaw 지터를 82% 줄이기",
-      ),
-      summary: copy(
-        "Stationary scans swung 0.378°. The cause was in the timestamps and the angle indexing, not the sensor. A fixed angular grid plus a per-beam EKF brought it to 0.067°.",
-        "정지 상태 스캔이 0.378° 흔들렸습니다. 원인은 센서가 아니라 타임스탬프와 각도 인덱싱이었습니다. 고정 각도 그리드와 빔별 EKF로 0.067°까지 내렸습니다.",
-      ),
+      title: copy("Reducing LiDAR Yaw Jitter by 82%", "LiDAR Yaw 지터를 82% 줄이기"),
+      summary: copy("Stationary scans showed 0.378° of yaw variation. Diagnostic playback isolated the instability to scan timing and angular indexing. A fixed angular grid and per-beam EKF reduced it to 0.067°.", "정지 상태 스캔에서 yaw 변동이 0.378°까지 나타났습니다. 진단 재생으로 원인을 스캔 타이밍과 각도 인덱싱으로 분리했고, 고정 각도 그리드와 빔별 EKF를 적용해 0.067°까지 줄였습니다."),
       tags: ["2D LiDAR", "EKF", "Mahalanobis gating", "ROS 1"],
       metrics: [
         {
           label: copy("Yaw standard deviation", "Yaw 표준편차"),
           value: copy("0.378° → 0.067°", "0.378° → 0.067°"),
-          context: copy("Raw to filtered", "원본 대비 필터링"),
+          context: copy("Before to after filtering", "필터 적용 전후"),
         },
         {
           label: copy("Range noise", "거리 노이즈"),
@@ -270,11 +228,8 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "lidar-problem",
           label: stages.problem,
-          title: copy("The room moved while the robot stood still", "로봇은 멈췄는데 공간이 흔들렸습니다"),
-          body: copy(
-            "The robot was parked and the whole scan still rocked as one rigid shape. Each range reading looked plausible on its own, so nothing flagged a fault. Navigation saw the room moving.",
-            "로봇은 정지해 있는데 스캔 전체가 하나의 강체처럼 흔들렸습니다. 개별 거리값은 그럴듯해서 어디서도 결함으로 잡히지 않았습니다. 내비게이션은 공간이 움직인다고 인식했습니다.",
-          ),
+          title: copy("The robot was still, but the scan was not", "로봇은 멈춰 있었지만 스캔은 흔들렸습니다"),
+          body: copy("With the robot stationary, the entire scan oscillated as a rigid shape. Individual range values still looked plausible, so the issue only became clear when the scan geometry was observed over time.", "로봇이 정지한 상태에서도 스캔 전체가 하나의 강체처럼 흔들렸습니다. 개별 거리값은 정상적으로 보여, 시간에 따른 스캔 기하를 관찰했을 때 문제를 명확히 확인할 수 있었습니다."),
           media: {
             kind: "image",
             src: "/media/lidar-stability/scan-excursion-as-is.webp",
@@ -282,20 +237,14 @@ export const portfolioContent: PortfolioContent = {
               "Every scan of a stationary wall corner drawn on top of one another, where the wall appears as a thick smeared band many pixels wide",
               "정지한 벽 코너의 모든 스캔을 겹쳐 그린 그림으로, 벽이 선이 아니라 두껍게 번진 띠로 나타납니다",
             ),
-            caption: copy(
-              "A wall that never moved, measured at 3,273 different positions across 91 scans.",
-              "움직인 적 없는 벽이 91회 스캔에서 3,273개의 서로 다른 위치로 측정됐습니다.",
-            ),
+            caption: copy("Across 91 scans, a stationary wall occupied 3,273 measured positions.", "91회 스캔을 누적했을 때 정지한 벽이 3,273개의 위치에 걸쳐 측정됐습니다."),
           },
         },
         storyStep(
           "lidar-evidence",
           stages.evidence,
-          copy("Three suspects, one culprit", "용의자 셋, 범인 하나"),
-          copy(
-            "Diagnostic playback separated publish time, angle wrapping, and beam order. The motion followed the assembled scan. The individual ranges stayed put. Pinning the angular grid alone dropped yaw variation to 0.166°.",
-            "진단 재생으로 publish time, angle wrapping, 빔 순서를 분리했습니다. 움직임은 조립된 스캔을 따라갔습니다. 개별 거리값은 제자리에 있었습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°로 떨어졌습니다.",
-          ),
+          copy("Separate the range from the scan geometry", "거리값과 스캔 기하를 분리해 확인"),
+          copy("Diagnostic playback separated publish time, angle wrapping, and beam order. The apparent motion followed the assembled scan while individual ranges remained stable. Fixing the angular grid alone reduced yaw variation to 0.166°.", "진단 재생으로 publish time, angle wrapping, beam order를 분리해 확인했습니다. 흔들림은 개별 거리값보다 조립된 스캔을 따라 나타났습니다. 각도 그리드만 고정해도 yaw 변동이 0.166°까지 줄었습니다."),
           "lidar",
           copy("Diagnostic comparison of timestamps and wrapped scan angles", "타임스탬프와 래핑된 스캔 각도 진단 비교"),
           copy("A fixed angle grid lowered yaw variation to 0.166°.", "고정 각도 그리드에서 yaw 변동이 0.166°로 줄었습니다."),
@@ -303,11 +252,8 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "lidar-decision",
           stages.decision,
-          copy("Fix the geometry first, then estimate", "기하를 먼저 고정하고 추정하기"),
-          copy(
-            "400 angular bins, so index i always means the same physical direction. Then one independent 1-D EKF per beam, because the beams do not share a noise source.",
-            "400개 각도 bin으로 나눠 인덱스 i가 항상 같은 물리 방향을 가리키게 했습니다. 그 위에 빔마다 독립적인 1차원 EKF를 뒀습니다. 빔끼리 노이즈 원인이 다르니 따로 추정하는 편이 맞습니다.",
-          ),
+          copy("Stabilize the geometry before estimation", "추정 전에 스캔 기하부터 안정화"),
+          copy("I mapped every scan onto 400 fixed angular bins so that index i always represented the same physical direction. Each beam then used an independent 1-D EKF to estimate its own range state.", "모든 스캔을 400개의 고정 각도 bin에 매핑해 인덱스 i가 항상 같은 물리 방향을 가리키도록 했습니다. 그 위에서 각 빔에 독립적인 1차원 EKF를 적용해 거리 상태를 추정했습니다."),
           "lidar",
           copy("Fixed 400-bin angular grid feeding per-beam EKF filters", "400-bin 고정 각도 그리드와 빔별 EKF 구조"),
           copy("The estimator works on consistent angular observations.", "일관된 각도 관측값 위에서 추정기가 동작합니다."),
@@ -315,11 +261,8 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "lidar-implementation",
           label: stages.implementation,
-          title: copy("Gate the outliers, keep the real motion", "이상치는 막고 실제 움직임은 통과"),
-          body: copy(
-            "Each beam carries a Mahalanobis gate sized to its own uncertainty. Readings that fail the gate are dropped. A sudden obstacle still gets through, because the gate resets on a run of rejections.",
-            "빔마다 자기 불확도에 맞춘 Mahalanobis gate를 둡니다. gate를 통과하지 못한 측정은 버립니다. 그래도 갑자기 나타난 장애물은 그대로 통과합니다. 거부가 연달아 쌓이면 gate를 리셋하기 때문입니다.",
-          ),
+          title: copy("Reject outliers without suppressing real motion", "이상치는 제거하고 실제 움직임은 유지"),
+          body: copy("Each beam used a Mahalanobis gate based on its estimated uncertainty. Outliers were rejected, while repeated rejections reset the gate so that genuine scene changes such as a new obstacle could still be accepted.", "각 빔의 추정 불확도에 맞춘 Mahalanobis gate로 이상치를 제거했습니다. 연속적인 rejection이 발생하면 gate를 초기화해 새로 등장한 장애물과 같은 실제 환경 변화는 다시 받아들이도록 했습니다."),
           media: {
             kind: "video",
             src: "/media/lidar-stability/scan-stability-before-after.webm",
@@ -339,10 +282,7 @@ export const portfolioContent: PortfolioContent = {
           id: "lidar-result",
           label: stages.result,
           title: copy("0.378° → 0.067°", "0.378° → 0.067°"),
-          body: copy(
-            "Yaw standard deviation: 0.378° to 0.067°. Range noise on a stationary target: 4.1 mm to 1.3 mm. Stack every scan of the same wall and the smear shrinks from 3,273 pixels to 977 across 91 scans.",
-            "Yaw 표준편차 0.378° → 0.067°. 정지 표적 거리 노이즈 4.1 mm → 1.3 mm. 같은 벽의 모든 스캔을 겹치면 번짐이 91회 스캔에서 3,273픽셀에서 977픽셀로 줄어듭니다.",
-          ),
+          body: copy("Yaw standard deviation fell from 0.378° to 0.067°. Range noise on a stationary target dropped from 4.1 mm to 1.3 mm. Across 91 accumulated scans, the wall footprint shrank from 3,273 pixels to 977.", "Yaw 표준편차는 0.378°에서 0.067°로 줄었고, 정지 표적의 거리 노이즈는 4.1 mm에서 1.3 mm로 감소했습니다. 91회 스캔을 누적했을 때 벽의 측정 영역도 3,273픽셀에서 977픽셀로 줄었습니다."),
           media: {
             kind: "image",
             src: "/media/lidar-stability/scan-excursion-decay.webp",
@@ -350,10 +290,7 @@ export const portfolioContent: PortfolioContent = {
               "Two accumulated scan images of the same wall corner, where the unfiltered side spreads into a wide colored band and the filtered side stays a narrow line",
               "같은 벽 코너를 누적한 두 스캔 이미지로, 필터링 전은 넓은 색 띠로 번지고 필터링 후는 얇은 선으로 유지됩니다",
             ),
-            caption: copy(
-              "Every position the wall was ever measured at, over 91 scans: 3,273 pixels before filtering, 977 after.",
-              "91회 스캔 동안 벽이 측정된 모든 위치입니다. 필터링 전 3,273픽셀, 필터링 후 977픽셀입니다.",
-            ),
+            caption: copy("Across 91 scans: 3,273 pixels before filtering, 977 after.", "91회 스캔 누적 기준으로 필터링 전 3,273픽셀, 필터링 후 977픽셀입니다."),
           },
         },
       ],
@@ -361,31 +298,22 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "amr-calibration",
       eyebrow: copy("03 · Production Calibration", "03 · 생산 캘리브레이션"),
-      title: copy(
-        "LiDAR-to-LiDAR Extrinsic Calibration Method That Reached the Production Line",
-        "라이다-라이다 캘리브레이션: 문제 주도를 통해 생산에 적용한 사례",
-      ),
-      summary: copy(
-        "One LiDAR sat upside down with an unknown yaw offset, so its returns missed the wall the reference sensor hit. Estimated the offset from wall geometry and put the method on the production line.",
-        "LiDAR 하나가 뒤집혀 달렸는데 yaw 오프셋을 알 수 없었습니다. 그래서 기준 센서가 제대로 맞히는 벽을 이 센서만 빗나갔습니다. 벽면 기하로 오프셋을 추정해 그 방법을 생산 라인에 올렸습니다.",
-      ),
+      title: copy("LiDAR-to-LiDAR Calibration for Production", "생산 환경을 위한 LiDAR-to-LiDAR 캘리브레이션"),
+      summary: copy("An unknown planar offset between two LiDARs caused their wall measurements to misalign. I estimated the transform from wall geometry and packaged the method as an on-robot production workflow.", "두 LiDAR 사이의 알 수 없는 평면 offset으로 벽 측정이 서로 어긋났습니다. 벽면 기하를 이용해 변환을 추정하고, 로봇에서 바로 실행할 수 있는 생산용 workflow로 정리했습니다."),
       tags: ["RANSAC", "PCA", "Huber loss", "Production", "On-robot workflow"],
       metrics: [
         {
           label: copy("Alignment criterion", "정렬 기준"),
           value: copy("Measurable residual", "측정 가능한 residual"),
-          context: copy("Replaced operator judgment", "작업자 판단을 대체"),
+          context: copy("Converted visual alignment into a numeric criterion", "시각적 정렬을 수치 기준으로 전환"),
         },
       ],
       steps: [
         {
           id: "calibration-problem",
           label: stages.problem,
-          title: copy("Manual alignment did not scale", "수동 정렬은 확장되지 않았습니다"),
-          body: copy(
-            "Two range sensors, one mounted upside down, yaw offset unknown. Its returns land short of the wall the reference sensor measures correctly. Every fix was an operator turning a value by eye.",
-            "거리 센서 두 개 중 하나가 뒤집혀 장착되고 yaw 오프셋을 모릅니다. 기준 센서가 정확히 재는 벽에서 그 센서의 점만 벗어납니다. 보정은 매번 작업자가 눈으로 값을 돌리는 일이었습니다.",
-          ),
+          title: copy("Turn visual alignment into a repeatable process", "시각적 정렬을 반복 가능한 절차로 전환"),
+          body: copy("Two range sensors had an unknown planar offset, including yaw. Their scans did not align on the same wall, and the existing workflow relied on visual comparison. Production use required a repeatable numerical criterion.", "두 거리 센서 사이에는 yaw를 포함한 알 수 없는 평면 offset이 있었습니다. 같은 벽을 측정해도 스캔이 서로 어긋났고, 기존 절차는 시각적 비교에 의존했습니다. 생산 적용을 위해서는 반복 가능한 수치 기준이 필요했습니다."),
           media: {
             kind: "image",
             src: "/media/amr-calibration/two-lidar-setup.webp",
@@ -402,11 +330,8 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "calibration-evidence",
           label: stages.evidence,
-          title: copy("A wall is a good ruler", "벽은 좋은 자입니다"),
-          body: copy(
-            "RANSAC pulls wall candidates out of the clutter. PCA gives each wall a direction and a normal. Measure every point along that normal and the misalignment becomes a number to minimize.",
-            "RANSAC이 clutter에서 벽 후보를 뽑고, PCA가 각 벽의 방향과 normal을 줍니다. 모든 점을 그 normal 방향으로 재면 정렬 오차를 줄여야 할 하나의 수치로 다룰 수 있습니다.",
-          ),
+          title: copy("Use the wall as a geometric reference", "벽을 기하 기준으로 사용"),
+          body: copy("RANSAC extracted wall candidates from clutter, and PCA estimated each wall direction and normal. Point-to-wall distance along the normal converted the alignment error into a residual that could be minimized.", "RANSAC으로 clutter에서 벽 후보를 추출하고 PCA로 각 벽의 방향과 normal을 계산했습니다. normal 방향의 point-to-wall distance를 사용해 정렬 오차를 최소화할 수 있는 residual로 수치화했습니다."),
           media: {
             kind: "image",
             src: "/media/amr-calibration/wall-residual-se2.webp",
@@ -423,11 +348,8 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "calibration-result",
           label: stages.result,
-          title: copy("It transfers to robots it never saw", "처음 보는 로봇에서도 수렴합니다"),
-          body: copy(
-            "Capture, estimate, validate, save: one on-robot workflow that runs where the robot is built. It replaced alignment by operator judgment with a residual anyone can read, and converges on robots it was never tuned against.",
-            "수집, 추정, 검증, 저장을 하나의 on-robot workflow로 묶어 로봇이 만들어지는 자리에서 돌립니다. 작업자 판단에 의존하던 정렬을 누구나 읽을 수 있는 residual로 바꿨고 튜닝하지 않은 로봇에서도 수렴합니다.",
-          ),
+          title: copy("A repeatable workflow across robots", "여러 로봇에 반복 적용 가능한 workflow"),
+          body: copy("Capture, estimate, validate, save: the full procedure runs on the robot where it is built. The measurable residual provides a consistent alignment criterion, and the same workflow converged on robots outside the original development set.", "수집, 추정, 검증, 저장을 하나의 on-robot workflow로 묶었습니다. 측정 가능한 residual을 일관된 정렬 기준으로 사용했고, 초기 개발 대상이 아니었던 로봇에서도 같은 절차가 수렴했습니다."),
           media: {
             kind: "image",
             src: "/media/amr-calibration/wall-alignment-before-after.webp",
@@ -446,14 +368,8 @@ export const portfolioContent: PortfolioContent = {
     {
       id: "rgbd-pipeline",
       eyebrow: copy("04 · Runtime Performance", "04 · 런타임 성능"),
-      title: copy(
-        "26% of the CPU Was Sorting Points Nobody Needed",
-        "CPU의 26%는 아무도 필요로 하지 않는 정렬이었습니다",
-      ),
-      summary: copy(
-        "Three depth camera processes were eating the robot's CPU. Profiling put the cost inside PCL VoxelGrid's sort, and a sort-free downsampling pass gave 26% back.",
-        "depth 카메라 프로세스 세 개가 로봇 CPU를 잡아먹고 있었습니다. 프로파일링해 보니 비용은 PCL VoxelGrid의 정렬에 몰려 있었고 정렬 없는 downsampling으로 바꿔 CPU 26%를 되찾았습니다.",
-      ),
+      title: copy("Reducing Depth Processing CPU by 26%", "Depth 처리 CPU 사용량을 26% 줄이기"),
+      summary: copy("Three depth-camera pipelines consumed a significant share of the robot CPU. Profiling identified point sorting inside PCL VoxelGrid as the main hotspot. A sort-free single-pass downsampling path reduced combined CPU usage by 26%.", "세 개의 depth camera pipeline이 로봇 CPU의 상당 부분을 사용하고 있었습니다. 프로파일링으로 PCL VoxelGrid 내부의 point sorting을 주요 병목으로 확인했고, 정렬 없는 single-pass downsampling으로 전체 CPU 사용량을 26% 줄였습니다."),
       tags: ["Profiling", "PCL", "Point cloud", "C++", "Runtime"],
       metrics: [
         {
@@ -466,11 +382,8 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "rgbd-problem",
           stages.problem,
-          copy("Three cameras, and the CPU had nothing left", "카메라 셋, 그리고 남지 않은 CPU"),
-          copy(
-            "Each depth camera ran its own downsampling stage. On a robot that also has to navigate, three of them together left little headroom for anything else.",
-            "depth 카메라마다 자체 downsampling 단계를 돌렸습니다. 주행까지 해야 하는 로봇에서 셋이 합쳐지니 다른 일에 쓸 여유가 거의 없었습니다.",
-          ),
+          copy("Three cameras left limited CPU headroom", "세 카메라를 동시에 실행하면 CPU 여유가 줄었습니다"),
+          copy("Each depth camera ran its own downsampling stage. With all three cameras active alongside navigation, their combined processing cost reduced the CPU headroom available to the rest of the system.", "각 depth camera가 독립적으로 downsampling을 수행했습니다. 세 카메라와 navigation을 동시에 실행하면 누적 처리 비용 때문에 시스템의 CPU 여유가 크게 줄었습니다."),
           "runtime",
           copy("Three camera processes competing for the same CPU budget", "같은 CPU 예산을 두고 경쟁하는 세 개의 카메라 프로세스"),
           copy("The cost scales with the number of cameras, not with the scene.", "비용이 장면이 아니라 카메라 대수에 비례해 늘어납니다."),
@@ -478,11 +391,8 @@ export const portfolioContent: PortfolioContent = {
         {
           id: "rgbd-evidence",
           label: stages.evidence,
-          title: copy("The cost was in a sort, not in the filtering", "비용은 필터링이 아니라 정렬에 있었습니다"),
-          body: copy(
-            "Profiling the pipeline on the robot put the time inside PCL VoxelGrid. Its implementation sorts the points to group them into voxels, and that sort, not the downsampling itself, was the expensive part.",
-            "로봇에서 파이프라인을 프로파일링해 보니 시간이 PCL VoxelGrid에 몰려 있었습니다. 이 구현의 문제는 downsampling에 cache 친화적 구현을 위한 정렬이 포함되어 있어 불필요한 추가 연산을 포함했습니다.",
-          ),
+          title: copy("Profiling identified sorting as the main hotspot", "프로파일링으로 정렬 연산을 주요 병목으로 확인"),
+          body: copy("Runtime profiling showed that much of the downsampling cost was concentrated inside PCL VoxelGrid. Points were sorted by voxel index before aggregation, making the reordering step the main optimization target.", "Runtime profiling 결과 downsampling 비용의 상당 부분이 PCL VoxelGrid 내부에 집중되어 있었습니다. voxel별 aggregation 전에 수행되는 point sorting이 주요 최적화 대상임을 확인했습니다."),
           media: {
             kind: "image",
             src: "/media/rgbd-pipeline/voxelgrid-sort-as-is.webp",
@@ -491,20 +401,14 @@ export const portfolioContent: PortfolioContent = {
               "Diagram of the existing path: points in a voxel grid are copied out into a flat list, reordered by voxel index with arrows crossing each other, grouped, and only then averaged into one point per voxel",
               "기존 경로를 그린 도식입니다. voxel 그리드의 점들을 평평한 목록으로 꺼낸 뒤 화살표가 서로 엇갈리며 voxel 인덱스 순으로 재배열하고, 묶은 다음에야 voxel당 한 점으로 평균을 냅니다",
             ),
-            caption: copy(
-              "The reordering in the middle is the whole cost. The two ends are what the pipeline actually needs.",
-              "가운데 재배열이 비용의 전부입니다. 파이프라인이 실제로 필요로 하는 것은 양쪽 끝뿐입니다.",
-            ),
+            caption: copy("The reordering step dominated the cost between input points and voxel centroids.", "입력 point에서 voxel centroid를 만드는 과정 중 재정렬 단계의 비용이 가장 컸습니다."),
           },
         },
         {
           id: "rgbd-implementation",
           label: stages.implementation,
-          title: copy("Accumulate in place, in one pass", "제자리에서, 한 번에 누적하기"),
-          body: copy(
-            "Each point is accumulated into the voxel it already sits in. Nothing is copied into a list, nothing is reordered, and one pass is enough. The voxel keeps a running sum and a count, so the centroid falls out at the end.",
-            "점을 이미 속해 있는 voxel에서 바로 누적합니다. 목록으로 복사하지도, 재배열하지도 않고 한 번만 순회합니다. voxel마다 합과 개수만 들고 있으면 끝에가서 중심점이 바로 나옵니다.",
-          ),
+          title: copy("Accumulate directly in one pass", "한 번의 순회로 voxel에 직접 누적"),
+          body: copy("Each point was mapped directly to its voxel and accumulated in a single pass. Each voxel kept only a running sum and point count, allowing the centroid to be computed without a separate sort.", "각 point를 해당 voxel에 바로 매핑해 한 번의 순회로 누적했습니다. voxel마다 좌표 합과 point count만 유지해 별도의 정렬 없이 centroid를 계산했습니다."),
           media: {
             kind: "image",
             src: "/media/rgbd-pipeline/voxelgrid-sortfree-to-be.webp",
@@ -513,49 +417,34 @@ export const portfolioContent: PortfolioContent = {
               "Diagram of the replacement: points stay in the voxel grid and are averaged in place inside each cell, giving the same one point per voxel with no list and no reordering",
               "교체한 경로를 그린 도식입니다. 점들은 voxel 그리드에 그대로 남아 각 칸 안에서 바로 평균이 되고, 목록도 재배열도 없이 voxel당 한 점이라는 같은 결과가 나옵니다",
             ),
-            caption: copy(
-              "Same first frame, same last frame. The middle step is gone.",
-              "첫 장면도 마지막 장면도 같습니다. 가운데 단계가 없어졌을 뿐입니다.",
-            ),
+            caption: copy("The input and output stay the same; the intermediate sort is removed.", "입력과 출력은 유지하고 중간 정렬 단계만 제거했습니다."),
           },
         },
         storyStep(
           "rgbd-result",
           stages.result,
-          copy("26% back across the three cameras", "세 카메라 합산 CPU 26% 반환"),
-          copy(
-            "Measured on the robot with all three camera processes running.",
-            "세 카메라 프로세스를 모두 돌린 상태로 로봇에서 측정했습니다.",
-          ),
+          copy("26% lower CPU usage across three cameras", "세 카메라 합산 CPU 사용량 26% 감소"),
+          copy("Measured on the robot with all three camera processes running, the new path reduced their combined CPU usage to 74% of the previous implementation.", "실제 로봇에서 세 카메라 프로세스를 모두 실행한 조건에서 합산 CPU 사용량이 기존 구현의 74% 수준으로 감소했습니다."),
           "cpu",
           copy(
             "Bar chart of the three camera processes' combined CPU, normalised: the PCL VoxelGrid path at 100% and the sort-free pass at 74%",
             "세 카메라 프로세스 합산 CPU를 정규화해 그린 막대그래프입니다. PCL VoxelGrid 경로가 100%, 정렬 없는 경로가 74%입니다",
           ),
-          copy(
-            "Normalised against the before figure. What was measured is the 26%.",
-            "적용 전을 100%로 두고 그렸습니다. 측정한 값은 26%입니다.",
-          ),
+          copy("Normalized to the previous implementation: 100% before, 74% after.", "기존 구현을 100%로 정규화했을 때 적용 후 74%로 감소했습니다."),
         ),
       ],
     },
     {
       id: "camera-iqc-uncertainty",
       eyebrow: copy("05 · Measurement System", "05 · 측정 시스템"),
-      title: copy(
-        "52 Cameras, Two Verdicts",
-        "카메라 52대, 두 개의 판정",
-      ),
-      summary: copy(
-        "The supplier passed 52 cameras the factory failed, and a 116-unit retest flipped 32 of them. I held sensors as the reference and measured the inspection setup instead: four conditions, thirty repeats each. Re-seating moved position σ from 0.15 px to 1.8 px. Brightness did nothing.",
-        "소형 RGB 카메라의 벤더사와 자사 IQC 결과 중 32대가 불일치 했습니다. 이를 해결하고자 지그 측정 시스템 분석을 통해 해결하고자 했습니다.",
-      ),
+      title: copy("Quantifying Variation in Camera Inspection", "카메라 검사 시스템의 산포를 정량화하기"),
+      summary: copy("Inspection results varied across measurement conditions: 52 units received conflicting decisions, and 32 of 116 retested units changed from fail to pass. I measured the inspection system itself and found that re-seating increased position σ from 0.15 px to 1.8 px.", "측정 조건에 따라 검사 결과의 변동이 관찰됐습니다. 52대에서 판정이 엇갈렸고, 116대 재검에서는 32대가 fail에서 pass로 변경됐습니다. 검사 시스템 자체의 산포를 측정한 결과, 재안착만으로 위치 σ가 0.15 px에서 1.8 px까지 증가했습니다."),
       tags: ["Measurement system analysis", "Measurement uncertainty", "Repeatability study", "Fixture design"],
       metrics: [
         {
-          label: copy("Conflicting decisions", "상충 판정"),
+          label: copy("Inconsistent decisions", "판정 불일치"),
           value: copy("52", "52"),
-          context: copy("Across two inspection sites", "두 검사 지점 간"),
+          context: copy("Observed across two inspection sites", "두 검사 환경에서 관찰"),
         },
         {
           label: copy("Position spread on remount", "재안착 위치 산포"),
@@ -567,38 +456,26 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "uncertainty-problem",
           stages.problem,
-          copy("The same camera got two answers", "같은 카메라가 두 개의 답을 받았습니다"),
-          copy(
-            "52 units where supplier and factory disagreed. A 116-unit retest moved 32 from fail to pass. The same product passing or failing by when and where it was measured points at the measurement system, not the product.",
-            "공급사와 공장의 판정이 갈린 52대가 있었습니다. 116대 재검에서 32대가 fail에서 pass로 바뀌었습니다. 같은 제품의 합불이 측정 시점과 조건에 따라 변한다면 의심할 곳은 제품이 아니라 측정 시스템입니다.",
-          ),
+          copy("The same hardware did not always receive the same result", "같은 하드웨어에서도 검사 결과가 달라졌습니다"),
+          copy("Inspection results differed for 52 units, and 32 of 116 retested units changed from fail to pass. This variation motivated a measurement-system study before changing the product or acceptance criteria.", "52대에서 검사 결과가 서로 달랐고, 116대 재검에서는 32대가 fail에서 pass로 변경됐습니다. 제품이나 판정 기준을 바꾸기 전에 측정 시스템이 만드는 변동부터 정량화했습니다."),
           "uncertainty",
-          copy("Supplier and factory decision split for camera inspection", "카메라 검사에서 공급사와 공장 판정이 갈리는 모습"),
-          copy("Observed evidence: 52 conflicts and 32 reversals among 116 retests.", "관측 근거: 52건의 충돌과 116대 중 32대의 판정 전환."),
+          copy("Different inspection outcomes observed for the same camera units across two measurement settings", "동일한 카메라가 두 측정 환경에서 서로 다른 검사 결과를 보이는 모습"),
+          copy("Observed evidence: 52 inconsistent decisions and 32 changes among 116 retests.", "관측 근거: 52건의 판정 불일치와 116대 재검 중 32대의 판정 변경."),
         ),
         storyStep(
           "uncertainty-decision",
           stages.decision,
-          copy("Hold the part still and measure the setup", "부품을 고정해 두고 측정 환경을 재기"),
-          copy(
-            "Fix a sensor as the reference and measure it again and again. Whatever spread comes back cannot be the part, so it is the measurement system: the program, the seating, the environment. That turns an argument about verdicts into a number.",
-            "IQC 판정은 같은 측정을 다시 해도 같은 답이 나와야 합니다. 그래서 검사 지그의 산포 원인을 분석하고자 했습니다.",
-          ),
+          copy("Hold the part constant and measure the system", "부품은 고정하고 측정 시스템의 산포를 확인"),
+          copy("A fixed sensor served as the reference while the inspection conditions were varied and repeated. With unit-to-unit variation removed, the remaining spread could be attributed to the measurement process: software, seating, and environment.", "동일한 센서를 기준물로 고정하고 검사 조건만 바꾸며 반복 측정했습니다. 센서 개체 차이를 제거한 상태에서 남는 산포를 software, seating, environment 등 측정 프로세스의 영향으로 분리했습니다."),
           "decomposition",
-          copy(
-            "The observed spread written out as the measurement system's terms, the program, the seating and the environment, with the part term absent because one sensor is held as the reference",
-            "관측된 산포를 측정 시스템의 항으로 풀어 쓴 도식입니다. 프로그램, 안착, 환경 세 항이며, 센서 하나를 기준물로 고정했기 때문에 부품 항은 없습니다",
-          ),
-          copy("With the part held fixed, the spread that remains is the setup's.", "부품을 고정하면 남는 산포는 검사 환경의 것입니다."),
+          copy("Measurement-system variation separated into software, seating, and environment while one sensor is held as the reference", "하나의 센서를 기준물로 고정한 상태에서 측정 시스템의 산포를 software, seating, environment로 나눈 도식"),
+          copy("With the sensor held constant, the remaining spread comes from the measurement setup.", "센서를 고정하면 남는 산포는 측정 환경의 영향을 보여줍니다."),
         ),
         storyStep(
           "uncertainty-evidence",
           stages.evidence,
-          copy("Four conditions, thirty repeats each", "조건 네 가지, 각 30회 반복"),
-          copy(
-            "Five sensors, four conditions, thirty measurements per condition. Recapture from unchanged seating gave the baseline. Remount took the sensor off and re-seated it every time. The other two changed the lighting: brightness first, then colour. Seven metrics came out of each measurement, chart centre coordinates and a diagonal.",
-            "센서 다섯 대, 조건 네 가지, 조건당 측정 서른 번입니다. 안착을 그대로 둔 채 다시 캡처한 것이 기준선입니다. 재안착은 매번 센서를 떼었다가 다시 얹혔습니다. 나머지 둘은 조명을 바꿔 봤습니다. 먼저 밝기, 다음 색입니다. 측정 한 번당 지표 일곱 개를 뽑았습니다. 차트 중심 좌표와 대각선입니다.",
-          ),
+          copy("Four conditions, thirty repeats each", "네 가지 조건을 각각 30회 반복"),
+          copy("Five sensors were tested under four conditions, with thirty measurements per condition. Recapture without remounting set the baseline; the other conditions isolated re-seating, brightness, and light colour. Each run produced seven geometric metrics.", "센서 5대를 네 가지 조건에서 각각 30회 측정했습니다. 재안착 없이 다시 촬영한 조건을 baseline으로 두고, 재안착, 밝기, 조명색의 영향을 각각 분리했습니다. 각 측정에서는 7개의 기하 지표를 추출했습니다."),
           "experiment",
           copy(
             "The four measurement conditions listed in order, recapture, remount, brightness and light colour, with the run size beneath them",
@@ -609,17 +486,11 @@ export const portfolioContent: PortfolioContent = {
         storyStep(
           "uncertainty-result",
           stages.result,
-          copy("Seating, not brightness", "범인은 안착이었습니다"),
-          copy(
-            "Baseline σ held at 0.15 px. Re-seating pushed position σ to 1.8 px, twelve times that, and it moved with the operator and the seating. Brightness stayed at baseline. Colour did something else entirely: tens to hundreds of px, which is detection breaking down rather than spread widening. The fixture seating and the inspection procedure were changed on that basis.",
-            "기준선 σ는 0.15 px에서 유지됐습니다. 재안착은 위치 σ를 1.8 px까지, 기준선의 12배까지 밀어 올렸고 작업자와 안착 상태에 따라 달라졌습니다. 밝기는 기준선 수준이었습니다. 색은 성격이 달랐습니다. 수십에서 백 px로, 산포가 넘어진 게 아니라 검출 자체가 무너진 값입니다. 이걸 근거로 지그 안착 방식과 검사 절차를 고쳤습니다.",
-          ),
+          copy("Re-seating was the dominant source of positional variation", "재안착이 위치 산포의 주요 원인이었습니다"),
+          copy("Baseline position σ remained at 0.15 px. Re-seating increased it to 1.8 px, twelve times the baseline, while brightness stayed near baseline. Light colour produced a different failure mode in which detection itself became unstable. These findings informed changes to fixture seating and the inspection procedure.", "Baseline 위치 σ는 0.15 px였고, 재안착 조건에서는 1.8 px로 기준의 12배까지 증가했습니다. 밝기 변화는 baseline 수준이었고, 조명색 변화에서는 산포 증가와 다른 형태로 검출 자체가 불안정해졌습니다. 이 결과를 바탕으로 지그 안착 방식과 검사 절차를 개선했습니다."),
           "sigma",
-          copy(
-            "Position sigma for each condition drawn as bars, recapture and brightness near zero, remount twelve times longer, and light colour hatched because it runs off the scale",
-            "조건별 위치 시그마를 막대로 그렸습니다. 재캡처와 밝기는 0에 가깝고, 재안착은 그 12배이며, 조명색은 눈금을 벗어나 뺗금으로 표시했습니다",
-          ),
-          copy("0.15 px against 1.8 px. Colour is off the scale, not on it.", "0.15 px 대 1.8 px입니다. 조명색은 눈금 안에 아예 들어오지 않습니다."),
+          copy("Bar chart of position sigma by condition: recapture and brightness near baseline, remount twelve times higher, and light colour outside the normal scale", "조건별 위치 σ 막대그래프로, 재캡처와 밝기는 baseline에 가깝고 재안착은 12배 높으며 조명색은 일반 범위를 벗어납니다"),
+          copy("0.15 px at baseline versus 1.8 px after re-seating; light colour produced a separate detection failure mode.", "Baseline 0.15 px 대비 재안착 시 1.8 px였고, 조명색에서는 별도의 detection failure mode가 나타났습니다."),
         ),
       ],
     },
@@ -631,14 +502,8 @@ export const portfolioContent: PortfolioContent = {
         "Camera Calibration from Pedestrians",
         "보행자 기반 카메라 캘리브레이션",
       ),
-      summary: copy(
-        "Calibrated CCTV cameras with no checkerboard, using pedestrians as vertical line segments. Accuracy improved 82% over the ICPR 2021 baseline.",
-        "Checkerboard 없이 보행자를 수직 선분으로 써서 CCTV 카메라를 캘리브레이션했습니다. ICPR 2021 baseline 대비 정확도를 82% 올렸습니다.",
-      ),
-      outcome: copy(
-        "RANSAC and MSAC absorb the outliers real footage produces: partial bodies, groups, reflections. A pedestrian is only usable when both endpoints are clean.",
-        "실제 영상에서 나오는 이상치를 RANSAC과 MSAC으로 흡수했습니다. 몸이 잘린 사람, 겹쳐 선 무리, 유리에 비친 상 같은 것들입니다. 양 끝점이 깨끗하게 잡힌 보행자만 씁니다.",
-      ),
+      summary: copy("Calibrated CCTV cameras without a checkerboard by representing pedestrians as vertical line segments. Accuracy improved by 82% over the ICPR 2021 baseline.", "Checkerboard 없이 보행자를 수직 선분으로 표현해 CCTV 카메라를 캘리브레이션했습니다. ICPR 2021 baseline 대비 정확도를 82% 향상했습니다."),
+      outcome: copy("RANSAC and MSAC rejected outliers caused by partial bodies, overlapping pedestrians, and reflections. Only pedestrians with reliable endpoints contributed to calibration.", "RANSAC과 MSAC으로 신체 일부 누락, 사람 간 겹침, 반사 등에서 발생한 이상치를 제거했습니다. 양 끝점이 안정적으로 검출된 보행자만 캘리브레이션에 사용했습니다."),
       tags: ["Camera calibration", "RANSAC", "MSAC", "Geometry"],
       media: [
         {
@@ -648,10 +513,7 @@ export const portfolioContent: PortfolioContent = {
             "Pipeline diagram running from pose estimation and line segment extraction into sampling, parameter estimation, triangulation, and evaluation",
             "자세 추정과 선분 추출에서 샘플링, 파라미터 추정, 삼각측량, 평가로 이어지는 파이프라인 다이어그램",
           ),
-          caption: copy(
-            "Pedestrians become line segments, then a sampling loop solves for the camera.",
-            "보행자를 선분으로 만든 뒤, 샘플링 반복으로 카메라를 추정합니다.",
-          ),
+          caption: copy("Pedestrians become vertical line segments, then a sampling loop estimates the camera parameters.", "보행자를 수직 선분으로 변환한 뒤 샘플링 반복으로 카메라 파라미터를 추정합니다."),
         },
         {
           kind: "image",
@@ -673,14 +535,8 @@ export const portfolioContent: PortfolioContent = {
         "Multi-Object Tracking with a 2D LiDAR",
         "2D LiDAR 기반 다중 객체 추적",
       ),
-      summary: copy(
-        "Tracked several moving objects from range scans alone, no camera appearance. DBSCAN formed the observations, an EKF held the motion state, the Hungarian algorithm linked frames.",
-        "카메라 외형 정보 없이 거리 스캔만으로 여러 이동 객체를 추적했습니다. DBSCAN이 관측을 만들고 EKF가 motion state를 유지하고 Hungarian algorithm이 프레임을 연결했습니다.",
-      ),
-      outcome: copy(
-        "Range gives you a centroid and nothing else. No colour, no texture, no box to re-identify by. Identity has to come from motion alone.",
-        "거리 센서가 주는 것은 centroid뿐입니다. 색도, 질감도, 다시 알아볼 박스도 없습니다. 결국 움직임만 보고 같은 객체인지 가려내야 합니다.",
-      ),
+      summary: copy("Tracked multiple moving objects from 2D range scans without camera appearance features. DBSCAN formed observations, an EKF estimated motion state, and the Hungarian algorithm associated tracks across frames.", "카메라 appearance 정보 없이 2D 거리 스캔만으로 여러 이동 객체를 추적했습니다. DBSCAN으로 관측을 만들고, EKF로 motion state를 추정하며, Hungarian algorithm으로 프레임 간 track을 연결했습니다."),
+      outcome: copy("With no colour, texture, or appearance descriptor, object identity had to be maintained from spatial position and motion alone.", "색상, 질감, appearance descriptor가 없는 환경에서 위치와 움직임만으로 객체의 identity를 유지했습니다."),
       tags: ["DBSCAN", "EKF", "Hungarian", "MOT"],
       media: [
         {
@@ -705,28 +561,19 @@ export const portfolioContent: PortfolioContent = {
       id: "compact-service",
       platform: copy("Compact Service Robot", "소형 서빙로봇"),
       role: copy("End-to-end sensor stack owner", "센서 스택 전 과정 담당"),
-      summary: copy(
-        "Depth, ToF, RGB, and LiDAR from bring-up to factory validation and field reliability.",
-        "Depth, ToF, RGB, LiDAR를 bring-up부터 공장 검증과 필드 신뢰성까지 담당했습니다.",
-      ),
+      summary: copy("Depth, ToF, RGB, and LiDAR from bring-up through production validation and field reliability.", "Depth, ToF, RGB, LiDAR를 bring-up부터 생산 검증과 필드 신뢰성까지 담당했습니다."),
     },
     {
       id: "industrial-amr",
       platform: copy("Industrial AMR", "산업용 AMR"),
       role: copy("Multi-sensor integration and production calibration", "다중 센서 통합 및 생산 캘리브레이션"),
-      summary: copy(
-        "Carried the sensing stack from prototype through a production hardware upgrade, and automated the geometric calibration.",
-        "센서 스택을 prototype부터 생산용 하드웨어 개선까지 끌고 가며 기하 캘리브레이션을 자동화했습니다.",
-      ),
+      summary: copy("Carried the sensor stack from prototype integration through production hardware updates and automated geometric calibration.", "센서 스택을 prototype 통합부터 생산용 하드웨어 업데이트까지 연결하고 기하 캘리브레이션을 자동화했습니다."),
     },
     {
       id: "humanoid-platform",
       platform: copy("Humanoid Platform", "휴머노이드 플랫폼"),
       role: copy("Sensor-system bring-up and calibration", "센서 시스템 bring-up 및 캘리브레이션"),
-      summary: copy(
-        "Built a shipment-ready range and depth configuration against a hard date.",
-        "촉박한 일정에 맞춰 출하 가능한 거리·깊이 센서 configuration을 구축했습니다.",
-      ),
+      summary: copy("Built and stabilized a shipment-ready range and depth sensing configuration under a compressed development schedule.", "촉박한 개발 일정 안에서 출하에 필요한 거리·깊이 센서 구성을 구축하고 안정화했습니다."),
     },
   ],
   research: [
@@ -736,14 +583,8 @@ export const portfolioContent: PortfolioContent = {
         "Accurate and Robust Surveillance Camera Calibration using Pedestrians",
         "보행자를 이용한 정확하고 강건한 감시 카메라 캘리브레이션",
       ),
-      summary: copy(
-        "Marker-free camera parameter estimation from pedestrian line segments perpendicular to the ground plane.",
-        "지면에 수직인 보행자 선분으로 marker 없이 카메라 파라미터를 추정했습니다.",
-      ),
-      result: copy(
-        "Improved accuracy by 82% over the ICPR 2021 baseline under real CCTV conditions.",
-        "실제 CCTV 조건에서 ICPR 2021 baseline 대비 정확도를 82% 향상했습니다.",
-      ),
+      summary: copy("Marker-free camera parameter estimation from pedestrian line segments perpendicular to the ground plane.", "지면에 수직인 보행자 선분을 이용해 marker 없이 카메라 파라미터를 추정했습니다."),
+      result: copy("Improved accuracy by 82% over the ICPR 2021 baseline under real CCTV conditions.", "실제 CCTV 환경에서 ICPR 2021 baseline 대비 정확도를 82% 향상했습니다."),
       tags: ["Camera calibration", "Multiple-view geometry", "RANSAC / MSAC"],
     },
     {
@@ -752,14 +593,8 @@ export const portfolioContent: PortfolioContent = {
         "LiDAR-based Multi-Object Tracking in Autonomous Driving",
         "자율주행 환경의 LiDAR 기반 다중 객체 추적",
       ),
-      summary: copy(
-        "A range-only tracking pipeline combining spatial clustering, recursive state estimation, and global data association.",
-        "공간 군집화, 재귀 상태 추정, 전역 데이터 연결을 결합한 거리 센서 기반 추적 파이프라인입니다.",
-      ),
-      result: copy(
-        "Implemented DBSCAN observations, EKF tracks, and Hungarian assignment as an end-to-end MOT system.",
-        "DBSCAN 관측, EKF track, Hungarian 할당을 end-to-end MOT 시스템으로 구현했습니다.",
-      ),
+      summary: copy("A range-only tracking pipeline combining spatial clustering, recursive state estimation, and global data association.", "공간 군집화, 재귀 상태 추정, 전역 data association을 결합한 거리 센서 기반 tracking pipeline입니다."),
+      result: copy("Implemented DBSCAN observations, EKF tracks, and Hungarian assignment as an end-to-end MOT system.", "DBSCAN 관측, EKF track, Hungarian assignment를 end-to-end MOT 시스템으로 구현했습니다."),
       tags: ["2D LiDAR", "Multi-Object Tracking", "EKF"],
     },
   ],
